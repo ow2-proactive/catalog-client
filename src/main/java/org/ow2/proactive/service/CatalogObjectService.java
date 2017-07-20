@@ -35,11 +35,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import lombok.extern.log4j.Log4j2;
+
 
 /**
  *  This service enables to query the catalog service
  */
 @Service
+@Log4j2
 public class CatalogObjectService {
 
     //max length response equal 1 MB
@@ -66,17 +69,23 @@ public class CatalogObjectService {
         try {
             long resourceLength = new RestTemplate().headForHeaders(new URI(url)).getContentLength();
             if (resourceLength > MAX_LENGTH) {
-                throw new EntityTooLargeException("the resource oversized the " + MAX_LENGTH + " limit with a " +
-                                                  resourceLength + " length.");
+                String message = "Get on url " + url + " failed because response size length " + resourceLength +
+                                 " is higher than max size " + MAX_LENGTH;
+                log.info(message);
+                throw new EntityTooLargeException(message);
             }
 
             return new RestTemplate().getForObject(url, CatalogObject.class);
 
         } catch (RestClientException e) {
-            throw new FailedRequestException("Get request on the URL " + url + " failed. The server response was " +
-                                             e.getLocalizedMessage());
+            String message = "Get request on the URL " + url + " failed. The server response was " +
+                             e.getLocalizedMessage();
+            log.info(message, e);
+            throw new FailedRequestException(message);
         } catch (URISyntaxException e) {
-            throw new FailedRequestException("The url '" + url + "' is ill-formed.");
+            String message = "The url '" + url + "' is ill-formed.";
+            log.info(message, e);
+            throw new FailedRequestException(message);
         }
     }
 
