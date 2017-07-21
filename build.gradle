@@ -23,7 +23,7 @@ buildscript {
     dependencies {
         classpath "com.diffplug.gradle.spotless:spotless:2.4.0"
         classpath "org.ow2.proactive:coding-rules:1.0.0"
-        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:1.2"
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.5"
     }
 
     dependencies {
