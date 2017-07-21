@@ -35,6 +35,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import com.google.common.annotations.VisibleForTesting;
+
 import lombok.extern.log4j.Log4j2;
 
 
@@ -89,7 +91,8 @@ public class CatalogObjectService {
         }
     }
 
-    private String getURL(String catalogURL, long bucketId, String name, boolean raw) {
+    @VisibleForTesting
+    String getURL(String catalogURL, long bucketId, String name, boolean raw) {
         return catalogURL + (catalogURL.endsWith("/") ? "" : "/") + BUCKETS_PATH + bucketId + RESOURCES_PATH + name +
                (raw ? RAW_PATH : "");
     }

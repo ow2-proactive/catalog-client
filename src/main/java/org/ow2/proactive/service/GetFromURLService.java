@@ -23,19 +23,17 @@
  * If needed, contact us to obtain a release under GPL Version 2 or 3
  * or a different license than the AGPL.
  */
-package org.ow2.proactive;
+package org.ow2.proactive.service;
 
-import java.net.URI;
-
-import org.junit.Test;
-import org.springframework.http.HttpHeaders;
+import org.springframework.stereotype.Service;
 
 
-public class CatalogObjectServiceTest {
+@Service
+public class GetFromURLService {
 
-    @Test
-    public void getCatalogObjectTest() {
+    public static final String TOKEN = "PA:GET_FROM_URL";
 
+    public String replaceTokenByURL() {
+        return null;
     }
-
 }
