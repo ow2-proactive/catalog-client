@@ -26,34 +26,78 @@
 package org.ow2.proactive.service;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.ow2.proactive.model.CatalogObject;
 
-
+@RunWith(MockitoJUnitRunner.class)
 public class CatalogObjectServiceTest {
 
-    private CatalogObjectService catalogObjectService = new CatalogObjectService();
+    @Mock
+    private RemoteObjectService remoteObjectService;
+
+    @InjectMocks
+    private CatalogObjectService catalogObjectService;
+
+    private static final String CATALOG_URL = "http://localhost:8080/catalog";
 
     @Test
-    public void getURLTest() {
+    public void getMetadataURLWithEndingSlash(){
+        assertThat(catalogObjectService.getURL(CATALOG_URL+"/", 3, "bobot", false))
+                .isEqualTo("http://localhost:8080/catalog/buckets/3/resources/bobot");
+    }
 
-        String goodCatalogURLWithSlash = "http://localhost:8080/catalog/";
-        String goodCatalogURLWithoutSlash = "http://localhost:8080/catalog";
+    @Test
+    public void getMetadataURLWithoutEndingSlash(){
+        assertThat(catalogObjectService.getURL(CATALOG_URL, 3, "bobot", false))
+                .isEqualTo("http://localhost:8080/catalog/buckets/3/resources/bobot");
 
-        String fullURL = "http://localhost:8080/catalog/buckets/3/resources/bobot";
-        String fullRawURL = "http://localhost:8080/catalog/buckets/3/resources/bobot/raw";
+    }
 
-        //test with slash without raw
-        assertThat(catalogObjectService.getURL(goodCatalogURLWithSlash, 3, "bobot", false)).isEqualTo(fullURL);
+    @Test
+    public void getRawURLWithEndingSlash(){
+        assertThat(catalogObjectService.getURL(CATALOG_URL+"/", 3, "bobot", true))
+                .isEqualTo("http://localhost:8080/catalog/buckets/3/resources/bobot/raw");
 
-        //test without slash without raw
-        assertThat(catalogObjectService.getURL(goodCatalogURLWithoutSlash, 3, "bobot", false)).isEqualTo(fullURL);
+    }
 
-        //test with slash with raw
-        assertThat(catalogObjectService.getURL(goodCatalogURLWithSlash, 3, "bobot", true)).isEqualTo(fullRawURL);
+    @Test
+    public void getRawURLWithoutEndingSlash(){
+        assertThat(catalogObjectService.getURL(CATALOG_URL, 3, "bobot", true))
+        .isEqualTo("http://localhost:8080/catalog/buckets/3/resources/bobot/raw");
+    }
 
-        //test without slash with raw
-        assertThat(catalogObjectService.getURL(goodCatalogURLWithoutSlash, 3, "bobot", true)).isEqualTo(fullRawURL);
+    @Test
+    public void getRawCatalogObjectTest(){
+        String returnedObject = "{ \"raw\":\"value\"}";
+        String objectURL = CATALOG_URL+"/buckets/0/resources/bobot/raw";
+        when(remoteObjectService.sendRequest(objectURL,String.class))
+                .thenReturn(returnedObject);
+        String result = catalogObjectService.getRawCatalogObject(CATALOG_URL,0,"bobot");
+        assertThat(result).isEqualTo(returnedObject);
+        verify(remoteObjectService,times(1)).sendRequest(objectURL,String.class);
+    }
+
+    @Test
+    public void getCatalogObject(){
+
+        CatalogObject expectedResult = new CatalogObject
+                .Builder(0,"bobot","workflow","application/xml","First commit")
+                .build();
+
+        String objectURL = CATALOG_URL+"/buckets/0/resources/bobot";
+        when(remoteObjectService.sendRequest(objectURL,CatalogObject.class))
+                .thenReturn(expectedResult);
+        CatalogObject result = catalogObjectService.getCatalogObjectMetadata(CATALOG_URL,0,"bobot");
+        assertThat(result).isEqualTo(expectedResult);
+        verify(remoteObjectService,times(1)).sendRequest(objectURL,CatalogObject.class);
     }
 
 }

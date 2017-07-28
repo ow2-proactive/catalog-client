@@ -25,6 +25,9 @@
  */
 package org.ow2.proactive.exception;
 
+/**
+ * This exception occurs when the server response is to big.
+ */
 public class EntityTooLargeException extends RuntimeException {
 
     public EntityTooLargeException() {

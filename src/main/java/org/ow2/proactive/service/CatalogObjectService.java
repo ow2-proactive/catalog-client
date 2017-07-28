@@ -31,6 +31,7 @@ import java.net.URISyntaxException;
 import org.ow2.proactive.exception.EntityTooLargeException;
 import org.ow2.proactive.exception.FailedRequestException;
 import org.ow2.proactive.model.CatalogObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -47,49 +48,42 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class CatalogObjectService {
 
-    //max length response equal 1 MB
-    private static final long MAX_LENGTH = 1000000;
-
     private static final String BUCKETS_PATH = "buckets/";
 
     private static final String RESOURCES_PATH = "/resources/";
 
     private static final String RAW_PATH = "/raw";
 
+    @Autowired
+    private RemoteObjectService remoteObjectService;
+
     /**
-     *
+     * Get the metadata of a catalog object
      * @param catalogURL is the catalog url
      * @param bucketId is the bucket containing the object id
      * @param name is the object name
-     * @param raw indicates if the get request should return the raw content or not
      * @return a Catalog Object containing the object information
      */
-    public CatalogObject getCatalogObject(String catalogURL, long bucketId, String name, boolean raw) {
+    public CatalogObject getCatalogObjectMetadata(String catalogURL, long bucketId, String name) {
 
-        final String url = getURL(catalogURL, bucketId, name, raw);
-
-        try {
-            long resourceLength = new RestTemplate().headForHeaders(new URI(url)).getContentLength();
-            if (resourceLength > MAX_LENGTH) {
-                String message = "Get on url " + url + " failed because response size length " + resourceLength +
-                                 " is higher than max size " + MAX_LENGTH;
-                log.info(message);
-                throw new EntityTooLargeException(message);
-            }
-
-            return new RestTemplate().getForObject(url, CatalogObject.class);
-
-        } catch (RestClientException e) {
-            String message = "Get request on the URL " + url + " failed. The server response was " +
-                             e.getLocalizedMessage();
-            log.info(message, e);
-            throw new FailedRequestException(message);
-        } catch (URISyntaxException e) {
-            String message = "The url '" + url + "' is ill-formed.";
-            log.info(message, e);
-            throw new FailedRequestException(message);
-        }
+        final String url = getURL(catalogURL, bucketId, name, false);
+        return (CatalogObject) remoteObjectService.sendRequest(url,CatalogObject.class);
     }
+
+    /**
+     * Get an object from the catalog
+     * @param catalogURL is the catalog url
+     * @param bucketId is the bucket containing the object id
+     * @param name is the object name
+     * @return a Catalog Object containing the object information
+     */
+    public String getRawCatalogObject(String catalogURL, long bucketId, String name) {
+
+        final String url = getURL(catalogURL, bucketId, name, true);
+        return (String) remoteObjectService.sendRequest(url,String.class);
+    }
+
+
 
     @VisibleForTesting
     String getURL(String catalogURL, long bucketId, String name, boolean raw) {

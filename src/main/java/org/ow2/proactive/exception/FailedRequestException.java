@@ -25,6 +25,9 @@
  */
 package org.ow2.proactive.exception;
 
+/**
+ * This exception occurs when a request sent to a remote server has an unexpected behaviour
+ */
 public class FailedRequestException extends RuntimeException {
     public FailedRequestException() {
         super();
