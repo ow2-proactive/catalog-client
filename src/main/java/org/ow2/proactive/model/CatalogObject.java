@@ -42,21 +42,21 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 public class CatalogObject {
 
-    private final int bucket_id;
+    private final int bucketId;
 
     private final String name;
 
     private final String kind;
 
-    private final String content_type;
+    private final String contentType;
 
-    private final String commit_message;
+    private final String commitMessage;
 
-    private ImmutableList<CatalogObjectMetadata> object_key_values;
+    private ImmutableList<CatalogObjectMetadata> objectKeyValues;
 
     private ImmutableList<String> links;
 
-    private String commit_time;
+    private String commitTime;
 
     @RequiredArgsConstructor
     public static class Builder {
@@ -78,37 +78,44 @@ public class CatalogObject {
         private String commitTime;
 
         public Builder(CatalogObject catalogObject) {
-            bucketID = catalogObject.bucket_id;
+            bucketID = catalogObject.bucketId;
             name = catalogObject.name;
             kind = catalogObject.kind;
-            contentType = catalogObject.content_type;
-            commitMessage = catalogObject.commit_message;
-            objectKeyValues = Optional.ofNullable(catalogObject.object_key_values)
-                               .map(metadata -> ImmutableList.copyOf(metadata))
-                               .orElse(new ImmutableList.Builder<CatalogObjectMetadata>().build());
+            contentType = catalogObject.contentType;
+            commitMessage = catalogObject.commitMessage;
+            objectKeyValues = Optional.ofNullable(catalogObject.objectKeyValues)
+                                      .map(metadata -> ImmutableList.copyOf(metadata))
+                                      .orElse(new ImmutableList.Builder<CatalogObjectMetadata>().build());
             links = Optional.ofNullable(catalogObject.links)
-                            .map(links -> ImmutableList.copyOf(links))
+                            .map(l -> ImmutableList.copyOf(l))
                             .orElse(new ImmutableList.Builder<String>().build());
-            commitTime = catalogObject.commit_time;
+            commitTime = catalogObject.commitTime;
         }
 
-        public Builder setObjectKeyValues(ImmutableList<CatalogObjectMetadata> object_key_values){
-            this.objectKeyValues = object_key_values;
+        public Builder setObjectKeyValues(ImmutableList<CatalogObjectMetadata> objectKeyValues) {
+            this.objectKeyValues = objectKeyValues;
             return this;
         }
 
-        public Builder setLinks(ImmutableList<String> links){
+        public Builder setLinks(ImmutableList<String> links) {
             this.links = links;
             return this;
         }
 
-        public Builder setCommitTime(String commit_time){
-            this.commitTime = commit_time;
+        public Builder setCommitTime(String commitTime) {
+            this.commitTime = commitTime;
             return this;
         }
 
         public CatalogObject build() {
-            return new CatalogObject(bucketID, name, kind, contentType, commitMessage, objectKeyValues, links, commitTime);
+            return new CatalogObject(bucketID,
+                                     name,
+                                     kind,
+                                     contentType,
+                                     commitMessage,
+                                     objectKeyValues,
+                                     links,
+                                     commitTime);
         }
     }
 }

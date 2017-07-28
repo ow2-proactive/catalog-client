@@ -25,16 +25,9 @@
  */
 package org.ow2.proactive.service;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import org.ow2.proactive.exception.EntityTooLargeException;
-import org.ow2.proactive.exception.FailedRequestException;
 import org.ow2.proactive.model.CatalogObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
 
 import com.google.common.annotations.VisibleForTesting;
 
@@ -67,7 +60,7 @@ public class CatalogObjectService {
     public CatalogObject getCatalogObjectMetadata(String catalogURL, long bucketId, String name) {
 
         final String url = getURL(catalogURL, bucketId, name, false);
-        return (CatalogObject) remoteObjectService.sendRequest(url,CatalogObject.class);
+        return (CatalogObject) remoteObjectService.sendRequest(url, CatalogObject.class);
     }
 
     /**
@@ -80,10 +73,8 @@ public class CatalogObjectService {
     public String getRawCatalogObject(String catalogURL, long bucketId, String name) {
 
         final String url = getURL(catalogURL, bucketId, name, true);
-        return (String) remoteObjectService.sendRequest(url,String.class);
+        return (String) remoteObjectService.sendRequest(url, String.class);
     }
-
-
 
     @VisibleForTesting
     String getURL(String catalogURL, long bucketId, String name, boolean raw) {

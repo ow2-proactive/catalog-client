@@ -32,7 +32,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-
 @Service
 public class GetFromURLService {
 
@@ -46,10 +45,15 @@ public class GetFromURLService {
     private ServiceConfiguration serviceConfiguration;
 
     private static final String GET_FROM_URL = "PA:GET_FROM_URL";
+
     private static final String URL_REGEX = "(.*?)";
-    private static final String CATCH_URL_REGEX_WITH_HTML_QUOTE = "&quot;"+ URL_REGEX + "&quot;";
-    private static final String CATCH_URL_REGEX = "\\\""+ URL_REGEX + "\\\"";
-    private static final String GET_FROM_URL_PATTERN = GET_FROM_URL+"\\((("+CATCH_URL_REGEX+")|("+CATCH_URL_REGEX_WITH_HTML_QUOTE+"))\\)";
+
+    private static final String CATCH_URL_REGEX_WITH_HTML_QUOTE = "&quot;" + URL_REGEX + "&quot;";
+
+    private static final String CATCH_URL_REGEX = "\\\"" + URL_REGEX + "\\\"";
+
+    private static final String GET_FROM_URL_PATTERN = GET_FROM_URL + "\\(((" + CATCH_URL_REGEX + ")|(" +
+                                                       CATCH_URL_REGEX_WITH_HTML_QUOTE + "))\\)";
 
     /**
      * Get a resource from the catalog and resolve PA:GET_FROM_URL("url") if necessary
@@ -62,29 +66,29 @@ public class GetFromURLService {
 
         Pattern pattern = Pattern.compile(GET_FROM_URL_PATTERN);
 
-        String resource = catalogObjectService.getRawCatalogObject(serviceConfiguration.getCatalogURL(),bucketId,myResourceID);
-        if(! resolveLinks){
+        String resource = catalogObjectService.getRawCatalogObject(serviceConfiguration.getCatalogURL(),
+                                                                   bucketId,
+                                                                   myResourceID);
+        if (!resolveLinks) {
             return resource;
         }
         Matcher tokenMatcher = pattern.matcher(resource);
         String resourceURL;
-        while(tokenMatcher.find()){
+        while (tokenMatcher.find()) {
             resourceURL = extractURLFromToken(tokenMatcher.group());
-            resource = tokenMatcher.replaceFirst((String) remoteObjectService.sendRequest(resourceURL,String.class));
+            resource = tokenMatcher.replaceFirst((String) remoteObjectService.sendRequest(resourceURL, String.class));
             tokenMatcher.reset(resource);
         }
         return resource;
     }
 
-    private String extractURLFromToken(String token){
-        if(token.endsWith("\")")){
-            token = token.replaceFirst(GET_FROM_URL+"\\(\"","");
-            token = token.replaceFirst("\"\\)","");
-        }else{
-            token = token.replaceFirst(GET_FROM_URL+"\\(&quot;","");
-            token = token.replaceFirst("&quot;\\)","");
+    private String extractURLFromToken(String token) {
+        if (token.endsWith("\")")) {
+            String result = token.replaceFirst(GET_FROM_URL + "\\(\"", "");
+            return result.replaceFirst("\"\\)", "");
+        } else {
+            String result = token.replaceFirst(GET_FROM_URL + "\\(&quot;", "");
+            return result.replaceFirst("&quot;\\)", "");
         }
-
-        return token;
     }
 }

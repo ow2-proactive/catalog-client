@@ -37,6 +37,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.ow2.proactive.model.CatalogObject;
 
+
 @RunWith(MockitoJUnitRunner.class)
 public class CatalogObjectServiceTest {
 
@@ -49,55 +50,63 @@ public class CatalogObjectServiceTest {
     private static final String CATALOG_URL = "http://localhost:8080/catalog";
 
     @Test
-    public void getMetadataURLWithEndingSlash(){
-        assertThat(catalogObjectService.getURL(CATALOG_URL+"/", 3, "bobot", false))
-                .isEqualTo("http://localhost:8080/catalog/buckets/3/resources/bobot");
+    public void getMetadataURLWithEndingSlash() {
+        assertThat(catalogObjectService.getURL(CATALOG_URL + "/",
+                                               3,
+                                               "bobot",
+                                               false)).isEqualTo("http://localhost:8080/catalog/buckets/3/resources/bobot");
     }
 
     @Test
-    public void getMetadataURLWithoutEndingSlash(){
-        assertThat(catalogObjectService.getURL(CATALOG_URL, 3, "bobot", false))
-                .isEqualTo("http://localhost:8080/catalog/buckets/3/resources/bobot");
+    public void getMetadataURLWithoutEndingSlash() {
+        assertThat(catalogObjectService.getURL(CATALOG_URL,
+                                               3,
+                                               "bobot",
+                                               false)).isEqualTo("http://localhost:8080/catalog/buckets/3/resources/bobot");
 
     }
 
     @Test
-    public void getRawURLWithEndingSlash(){
-        assertThat(catalogObjectService.getURL(CATALOG_URL+"/", 3, "bobot", true))
-                .isEqualTo("http://localhost:8080/catalog/buckets/3/resources/bobot/raw");
+    public void getRawURLWithEndingSlash() {
+        assertThat(catalogObjectService.getURL(CATALOG_URL + "/",
+                                               3,
+                                               "bobot",
+                                               true)).isEqualTo("http://localhost:8080/catalog/buckets/3/resources/bobot/raw");
 
     }
 
     @Test
-    public void getRawURLWithoutEndingSlash(){
-        assertThat(catalogObjectService.getURL(CATALOG_URL, 3, "bobot", true))
-        .isEqualTo("http://localhost:8080/catalog/buckets/3/resources/bobot/raw");
+    public void getRawURLWithoutEndingSlash() {
+        assertThat(catalogObjectService.getURL(CATALOG_URL,
+                                               3,
+                                               "bobot",
+                                               true)).isEqualTo("http://localhost:8080/catalog/buckets/3/resources/bobot/raw");
     }
 
     @Test
-    public void getRawCatalogObjectTest(){
+    public void getRawCatalogObjectTest() {
         String returnedObject = "{ \"raw\":\"value\"}";
-        String objectURL = CATALOG_URL+"/buckets/0/resources/bobot/raw";
-        when(remoteObjectService.sendRequest(objectURL,String.class))
-                .thenReturn(returnedObject);
-        String result = catalogObjectService.getRawCatalogObject(CATALOG_URL,0,"bobot");
+        String objectURL = CATALOG_URL + "/buckets/0/resources/bobot/raw";
+        when(remoteObjectService.sendRequest(objectURL, String.class)).thenReturn(returnedObject);
+        String result = catalogObjectService.getRawCatalogObject(CATALOG_URL, 0, "bobot");
         assertThat(result).isEqualTo(returnedObject);
-        verify(remoteObjectService,times(1)).sendRequest(objectURL,String.class);
+        verify(remoteObjectService, times(1)).sendRequest(objectURL, String.class);
     }
 
     @Test
-    public void getCatalogObject(){
+    public void getCatalogObject() {
 
-        CatalogObject expectedResult = new CatalogObject
-                .Builder(0,"bobot","workflow","application/xml","First commit")
-                .build();
+        CatalogObject expectedResult = new CatalogObject.Builder(0,
+                                                                 "bobot",
+                                                                 "workflow",
+                                                                 "application/xml",
+                                                                 "First commit").build();
 
-        String objectURL = CATALOG_URL+"/buckets/0/resources/bobot";
-        when(remoteObjectService.sendRequest(objectURL,CatalogObject.class))
-                .thenReturn(expectedResult);
-        CatalogObject result = catalogObjectService.getCatalogObjectMetadata(CATALOG_URL,0,"bobot");
+        String objectURL = CATALOG_URL + "/buckets/0/resources/bobot";
+        when(remoteObjectService.sendRequest(objectURL, CatalogObject.class)).thenReturn(expectedResult);
+        CatalogObject result = catalogObjectService.getCatalogObjectMetadata(CATALOG_URL, 0, "bobot");
         assertThat(result).isEqualTo(expectedResult);
-        verify(remoteObjectService,times(1)).sendRequest(objectURL,CatalogObject.class);
+        verify(remoteObjectService, times(1)).sendRequest(objectURL, CatalogObject.class);
     }
 
 }
