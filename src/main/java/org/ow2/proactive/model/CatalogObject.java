@@ -35,7 +35,7 @@ import lombok.RequiredArgsConstructor;
 
 
 /**
- * This is catalog object model
+ * This is the catalog object model
  */
 @Getter
 @RequiredArgsConstructor
