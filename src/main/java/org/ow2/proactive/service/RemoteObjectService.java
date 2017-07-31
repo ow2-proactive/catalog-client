@@ -69,11 +69,11 @@ public class RemoteObjectService {
             String message = "Get request on the URL " + url + " failed. The server response was " +
                              e.getLocalizedMessage();
             log.info(message, e);
-            throw new FailedRequestException(message);
+            throw new FailedRequestException(message, e);
         } catch (URISyntaxException e) {
             String message = "The url '" + url + "' is ill-formed.";
             log.info(message, e);
-            throw new FailedRequestException(message);
+            throw new FailedRequestException(message, e);
         }
     }
 }
