@@ -23,13 +23,13 @@
  * If needed, contact us to obtain a release under GPL Version 2 or 3
  * or a different license than the AGPL.
  */
-package org.ow2.proactive.service;
+package org.ow2.proactive.catalogclient.service;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import org.ow2.proactive.exception.EntityTooLargeException;
-import org.ow2.proactive.exception.FailedRequestException;
+import org.ow2.proactive.catalogclient.exception.EntityTooLargeException;
+import org.ow2.proactive.catalogclient.exception.FailedRequestException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;

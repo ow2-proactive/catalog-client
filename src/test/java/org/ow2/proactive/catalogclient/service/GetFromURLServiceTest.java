@@ -23,7 +23,7 @@
  * If needed, contact us to obtain a release under GPL Version 2 or 3
  * or a different license than the AGPL.
  */
-package org.ow2.proactive.service;
+package org.ow2.proactive.catalogclient.service;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Mockito.times;

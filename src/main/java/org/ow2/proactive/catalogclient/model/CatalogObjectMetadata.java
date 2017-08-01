@@ -23,21 +23,19 @@
  * If needed, contact us to obtain a release under GPL Version 2 or 3
  * or a different license than the AGPL.
  */
-package org.ow2.proactive.exception;
+package org.ow2.proactive.catalogclient.model;
 
-/**
- * This exception occurs when a request sent to a remote server has an unexpected behaviour
- */
-public class FailedRequestException extends RuntimeException {
-    public FailedRequestException() {
-        super();
-    }
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
-    public FailedRequestException(String message) {
-        super(message);
-    }
 
-    public FailedRequestException(String message, Throwable t) {
-        super(message, t);
-    }
+@Getter
+@AllArgsConstructor
+public class CatalogObjectMetadata {
+
+    public final String key;
+
+    public final String value;
+
+    public final String label;
 }

@@ -23,21 +23,22 @@
  * If needed, contact us to obtain a release under GPL Version 2 or 3
  * or a different license than the AGPL.
  */
-package org.ow2.proactive.service;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
-import lombok.Getter;
-
+package org.ow2.proactive.catalogclient.exception;
 
 /**
- * Contains the configuration to reach other services
+ * This exception occurs when the server response is to big.
  */
-@Component
-@Getter
-public class ServiceConfiguration {
+public class EntityTooLargeException extends RuntimeException {
 
-    @Value("${pa.calendar.catalog-url}")
-    private String catalogURL;
+    public EntityTooLargeException() {
+        super();
+    }
+
+    public EntityTooLargeException(String message) {
+        super(message);
+    }
+
+    public EntityTooLargeException(String message, Throwable t) {
+        super(message, t);
+    }
 }
