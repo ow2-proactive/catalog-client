@@ -25,6 +25,9 @@
  */
 package org.ow2.proactive.catalogclient.service;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.ow2.proactive.catalogclient.model.CatalogObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,14 +44,22 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class CatalogObjectService {
 
-    private static final String BUCKETS_PATH = "buckets/";
+    private static final String GET_FROM_URL = "PA:GET_FROM_URL";
 
-    private static final String RESOURCES_PATH = "/resources/";
+    private static final String URL_REGEX = "(.*?)";
 
-    private static final String RAW_PATH = "/raw";
+    private static final String CATCH_URL_REGEX_WITH_HTML_QUOTE = "&quot;" + URL_REGEX + "&quot;";
+
+    private static final String CATCH_URL_REGEX = "\\\"" + URL_REGEX + "\\\"";
+
+    private static final String GET_FROM_URL_PATTERN = GET_FROM_URL + "\\(((" + CATCH_URL_REGEX + ")|(" +
+            CATCH_URL_REGEX_WITH_HTML_QUOTE + "))\\)";
 
     @Autowired
     private RemoteObjectService remoteObjectService;
+
+    @Autowired
+    private ServiceConfiguration serviceConfiguration;
 
     /**
      * Get the metadata of a catalog object
@@ -76,9 +87,59 @@ public class CatalogObjectService {
         return (String) remoteObjectService.sendRequest(url, String.class);
     }
 
+    /**
+     * Get a resource from the catalog and resolve PA:GET_FROM_URL("url") if necessary
+     * @param bucketId is the resource bucket id
+     * @param myResourceID is the resource name
+     * @param resolveLinks on true replace PA:GET_FROM_URL("url") by its value otherwise return the raw resource
+     * @return a string which contains the
+     */
+    public String getResource(long bucketId, String myResourceID, boolean resolveLinks) {
+
+        Pattern pattern = Pattern.compile(GET_FROM_URL_PATTERN);
+
+        String resource = getRawCatalogObject(serviceConfiguration.getCatalogURL(),
+                bucketId,
+                myResourceID);
+        if (!resolveLinks) {
+            return resource;
+        }
+        Matcher tokenMatcher = pattern.matcher(resource);
+        String resourceURL;
+        while (tokenMatcher.find()) {
+            resourceURL = extractURLFromToken(tokenMatcher.group());
+            resource = tokenMatcher.replaceFirst((String) remoteObjectService.sendRequest(resourceURL, String.class));
+            tokenMatcher.reset(resource);
+        }
+        return resource;
+    }
+
+    /**
+     * Generate the catalog URL from the argument
+     * @param catalogURL is the domain name
+     * @param bucketId is the id of bucket containing the resource
+     * @param name is the resource name
+     * @param raw enables to choose for the resource metadata or the resource content
+     * @return the resource content if raw is true otherwise return the resource metadata
+     */
     @VisibleForTesting
     String getURL(String catalogURL, long bucketId, String name, boolean raw) {
+
+        final String BUCKETS_PATH = "buckets/";
+        final String RESOURCES_PATH = "/resources/";
+        final String RAW_PATH = "/raw";
+
         return catalogURL + (catalogURL.endsWith("/") ? "" : "/") + BUCKETS_PATH + bucketId + RESOURCES_PATH + name +
                (raw ? RAW_PATH : "");
+    }
+
+    private String extractURLFromToken(String token) {
+        if (token.endsWith("\")")) {
+            String result = token.replaceFirst(GET_FROM_URL + "\\(\"", "");
+            return result.replaceFirst("\"\\)", "");
+        } else {
+            String result = token.replaceFirst(GET_FROM_URL + "\\(&quot;", "");
+            return result.replaceFirst("&quot;\\)", "");
+        }
     }
 }
