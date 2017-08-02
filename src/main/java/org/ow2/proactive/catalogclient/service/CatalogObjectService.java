@@ -44,7 +44,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class CatalogObjectService {
 
-    private static final String GET_FROM_URL = "PA:GET_FROM_URL";
+    public static final String GET_FROM_URL = "PA:GET_FROM_URL";
 
     private static final String URL_REGEX = "(.*?)";
 
@@ -53,7 +53,7 @@ public class CatalogObjectService {
     private static final String CATCH_URL_REGEX = "\\\"" + URL_REGEX + "\\\"";
 
     private static final String GET_FROM_URL_PATTERN = GET_FROM_URL + "\\(((" + CATCH_URL_REGEX + ")|(" +
-            CATCH_URL_REGEX_WITH_HTML_QUOTE + "))\\)";
+                                                       CATCH_URL_REGEX_WITH_HTML_QUOTE + "))\\)";
 
     @Autowired
     private RemoteObjectService remoteObjectService;
@@ -69,7 +69,6 @@ public class CatalogObjectService {
      * @return a Catalog Object containing the object information
      */
     public CatalogObject getCatalogObjectMetadata(String catalogURL, long bucketId, String name) {
-
         final String url = getURL(catalogURL, bucketId, name, false);
         return (CatalogObject) remoteObjectService.sendRequest(url, CatalogObject.class);
     }
@@ -98,9 +97,7 @@ public class CatalogObjectService {
 
         Pattern pattern = Pattern.compile(GET_FROM_URL_PATTERN);
 
-        String resource = getRawCatalogObject(serviceConfiguration.getCatalogURL(),
-                bucketId,
-                myResourceID);
+        String resource = getRawCatalogObject(serviceConfiguration.getCatalogURL(), bucketId, myResourceID);
         if (!resolveLinks) {
             return resource;
         }
@@ -125,12 +122,12 @@ public class CatalogObjectService {
     @VisibleForTesting
     String getURL(String catalogURL, long bucketId, String name, boolean raw) {
 
-        final String BUCKETS_PATH = "buckets/";
-        final String RESOURCES_PATH = "/resources/";
-        final String RAW_PATH = "/raw";
+        final String bucketsPath = "buckets/";
+        final String resourcesPath = "/resources/";
+        final String rawPath = "/raw";
 
-        return catalogURL + (catalogURL.endsWith("/") ? "" : "/") + BUCKETS_PATH + bucketId + RESOURCES_PATH + name +
-               (raw ? RAW_PATH : "");
+        return catalogURL + (catalogURL.endsWith("/") ? "" : "/") + bucketsPath + bucketId + resourcesPath + name +
+               (raw ? rawPath : "");
     }
 
     private String extractURLFromToken(String token) {
