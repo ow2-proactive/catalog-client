@@ -23,19 +23,19 @@
  * If needed, contact us to obtain a release under GPL Version 2 or 3
  * or a different license than the AGPL.
  */
-package org.ow2.proactive;
+package org.ow2.proactive.catalogclient.model;
 
-import java.net.URI;
-
-import org.junit.Test;
-import org.springframework.http.HttpHeaders;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 
-public class CatalogObjectServiceTest {
+@Getter
+@AllArgsConstructor
+public class CatalogObjectMetadata {
 
-    @Test
-    public void getCatalogObjectTest() {
+    public final String key;
 
-    }
+    public final String value;
 
+    public final String label;
 }

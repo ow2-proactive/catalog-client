@@ -23,18 +23,21 @@
  * If needed, contact us to obtain a release under GPL Version 2 or 3
  * or a different license than the AGPL.
  */
-package org.ow2.proactive.exception;
+package org.ow2.proactive.catalogclient.service;
 
-public class FailedRequestException extends RuntimeException {
-    public FailedRequestException() {
-        super();
-    }
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
-    public FailedRequestException(String message) {
-        super(message);
-    }
+import lombok.Getter;
 
-    public FailedRequestException(String message, Throwable t) {
-        super(message, t);
-    }
+
+/**
+ * Contains the configuration to reach other services
+ */
+@Component
+@Getter
+public class ServiceConfiguration {
+
+    @Value("${pa.calendar.catalog.url}")
+    private String catalogURL;
 }

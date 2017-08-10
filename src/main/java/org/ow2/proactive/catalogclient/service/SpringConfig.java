@@ -23,19 +23,23 @@
  * If needed, contact us to obtain a release under GPL Version 2 or 3
  * or a different license than the AGPL.
  */
-package org.ow2.proactive.model;
+package org.ow2.proactive.catalogclient.service;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 
-@Getter
-@AllArgsConstructor
-public class CatalogObjectMetadata {
+@Configuration
+@ComponentScan(basePackages = { "org.ow2.proactive.catalogclient.*" })
+@PropertySources({ @PropertySource("classpath:catalogclient/application.properties") })
+public class SpringConfig {
 
-    public final String key;
-
-    public final String value;
-
-    public final String label;
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertyPlaceholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
 }

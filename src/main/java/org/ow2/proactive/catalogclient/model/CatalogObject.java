@@ -23,7 +23,7 @@
  * If needed, contact us to obtain a release under GPL Version 2 or 3
  * or a different license than the AGPL.
  */
-package org.ow2.proactive.model;
+package org.ow2.proactive.catalogclient.model;
 
 import java.util.Optional;
 
@@ -32,15 +32,17 @@ import com.google.common.collect.ImmutableList;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 
+/**
+ * This is the catalog object model
+ */
 @Getter
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class CatalogObject {
 
-    private final int bucketID;
+    private final int bucketId;
 
     private final String name;
 
@@ -50,16 +52,14 @@ public class CatalogObject {
 
     private final String commitMessage;
 
-    private ImmutableList<CatalogObjectMetadata> metadata;
+    private ImmutableList<CatalogObjectMetadata> objectKeyValues;
 
     private ImmutableList<String> links;
 
-    private String commitDateTime;
+    private String commitTime;
 
-    @Setter
-    @Getter
     @RequiredArgsConstructor
-    public class Builder {
+    public static class Builder {
 
         private final int bucketID;
 
@@ -71,29 +71,51 @@ public class CatalogObject {
 
         private final String commitMessage;
 
-        private ImmutableList<CatalogObjectMetadata> metadata;
+        private ImmutableList<CatalogObjectMetadata> objectKeyValues;
 
         private ImmutableList<String> links;
 
-        private String commitDateTime;
+        private String commitTime;
 
         public Builder(CatalogObject catalogObject) {
-            bucketID = catalogObject.bucketID;
+            bucketID = catalogObject.bucketId;
             name = catalogObject.name;
             kind = catalogObject.kind;
             contentType = catalogObject.contentType;
             commitMessage = catalogObject.commitMessage;
-            metadata = Optional.ofNullable(catalogObject.metadata)
-                               .map(metadata -> ImmutableList.copyOf(metadata))
-                               .orElse(new ImmutableList.Builder<CatalogObjectMetadata>().build());
+            objectKeyValues = Optional.ofNullable(catalogObject.objectKeyValues)
+                                      .map(metadata -> ImmutableList.copyOf(metadata))
+                                      .orElse(new ImmutableList.Builder<CatalogObjectMetadata>().build());
             links = Optional.ofNullable(catalogObject.links)
-                            .map(links -> ImmutableList.copyOf(links))
+                            .map(l -> ImmutableList.copyOf(l))
                             .orElse(new ImmutableList.Builder<String>().build());
-            commitDateTime = catalogObject.commitDateTime;
+            commitTime = catalogObject.commitTime;
+        }
+
+        public Builder setObjectKeyValues(ImmutableList<CatalogObjectMetadata> objectKeyValues) {
+            this.objectKeyValues = objectKeyValues;
+            return this;
+        }
+
+        public Builder setLinks(ImmutableList<String> links) {
+            this.links = links;
+            return this;
+        }
+
+        public Builder setCommitTime(String commitTime) {
+            this.commitTime = commitTime;
+            return this;
         }
 
         public CatalogObject build() {
-            return new CatalogObject(bucketID, name, kind, contentType, commitMessage, metadata, links, commitDateTime);
+            return new CatalogObject(bucketID,
+                                     name,
+                                     kind,
+                                     contentType,
+                                     commitMessage,
+                                     objectKeyValues,
+                                     links,
+                                     commitTime);
         }
     }
 }
