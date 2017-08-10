@@ -72,18 +72,18 @@ public class CatalogObjectServiceTest {
     private static final String CATALOG_RESOURCE_URL_RAW = CATALOG_RESOURCE_URL + "/raw";
 
     @Test
-    public void getMetadataURLWithEndingSlash() {
+    public void testGetRequestWithMetadataURLWithEndingSlash() {
         assertThat(catalogObjectService.getURL(CATALOG_URL + "/", 3, "bobot", false)).isEqualTo(CATALOG_RESOURCE_URL);
     }
 
     @Test
-    public void getMetadataURLWithoutEndingSlash() {
+    public void testGetRequestWithMetadataURLWithoutEndingSlash() {
         assertThat(catalogObjectService.getURL(CATALOG_URL, 3, "bobot", false)).isEqualTo(CATALOG_RESOURCE_URL);
 
     }
 
     @Test
-    public void getRawURLWithEndingSlash() {
+    public void testGetRequestWithRawURLWithEndingSlash() {
         assertThat(catalogObjectService.getURL(CATALOG_URL + "/",
                                                3,
                                                "bobot",
@@ -92,12 +92,12 @@ public class CatalogObjectServiceTest {
     }
 
     @Test
-    public void getRawURLWithoutEndingSlash() {
+    public void testGetRequestWithRawURLWithoutEndingSlash() {
         assertThat(catalogObjectService.getURL(CATALOG_URL, 3, "bobot", true)).isEqualTo(CATALOG_RESOURCE_URL_RAW);
     }
 
     @Test
-    public void getRawCatalogObjectTest() {
+    public void testThatGetRawRequestReturnTheRawCatalogObject() {
         String returnedObject = "{ \"raw\":\"value\"}";
         String objectURL = CATALOG_RESOURCE_URL_RAW;
         when(remoteObjectService.sendRequest(objectURL, String.class)).thenReturn(returnedObject);
@@ -107,7 +107,7 @@ public class CatalogObjectServiceTest {
     }
 
     @Test
-    public void getCatalogObject() {
+    public void testThatGetRequestReturnTheCatalogObject() {
 
         CatalogObject expectedResult = new CatalogObject.Builder(3,
                                                                  "bobot",
@@ -122,7 +122,7 @@ public class CatalogObjectServiceTest {
     }
 
     @Test
-    public void getResourceWithOneReplacementTest() throws IOException {
+    public void testGetRequestWithAResourceWithOneReplacement() throws IOException {
         when(serviceConfiguration.getCatalogURL()).thenReturn(CATALOG_URL);
         when(remoteObjectService.sendRequest(CATALOG_RESOURCE_URL_RAW,
                                              String.class)).thenReturn(getWorkflowString("workflows/workflowWithPAGetFromURL.xml"));
@@ -138,7 +138,7 @@ public class CatalogObjectServiceTest {
     }
 
     @Test
-    public void getResourceWithSeveralReplacementTest() throws IOException {
+    public void testGetRequestWithAResourceWithSeveralReplacements() throws IOException {
         when(serviceConfiguration.getCatalogURL()).thenReturn(CATALOG_URL);
         when(remoteObjectService.sendRequest(CATALOG_RESOURCE_URL_RAW,
                                              String.class)).thenReturn(getWorkflowString("workflows/workflowWithSeveralPAGetFromURL.xml"));

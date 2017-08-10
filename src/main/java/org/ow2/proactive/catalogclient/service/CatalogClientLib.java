@@ -29,6 +29,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 
+/**
+ * This class enables to get the service beans in order to be used from an outside configuration.
+ * The beans enable to access to the service thanks to this class.
+ */
 public final class CatalogClientLib {
 
     private static ApplicationContext applicationContext;

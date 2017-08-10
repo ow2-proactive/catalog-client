@@ -38,6 +38,6 @@ import lombok.Getter;
 @Getter
 public class ServiceConfiguration {
 
-    @Value("${pa.calendar.catalog-url}")
+    @Value("${pa.calendar.catalog.url}")
     private String catalogURL;
 }
