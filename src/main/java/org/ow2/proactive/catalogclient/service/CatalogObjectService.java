@@ -70,7 +70,7 @@ public class CatalogObjectService {
      */
     public CatalogObject getCatalogObjectMetadata(String catalogURL, long bucketId, String name) {
         final String url = getURL(catalogURL, bucketId, name, false);
-        return (CatalogObject) remoteObjectService.sendRequest(url, CatalogObject.class);
+        return remoteObjectService.sendRequest(url, CatalogObject.class);
     }
 
     /**
@@ -83,7 +83,7 @@ public class CatalogObjectService {
     public String getRawCatalogObject(String catalogURL, long bucketId, String name) {
 
         final String url = getURL(catalogURL, bucketId, name, true);
-        return (String) remoteObjectService.sendRequest(url, String.class);
+        return remoteObjectService.sendRequest(url, String.class);
     }
 
     /**
