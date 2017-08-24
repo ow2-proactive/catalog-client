@@ -34,11 +34,11 @@ import org.springframework.context.annotation.PropertySources;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 
-@Profile("default")
+@Profile("local")
 @Configuration
 @ComponentScan(basePackages = { "org.ow2.proactive.catalogclient.*" })
-@PropertySources({ @PropertySource("classpath:catalogclient/application.properties") })
-public class SpringConfig {
+@PropertySources({ @PropertySource("classpath:catalogclient/application-local.properties") })
+public class LocalSpringConfig {
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyPlaceholderConfigurer() {
