@@ -33,6 +33,9 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 @ComponentScan(basePackages = { "org.ow2.proactive.catalogclient.*" })
 public class SpringConfig {
 
+    private SpringConfig() {
+    }
+
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyPlaceholderConfigurer() {
         return new PropertySourcesPlaceholderConfigurer();
