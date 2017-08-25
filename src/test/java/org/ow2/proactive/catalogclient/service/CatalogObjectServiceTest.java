@@ -51,9 +51,6 @@ public class CatalogObjectServiceTest {
     @Mock
     private RemoteObjectService remoteObjectService;
 
-    @Mock
-    private ServiceConfiguration serviceConfiguration;
-
     @InjectMocks
     private CatalogObjectService catalogObjectService;
 
@@ -123,32 +120,27 @@ public class CatalogObjectServiceTest {
 
     @Test
     public void testGetRequestWithAResourceWithOneReplacement() throws IOException {
-        when(serviceConfiguration.getCatalogURL()).thenReturn(CATALOG_URL);
         when(remoteObjectService.sendRequest(CATALOG_RESOURCE_URL_RAW,
                                              String.class)).thenReturn(getWorkflowString("workflows/workflowWithPAGetFromURL.xml"));
         when(remoteObjectService.sendRequest(REMOTE_URL, String.class)).thenReturn(REMOTE_VALUE);
 
-        String replacedWorkflow = catalogObjectService.getResource(3, "bobot", true);
+        String replacedWorkflow = catalogObjectService.getResolvedCatalogObject(CATALOG_URL, 3, "bobot", true);
         assertThat(replacedWorkflow).isEqualTo(getWorkflowString("workflows/workflowWithPAGetFromURLReplaced.xml"));
 
-        verify(serviceConfiguration, times(1)).getCatalogURL();
         verify(remoteObjectService, times(1)).sendRequest(CATALOG_RESOURCE_URL_RAW, String.class);
-        verify(serviceConfiguration, times(1)).getCatalogURL();
         verify(remoteObjectService, times(1)).sendRequest(REMOTE_URL, String.class);
     }
 
     @Test
     public void testGetRequestWithAResourceWithSeveralReplacements() throws IOException {
-        when(serviceConfiguration.getCatalogURL()).thenReturn(CATALOG_URL);
         when(remoteObjectService.sendRequest(CATALOG_RESOURCE_URL_RAW,
                                              String.class)).thenReturn(getWorkflowString("workflows/workflowWithSeveralPAGetFromURL.xml"));
         when(remoteObjectService.sendRequest(REMOTE_URL, String.class)).thenReturn(REMOTE_VALUE);
         when(remoteObjectService.sendRequest(REMOTE_URL2, String.class)).thenReturn(REMOTE_VALUE2);
 
-        String replacedWorkflow = catalogObjectService.getResource(3, "bobot", true);
+        String replacedWorkflow = catalogObjectService.getResolvedCatalogObject(CATALOG_URL, 3, "bobot", true);
         assertThat(replacedWorkflow).isEqualTo(getWorkflowString("workflows/workflowWithSeveralPAGetFromURLReplaced.xml"));
 
-        verify(serviceConfiguration, times(1)).getCatalogURL();
         verify(remoteObjectService, times(1)).sendRequest(CATALOG_RESOURCE_URL_RAW, String.class);
         verify(remoteObjectService, times(2)).sendRequest(REMOTE_URL, String.class);
         verify(remoteObjectService, times(1)).sendRequest(REMOTE_URL2, String.class);

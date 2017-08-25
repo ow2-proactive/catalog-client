@@ -34,10 +34,7 @@ import org.springframework.context.annotation.PropertySources;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 
-@Profile("default")
-@Configuration
 @ComponentScan(basePackages = { "org.ow2.proactive.catalogclient.*" })
-@PropertySources({ @PropertySource("classpath:catalogclient/application.properties") })
 public class SpringConfig {
 
     @Bean
