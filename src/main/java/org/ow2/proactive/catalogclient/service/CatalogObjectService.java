@@ -58,9 +58,6 @@ public class CatalogObjectService {
     @Autowired
     private RemoteObjectService remoteObjectService;
 
-    @Autowired
-    private ServiceConfiguration serviceConfiguration;
-
     /**
      * Get the metadata of a catalog object
      * @param catalogURL is the catalog url
@@ -70,7 +67,7 @@ public class CatalogObjectService {
      */
     public CatalogObject getCatalogObjectMetadata(String catalogURL, long bucketId, String name) {
         final String url = getURL(catalogURL, bucketId, name, false);
-        return (CatalogObject) remoteObjectService.sendRequest(url, CatalogObject.class);
+        return remoteObjectService.sendRequest(url, CatalogObject.class);
     }
 
     /**
@@ -83,21 +80,23 @@ public class CatalogObjectService {
     public String getRawCatalogObject(String catalogURL, long bucketId, String name) {
 
         final String url = getURL(catalogURL, bucketId, name, true);
-        return (String) remoteObjectService.sendRequest(url, String.class);
+        return remoteObjectService.sendRequest(url, String.class);
     }
 
     /**
      * Get a resource from the catalog and resolve PA:GET_FROM_URL("url") if necessary
+     * @param catalogUrl is the catalog URL
      * @param bucketId is the resource bucket id
      * @param myResourceID is the resource name
      * @param resolveLinks on true replace PA:GET_FROM_URL("url") by its value otherwise return the raw resource
      * @return a string which contains the
      */
-    public String getResource(long bucketId, String myResourceID, boolean resolveLinks) {
+    public String getResolvedCatalogObject(String catalogUrl, long bucketId, String myResourceID,
+            boolean resolveLinks) {
 
         Pattern pattern = Pattern.compile(GET_FROM_URL_PATTERN);
 
-        String resource = getRawCatalogObject(serviceConfiguration.getCatalogURL(), bucketId, myResourceID);
+        String resource = getRawCatalogObject(catalogUrl, bucketId, myResourceID);
         if (!resolveLinks) {
             return resource;
         }

@@ -27,16 +27,14 @@ package org.ow2.proactive.catalogclient.service;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 
-@Configuration
 @ComponentScan(basePackages = { "org.ow2.proactive.catalogclient.*" })
-@PropertySources({ @PropertySource("classpath:catalogclient/application.properties") })
 public class SpringConfig {
+
+    private SpringConfig() {
+    }
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyPlaceholderConfigurer() {

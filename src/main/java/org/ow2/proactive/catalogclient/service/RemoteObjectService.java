@@ -46,7 +46,7 @@ public class RemoteObjectService {
      * @param returnClass is the class type of the response
      * @return a returnClass object created from the server response
      */
-    public Object sendRequest(String url, Class returnClass) {
+    public <T> T sendRequest(String url, Class<T> returnClass) {
         try {
             return new RestTemplate().getForObject(url, returnClass);
         } catch (RestClientException e) {
