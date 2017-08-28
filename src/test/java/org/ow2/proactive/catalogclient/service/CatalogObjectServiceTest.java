@@ -64,18 +64,18 @@ public class CatalogObjectServiceTest {
 
     private static final String REMOTE_VALUE2 = "remoteValue2";
 
-    private static final String CATALOG_RESOURCE_URL = CATALOG_URL + "/buckets/3/resources/bobot";
+    private static final String CATALOG_RESOURCE_URL = CATALOG_URL + "/buckets/3/resources/object";
 
     private static final String CATALOG_RESOURCE_URL_RAW = CATALOG_RESOURCE_URL + "/raw";
 
     @Test
     public void testGetRequestWithMetadataURLWithEndingSlash() {
-        assertThat(catalogObjectService.getURL(CATALOG_URL + "/", 3, "bobot", false)).isEqualTo(CATALOG_RESOURCE_URL);
+        assertThat(catalogObjectService.getURL(CATALOG_URL + "/", 3, "object", false)).isEqualTo(CATALOG_RESOURCE_URL);
     }
 
     @Test
     public void testGetRequestWithMetadataURLWithoutEndingSlash() {
-        assertThat(catalogObjectService.getURL(CATALOG_URL, 3, "bobot", false)).isEqualTo(CATALOG_RESOURCE_URL);
+        assertThat(catalogObjectService.getURL(CATALOG_URL, 3, "object", false)).isEqualTo(CATALOG_RESOURCE_URL);
 
     }
 
@@ -83,14 +83,14 @@ public class CatalogObjectServiceTest {
     public void testGetRequestWithRawURLWithEndingSlash() {
         assertThat(catalogObjectService.getURL(CATALOG_URL + "/",
                                                3,
-                                               "bobot",
+                                               "object",
                                                true)).isEqualTo(CATALOG_RESOURCE_URL_RAW);
 
     }
 
     @Test
     public void testGetRequestWithRawURLWithoutEndingSlash() {
-        assertThat(catalogObjectService.getURL(CATALOG_URL, 3, "bobot", true)).isEqualTo(CATALOG_RESOURCE_URL_RAW);
+        assertThat(catalogObjectService.getURL(CATALOG_URL, 3, "object", true)).isEqualTo(CATALOG_RESOURCE_URL_RAW);
     }
 
     @Test
@@ -98,7 +98,7 @@ public class CatalogObjectServiceTest {
         String returnedObject = "{ \"raw\":\"value\"}";
         String objectURL = CATALOG_RESOURCE_URL_RAW;
         when(remoteObjectService.sendRequest(objectURL, String.class)).thenReturn(returnedObject);
-        String result = catalogObjectService.getRawCatalogObject(CATALOG_URL, 3, "bobot");
+        String result = catalogObjectService.getRawCatalogObject(CATALOG_URL, 3, "object");
         assertThat(result).isEqualTo(returnedObject);
         verify(remoteObjectService, times(1)).sendRequest(objectURL, String.class);
     }
@@ -107,13 +107,13 @@ public class CatalogObjectServiceTest {
     public void testThatGetRequestReturnTheCatalogObject() {
 
         CatalogObject expectedResult = new CatalogObject.Builder(3,
-                                                                 "bobot",
+                                                                 "object",
                                                                  "workflow",
                                                                  "application/xml",
                                                                  "First commit").build();
 
         when(remoteObjectService.sendRequest(CATALOG_RESOURCE_URL, CatalogObject.class)).thenReturn(expectedResult);
-        CatalogObject result = catalogObjectService.getCatalogObjectMetadata(CATALOG_URL, 3, "bobot");
+        CatalogObject result = catalogObjectService.getCatalogObjectMetadata(CATALOG_URL, 3, "object");
         assertThat(result).isEqualTo(expectedResult);
         verify(remoteObjectService, times(1)).sendRequest(CATALOG_RESOURCE_URL, CatalogObject.class);
     }
@@ -124,7 +124,7 @@ public class CatalogObjectServiceTest {
                                              String.class)).thenReturn(getWorkflowString("workflows/workflowWithPAGetFromURL.xml"));
         when(remoteObjectService.sendRequest(REMOTE_URL, String.class)).thenReturn(REMOTE_VALUE);
 
-        String replacedWorkflow = catalogObjectService.getResolvedCatalogObject(CATALOG_URL, 3, "bobot", true);
+        String replacedWorkflow = catalogObjectService.getResolvedCatalogObject(CATALOG_URL, 3, "object", true);
         assertThat(replacedWorkflow).isEqualTo(getWorkflowString("workflows/workflowWithPAGetFromURLReplaced.xml"));
 
         verify(remoteObjectService, times(1)).sendRequest(CATALOG_RESOURCE_URL_RAW, String.class);
@@ -138,7 +138,7 @@ public class CatalogObjectServiceTest {
         when(remoteObjectService.sendRequest(REMOTE_URL, String.class)).thenReturn(REMOTE_VALUE);
         when(remoteObjectService.sendRequest(REMOTE_URL2, String.class)).thenReturn(REMOTE_VALUE2);
 
-        String replacedWorkflow = catalogObjectService.getResolvedCatalogObject(CATALOG_URL, 3, "bobot", true);
+        String replacedWorkflow = catalogObjectService.getResolvedCatalogObject(CATALOG_URL, 3, "object", true);
         assertThat(replacedWorkflow).isEqualTo(getWorkflowString("workflows/workflowWithSeveralPAGetFromURLReplaced.xml"));
 
         verify(remoteObjectService, times(1)).sendRequest(CATALOG_RESOURCE_URL_RAW, String.class);
