@@ -23,21 +23,18 @@
  * If needed, contact us to obtain a release under GPL Version 2 or 3
  * or a different license than the AGPL.
  */
-package org.ow2.proactive.catalogclient.service;
+package org.ow2.proactive.catalogclient.util;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.ow2.proactive.catalogclient.exception.FailedRequestException;
+
+import io.restassured.response.Response;
 
 
-@ComponentScan(basePackages = { "org.ow2.proactive.catalogclient.*" })
-public class SpringConfig {
+public class ResponseUtils {
 
-    private SpringConfig() {
-    }
-
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer propertyPlaceholderConfigurer() {
-        return new PropertySourcesPlaceholderConfigurer();
+    public static void checkResponse(Response response) {
+        if (!(200 <= response.getStatusCode() && response.getStatusCode() <= 300)) {
+            throw new FailedRequestException(response.getStatusCode() + " " + response.getStatusLine());
+        }
     }
 }

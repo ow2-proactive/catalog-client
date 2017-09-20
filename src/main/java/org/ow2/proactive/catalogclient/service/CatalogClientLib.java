@@ -25,33 +25,16 @@
  */
 package org.ow2.proactive.catalogclient.service;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-
 /**
  * This class enables to get the service beans in order to be used from an outside configuration.
  * The beans enable to access to the service thanks to this class.
  */
 public final class CatalogClientLib {
 
-    private static ApplicationContext applicationContext;
-
     private CatalogClientLib() {
     }
 
     public static CatalogObjectService getCatalogObjectService() {
-        return getApplicationContext().getBean(CatalogObjectService.class);
-    }
-
-    public static RemoteObjectService remoteObjectService() {
-        return getApplicationContext().getBean(RemoteObjectService.class);
-    }
-
-    private static ApplicationContext getApplicationContext() {
-        if (applicationContext == null) {
-            applicationContext = new AnnotationConfigApplicationContext(SpringConfig.class);
-        }
-        return applicationContext;
+        return CatalogObjectService.getInstance();
     }
 }

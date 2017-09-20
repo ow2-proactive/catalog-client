@@ -25,35 +25,52 @@
  */
 package org.ow2.proactive.catalogclient.service;
 
-import org.ow2.proactive.catalogclient.exception.FailedRequestException;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientException;
-import org.springframework.web.client.RestTemplate;
+import static io.restassured.RestAssured.given;
 
+import org.ow2.proactive.catalogclient.util.ResponseUtils;
+
+import io.restassured.response.Response;
 import lombok.extern.log4j.Log4j2;
 
 
 /**
  * This class enables to send request to remote server
  */
-@Service
 @Log4j2
 public class RemoteObjectService {
 
+    private final static RemoteObjectService REMOTE_OBJECT_SERVICE = new RemoteObjectService();
+
+    private RemoteObjectService() {
+    }
+
+    public static RemoteObjectService getInstance() {
+        return REMOTE_OBJECT_SERVICE;
+    }
+
     /**
-     * Send a POST request on url returning a returnClass object
-     * @param url is the url where the post request will be sent
+     * Send a GET request on url returning a returnClass object
+     * @param url is the url where the get request will be sent
      * @param returnClass is the class type of the response
      * @return a returnClass object created from the server response
      */
     public <T> T sendRequest(String url, Class<T> returnClass) {
-        try {
-            return new RestTemplate().getForObject(url, returnClass);
-        } catch (RestClientException e) {
-            String message = "Get request on the URL " + url + " failed. The server response was " +
-                             e.getLocalizedMessage();
-            log.info(message, e);
-            throw new FailedRequestException(message, e);
-        }
+        Response response = given().when().get(url).then().extract().response();
+        ResponseUtils.checkResponse(response);
+
+        return response.as(returnClass);
+    }
+
+    /**
+     * Send a GET request on url with a sessionId returning a returnClass object
+     * @param url is the url where the get request will be sent
+     * @param returnClass is the class type of the response
+     * @return a returnClass object created from the server response
+     */
+    public <T> T sendRequest(String url, String sessionId, Class<T> returnClass) {
+        Response response = given().when().get(url).then().extract().response();
+        ResponseUtils.checkResponse(response);
+
+        return response.as(returnClass);
     }
 }
