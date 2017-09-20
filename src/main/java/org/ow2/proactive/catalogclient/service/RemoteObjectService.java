@@ -68,7 +68,7 @@ public class RemoteObjectService {
      * @return a returnClass object created from the server response
      */
     public <T> T sendRequest(String url, String sessionId, Class<T> returnClass) {
-        Response response = given().when().get(url).then().extract().response();
+        Response response = given().headers("sessionid", sessionId).when().get(url).then().extract().response();
         ResponseUtils.checkResponse(response);
 
         return response.as(returnClass);
