@@ -32,6 +32,9 @@ import io.restassured.response.Response;
 
 public class ResponseUtils {
 
+    private ResponseUtils() {
+    }
+
     public static void checkResponse(Response response) {
         if (!(200 <= response.getStatusCode() && response.getStatusCode() <= 300)) {
             throw new FailedRequestException(response.getStatusCode() + " " + response.getStatusLine());

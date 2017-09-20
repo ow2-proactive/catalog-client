@@ -39,7 +39,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class RemoteObjectService {
 
-    private final static RemoteObjectService REMOTE_OBJECT_SERVICE = new RemoteObjectService();
+    private static final RemoteObjectService REMOTE_OBJECT_SERVICE = new RemoteObjectService();
 
     private RemoteObjectService() {
     }
