@@ -27,6 +27,8 @@ package org.ow2.proactive.catalogclient.service;
 
 import static io.restassured.RestAssured.given;
 
+import java.util.Map;
+
 import org.ow2.proactive.catalogclient.util.ResponseUtils;
 
 import io.restassured.response.Response;
@@ -54,7 +56,7 @@ public class RemoteObjectService {
      * @param returnClass is the class type of the response
      * @return a returnClass object created from the server response
      */
-    public <T> T sendRequest(String url, Class<T> returnClass) {
+    public <T> T getObjectOnUrl(String url, Class<T> returnClass) {
         Response response = given().when().get(url).then().extract().response();
         ResponseUtils.checkResponse(response);
 
@@ -64,13 +66,39 @@ public class RemoteObjectService {
     /**
      * Send a GET request on url with a sessionId returning a returnClass object
      * @param url is the url where the get request will be sent
+     * @param headers is a map containing the headers request
      * @param returnClass is the class type of the response
      * @return a returnClass object created from the server response
      */
-    public <T> T sendRequest(String url, String sessionId, Class<T> returnClass) {
-        Response response = given().headers("sessionid", sessionId).when().get(url).then().extract().response();
+    public <T> T getObjectOnUrl(String url, Map<String, String> headers, Class<T> returnClass) {
+        Response response = given().headers(headers).when().get(url).then().extract().response();
         ResponseUtils.checkResponse(response);
-
         return response.as(returnClass);
     }
+
+    /**
+     * Send a GET request on url with a sessionId returning a String object
+     * @param url is the url where the get request will be sent
+     * @return a returnClass object created from the server response
+     */
+    public String getStringOnUrl(String url) {
+        Response response = given().when().get(url).then().extract().response();
+        ResponseUtils.checkResponse(response);
+
+        return response.asString();
+    }
+
+    /**
+     * Send a GET request on url with a sessionId returning a String object
+     * @param url is the url where the get request will be sent
+     * @param headers is a map containing the headers request
+     * @return a returnClass object created from the server response
+     */
+    public String getStringOnUrl(String url, Map<String, String> headers) {
+        Response response = given().headers(headers).when().get(url).then().extract().response();
+        ResponseUtils.checkResponse(response);
+
+        return response.asString();
+    }
+
 }

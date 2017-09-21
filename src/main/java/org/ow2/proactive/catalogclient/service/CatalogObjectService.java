@@ -72,7 +72,7 @@ public class CatalogObjectService {
      */
     public CatalogObject getCatalogObjectMetadata(String catalogURL, long bucketId, String name) {
         final String url = getURL(catalogURL, bucketId, name, false);
-        return remoteObjectService.sendRequest(url, CatalogObject.class);
+        return remoteObjectService.getObjectOnUrl(url, CatalogObject.class);
     }
 
     /**
@@ -85,7 +85,7 @@ public class CatalogObjectService {
     public String getRawCatalogObject(String catalogURL, long bucketId, String name) {
 
         final String url = getURL(catalogURL, bucketId, name, true);
-        return remoteObjectService.sendRequest(url, String.class);
+        return remoteObjectService.getStringOnUrl(url);
     }
 
     /**
@@ -109,7 +109,7 @@ public class CatalogObjectService {
         String resourceURL;
         while (tokenMatcher.find()) {
             resourceURL = extractURLFromToken(tokenMatcher.group());
-            resource = tokenMatcher.replaceFirst(remoteObjectService.sendRequest(resourceURL, String.class));
+            resource = tokenMatcher.replaceFirst(remoteObjectService.getStringOnUrl(resourceURL));
             tokenMatcher.reset(resource);
         }
         return resource;
