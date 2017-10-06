@@ -43,8 +43,8 @@ dependencies {
     compile "org.projectlombok:lombok:1.16.10"
     compile "com.google.guava:guava:19.0"
     compile "org.apache.logging.log4j:log4j-web:2.7"
-    compile group: 'org.springframework', name: 'spring-web', version: '3.0.2.RELEASE'
-    compile 'org.springframework:spring-context:4.2.3.RELEASE'
+    compile 'io.rest-assured:rest-assured:3.0.2'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.6'
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile 'com.google.truth:truth:0.30'
     testCompile 'org.mockito:mockito-core:1.10.19'

@@ -29,8 +29,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.ow2.proactive.catalogclient.model.CatalogObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.google.common.annotations.VisibleForTesting;
 
@@ -40,7 +38,6 @@ import lombok.extern.log4j.Log4j2;
 /**
  *  This service enables to query the catalog service
  */
-@Service
 @Log4j2
 public class CatalogObjectService {
 
@@ -55,8 +52,16 @@ public class CatalogObjectService {
     private static final String GET_FROM_URL_PATTERN = GET_FROM_URL + "\\(((" + CATCH_URL_REGEX + ")|(" +
                                                        CATCH_URL_REGEX_WITH_HTML_QUOTE + "))\\)";
 
-    @Autowired
-    private RemoteObjectService remoteObjectService;
+    private static final CatalogObjectService CATALOG_OBJECT_SERVICE = new CatalogObjectService();
+
+    private RemoteObjectService remoteObjectService = RemoteObjectService.getInstance();
+
+    private CatalogObjectService() {
+    }
+
+    public static CatalogObjectService getInstance() {
+        return CATALOG_OBJECT_SERVICE;
+    }
 
     /**
      * Get the metadata of a catalog object
@@ -67,7 +72,7 @@ public class CatalogObjectService {
      */
     public CatalogObject getCatalogObjectMetadata(String catalogURL, long bucketId, String name) {
         final String url = getURL(catalogURL, bucketId, name, false);
-        return remoteObjectService.sendRequest(url, CatalogObject.class);
+        return remoteObjectService.getObjectOnUrl(url, CatalogObject.class);
     }
 
     /**
@@ -80,7 +85,7 @@ public class CatalogObjectService {
     public String getRawCatalogObject(String catalogURL, long bucketId, String name) {
 
         final String url = getURL(catalogURL, bucketId, name, true);
-        return remoteObjectService.sendRequest(url, String.class);
+        return remoteObjectService.getStringOnUrl(url);
     }
 
     /**
@@ -104,7 +109,7 @@ public class CatalogObjectService {
         String resourceURL;
         while (tokenMatcher.find()) {
             resourceURL = extractURLFromToken(tokenMatcher.group());
-            resource = tokenMatcher.replaceFirst((String) remoteObjectService.sendRequest(resourceURL, String.class));
+            resource = tokenMatcher.replaceFirst(remoteObjectService.getStringOnUrl(resourceURL));
             tokenMatcher.reset(resource);
         }
         return resource;
