@@ -65,14 +65,14 @@ public class CatalogObjectService {
 
     /**
      * Get the metadata of a catalog object
-     * @param catalogURL is the catalog url
+     * @param catalogUrl is the catalog url
      * @param bucketId is the bucket containing the object id
      * @param name is the object name
      * @return a Catalog Object containing the object information
      */
-    public CatalogObject getCatalogObjectMetadata(String catalogURL, long bucketId, String name) {
-        final String url = getURL(catalogURL, bucketId, name, false);
-        return remoteObjectService.getObjectOnUrl(url, CatalogObject.class);
+    public CatalogObject getCatalogObjectMetadata(String catalogUrl, long bucketId, String name, String sessionId) {
+        final String url = getURL(catalogUrl, bucketId, name, false);
+        return remoteObjectService.getObjectOnUrl(url, sessionId, CatalogObject.class);
     }
 
     /**
@@ -82,26 +82,26 @@ public class CatalogObjectService {
      * @param name is the object name
      * @return a Catalog Object containing the object information
      */
-    public String getRawCatalogObject(String catalogURL, long bucketId, String name) {
+    public String getRawCatalogObject(String catalogURL, long bucketId, String name, String sessionId) {
 
         final String url = getURL(catalogURL, bucketId, name, true);
-        return remoteObjectService.getStringOnUrl(url);
+        return remoteObjectService.getStringOnUrl(url, sessionId);
     }
 
     /**
      * Get a resource from the catalog and resolve PA:GET_FROM_URL("url") if necessary
      * @param catalogUrl is the catalog URL
      * @param bucketId is the resource bucket id
-     * @param myResourceID is the resource name
+     * @param myResourceId is the resource name
      * @param resolveLinks on true replace PA:GET_FROM_URL("url") by its value otherwise return the raw resource
      * @return a string which contains the
      */
-    public String getResolvedCatalogObject(String catalogUrl, long bucketId, String myResourceID,
-            boolean resolveLinks) {
+    public String getResolvedCatalogObject(String catalogUrl, long bucketId, String myResourceId, boolean resolveLinks,
+            String sessionId) {
 
         Pattern pattern = Pattern.compile(GET_FROM_URL_PATTERN);
 
-        String resource = getRawCatalogObject(catalogUrl, bucketId, myResourceID);
+        String resource = getRawCatalogObject(catalogUrl, bucketId, myResourceId, sessionId);
         if (!resolveLinks) {
             return resource;
         }
@@ -109,7 +109,7 @@ public class CatalogObjectService {
         String resourceURL;
         while (tokenMatcher.find()) {
             resourceURL = extractURLFromToken(tokenMatcher.group());
-            resource = tokenMatcher.replaceFirst(remoteObjectService.getStringOnUrl(resourceURL));
+            resource = tokenMatcher.replaceFirst(remoteObjectService.getStringOnUrl(resourceURL, sessionId));
             tokenMatcher.reset(resource);
         }
         return resource;

@@ -68,6 +68,8 @@ public class CatalogObjectServiceTest {
 
     private static final String CATALOG_RESOURCE_URL_RAW = CATALOG_RESOURCE_URL + "/raw";
 
+    private static final String SESSION_ID = "sessionIdMock";
+
     @Test
     public void testGetRequestWithMetadataURLWithEndingSlash() {
         assertThat(catalogObjectService.getURL(CATALOG_URL + "/", 3, "object", false)).isEqualTo(CATALOG_RESOURCE_URL);
@@ -97,10 +99,10 @@ public class CatalogObjectServiceTest {
     public void testThatGetRawRequestReturnTheRawCatalogObject() {
         String returnedObject = "{ \"raw\":\"value\"}";
         String objectURL = CATALOG_RESOURCE_URL_RAW;
-        when(remoteObjectService.getStringOnUrl(objectURL)).thenReturn(returnedObject);
-        String result = catalogObjectService.getRawCatalogObject(CATALOG_URL, 3, "object");
+        when(remoteObjectService.getStringOnUrl(objectURL, SESSION_ID)).thenReturn(returnedObject);
+        String result = catalogObjectService.getRawCatalogObject(CATALOG_URL, 3, "object", SESSION_ID);
         assertThat(result).isEqualTo(returnedObject);
-        verify(remoteObjectService, times(1)).getStringOnUrl(objectURL);
+        verify(remoteObjectService, times(1)).getStringOnUrl(objectURL, SESSION_ID);
     }
 
     @Test
@@ -112,36 +114,48 @@ public class CatalogObjectServiceTest {
                                                                  "application/xml",
                                                                  "First commit").build();
 
-        when(remoteObjectService.getObjectOnUrl(CATALOG_RESOURCE_URL, CatalogObject.class)).thenReturn(expectedResult);
-        CatalogObject result = catalogObjectService.getCatalogObjectMetadata(CATALOG_URL, 3, "object");
+        when(remoteObjectService.getObjectOnUrl(CATALOG_RESOURCE_URL,
+                                                SESSION_ID,
+                                                CatalogObject.class)).thenReturn(expectedResult);
+        CatalogObject result = catalogObjectService.getCatalogObjectMetadata(CATALOG_URL, 3, "object", SESSION_ID);
         assertThat(result).isEqualTo(expectedResult);
-        verify(remoteObjectService, times(1)).getObjectOnUrl(CATALOG_RESOURCE_URL, CatalogObject.class);
+        verify(remoteObjectService, times(1)).getObjectOnUrl(CATALOG_RESOURCE_URL, SESSION_ID, CatalogObject.class);
     }
 
     @Test
     public void testGetRequestWithAResourceWithOneReplacement() throws IOException {
-        when(remoteObjectService.getStringOnUrl(CATALOG_RESOURCE_URL_RAW)).thenReturn(getWorkflowString("workflows/workflowWithPAGetFromURL.xml"));
-        when(remoteObjectService.getStringOnUrl(REMOTE_URL)).thenReturn(REMOTE_VALUE);
+        when(remoteObjectService.getStringOnUrl(CATALOG_RESOURCE_URL_RAW,
+                                                SESSION_ID)).thenReturn(getWorkflowString("workflows/workflowWithPAGetFromURL.xml"));
+        when(remoteObjectService.getStringOnUrl(REMOTE_URL, SESSION_ID)).thenReturn(REMOTE_VALUE);
 
-        String replacedWorkflow = catalogObjectService.getResolvedCatalogObject(CATALOG_URL, 3, "object", true);
+        String replacedWorkflow = catalogObjectService.getResolvedCatalogObject(CATALOG_URL,
+                                                                                3,
+                                                                                "object",
+                                                                                true,
+                                                                                SESSION_ID);
         assertThat(replacedWorkflow).isEqualTo(getWorkflowString("workflows/workflowWithPAGetFromURLReplaced.xml"));
 
-        verify(remoteObjectService, times(1)).getStringOnUrl(CATALOG_RESOURCE_URL_RAW);
-        verify(remoteObjectService, times(1)).getStringOnUrl(REMOTE_URL);
+        verify(remoteObjectService, times(1)).getStringOnUrl(CATALOG_RESOURCE_URL_RAW, SESSION_ID);
+        verify(remoteObjectService, times(1)).getStringOnUrl(REMOTE_URL, SESSION_ID);
     }
 
     @Test
     public void testGetRequestWithAResourceWithSeveralReplacements() throws IOException {
-        when(remoteObjectService.getStringOnUrl(CATALOG_RESOURCE_URL_RAW)).thenReturn(getWorkflowString("workflows/workflowWithSeveralPAGetFromURL.xml"));
-        when(remoteObjectService.getStringOnUrl(REMOTE_URL)).thenReturn(REMOTE_VALUE);
-        when(remoteObjectService.getStringOnUrl(REMOTE_URL2)).thenReturn(REMOTE_VALUE2);
+        when(remoteObjectService.getStringOnUrl(CATALOG_RESOURCE_URL_RAW,
+                                                SESSION_ID)).thenReturn(getWorkflowString("workflows/workflowWithSeveralPAGetFromURL.xml"));
+        when(remoteObjectService.getStringOnUrl(REMOTE_URL, SESSION_ID)).thenReturn(REMOTE_VALUE);
+        when(remoteObjectService.getStringOnUrl(REMOTE_URL2, SESSION_ID)).thenReturn(REMOTE_VALUE2);
 
-        String replacedWorkflow = catalogObjectService.getResolvedCatalogObject(CATALOG_URL, 3, "object", true);
+        String replacedWorkflow = catalogObjectService.getResolvedCatalogObject(CATALOG_URL,
+                                                                                3,
+                                                                                "object",
+                                                                                true,
+                                                                                SESSION_ID);
         assertThat(replacedWorkflow).isEqualTo(getWorkflowString("workflows/workflowWithSeveralPAGetFromURLReplaced.xml"));
 
-        verify(remoteObjectService, times(1)).getStringOnUrl(CATALOG_RESOURCE_URL_RAW);
-        verify(remoteObjectService, times(2)).getStringOnUrl(REMOTE_URL);
-        verify(remoteObjectService, times(1)).getStringOnUrl(REMOTE_URL2);
+        verify(remoteObjectService, times(1)).getStringOnUrl(CATALOG_RESOURCE_URL_RAW, SESSION_ID);
+        verify(remoteObjectService, times(2)).getStringOnUrl(REMOTE_URL, SESSION_ID);
+        verify(remoteObjectService, times(1)).getStringOnUrl(REMOTE_URL2, SESSION_ID);
     }
 
     private String getWorkflowString(String path) throws IOException {
