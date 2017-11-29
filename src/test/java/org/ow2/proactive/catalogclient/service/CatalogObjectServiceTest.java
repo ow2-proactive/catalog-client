@@ -64,7 +64,7 @@ public class CatalogObjectServiceTest {
 
     private static final String REMOTE_VALUE2 = "remoteValue2";
 
-    private static final String CATALOG_RESOURCE_URL = CATALOG_URL + "/buckets/3/resources/object";
+    private static final String CATALOG_RESOURCE_URL = CATALOG_URL + "/buckets/test-bucket/resources/object";
 
     private static final String CATALOG_RESOURCE_URL_RAW = CATALOG_RESOURCE_URL + "/raw";
 
@@ -72,19 +72,25 @@ public class CatalogObjectServiceTest {
 
     @Test
     public void testGetRequestWithMetadataURLWithEndingSlash() {
-        assertThat(catalogObjectService.getURL(CATALOG_URL + "/", 3, "object", false)).isEqualTo(CATALOG_RESOURCE_URL);
+        assertThat(catalogObjectService.getURL(CATALOG_URL + "/",
+                                               "test-bucket",
+                                               "object",
+                                               false)).isEqualTo(CATALOG_RESOURCE_URL);
     }
 
     @Test
     public void testGetRequestWithMetadataURLWithoutEndingSlash() {
-        assertThat(catalogObjectService.getURL(CATALOG_URL, 3, "object", false)).isEqualTo(CATALOG_RESOURCE_URL);
+        assertThat(catalogObjectService.getURL(CATALOG_URL,
+                                               "test-bucket",
+                                               "object",
+                                               false)).isEqualTo(CATALOG_RESOURCE_URL);
 
     }
 
     @Test
     public void testGetRequestWithRawURLWithEndingSlash() {
         assertThat(catalogObjectService.getURL(CATALOG_URL + "/",
-                                               3,
+                                               "test-bucket",
                                                "object",
                                                true)).isEqualTo(CATALOG_RESOURCE_URL_RAW);
 
@@ -92,7 +98,10 @@ public class CatalogObjectServiceTest {
 
     @Test
     public void testGetRequestWithRawURLWithoutEndingSlash() {
-        assertThat(catalogObjectService.getURL(CATALOG_URL, 3, "object", true)).isEqualTo(CATALOG_RESOURCE_URL_RAW);
+        assertThat(catalogObjectService.getURL(CATALOG_URL,
+                                               "test-bucket",
+                                               "object",
+                                               true)).isEqualTo(CATALOG_RESOURCE_URL_RAW);
     }
 
     @Test
@@ -100,7 +109,7 @@ public class CatalogObjectServiceTest {
         String returnedObject = "{ \"raw\":\"value\"}";
         String objectURL = CATALOG_RESOURCE_URL_RAW;
         when(remoteObjectService.getStringOnUrl(objectURL, SESSION_ID)).thenReturn(returnedObject);
-        String result = catalogObjectService.getRawCatalogObject(CATALOG_URL, 3, "object", SESSION_ID);
+        String result = catalogObjectService.getRawCatalogObject(CATALOG_URL, "test-bucket", "object", SESSION_ID);
         assertThat(result).isEqualTo(returnedObject);
         verify(remoteObjectService, times(1)).getStringOnUrl(objectURL, SESSION_ID);
     }
@@ -108,7 +117,7 @@ public class CatalogObjectServiceTest {
     @Test
     public void testThatGetRequestReturnTheCatalogObject() {
 
-        CatalogObject expectedResult = new CatalogObject.Builder(3,
+        CatalogObject expectedResult = new CatalogObject.Builder("test-bucket",
                                                                  "object",
                                                                  "workflow",
                                                                  "application/xml",
@@ -117,7 +126,10 @@ public class CatalogObjectServiceTest {
         when(remoteObjectService.getObjectOnUrl(CATALOG_RESOURCE_URL,
                                                 SESSION_ID,
                                                 CatalogObject.class)).thenReturn(expectedResult);
-        CatalogObject result = catalogObjectService.getCatalogObjectMetadata(CATALOG_URL, 3, "object", SESSION_ID);
+        CatalogObject result = catalogObjectService.getCatalogObjectMetadata(CATALOG_URL,
+                                                                             "test-bucket",
+                                                                             "object",
+                                                                             SESSION_ID);
         assertThat(result).isEqualTo(expectedResult);
         verify(remoteObjectService, times(1)).getObjectOnUrl(CATALOG_RESOURCE_URL, SESSION_ID, CatalogObject.class);
     }
@@ -129,7 +141,7 @@ public class CatalogObjectServiceTest {
         when(remoteObjectService.getStringOnUrl(REMOTE_URL, SESSION_ID)).thenReturn(REMOTE_VALUE);
 
         String replacedWorkflow = catalogObjectService.getResolvedCatalogObject(CATALOG_URL,
-                                                                                3,
+                                                                                "test-bucket",
                                                                                 "object",
                                                                                 true,
                                                                                 SESSION_ID);
@@ -147,7 +159,7 @@ public class CatalogObjectServiceTest {
         when(remoteObjectService.getStringOnUrl(REMOTE_URL2, SESSION_ID)).thenReturn(REMOTE_VALUE2);
 
         String replacedWorkflow = catalogObjectService.getResolvedCatalogObject(CATALOG_URL,
-                                                                                3,
+                                                                                "test-bucket",
                                                                                 "object",
                                                                                 true,
                                                                                 SESSION_ID);
