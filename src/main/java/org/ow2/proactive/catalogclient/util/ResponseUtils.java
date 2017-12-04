@@ -25,6 +25,10 @@
  */
 package org.ow2.proactive.catalogclient.util;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
 import org.ow2.proactive.catalogclient.exception.FailedRequestException;
 
 import io.restassured.response.Response;
@@ -39,5 +43,10 @@ public class ResponseUtils {
         if (!(200 <= response.getStatusCode() && response.getStatusCode() <= 300)) {
             throw new FailedRequestException(response.getStatusCode() + " " + response.getStatusLine());
         }
+    }
+
+    private static void sss() throws FileNotFoundException {
+        FileOutputStream out = new FileOutputStream(new File(""));
+        FileOutputStream out1 = new FileOutputStream(new File(""));
     }
 }
