@@ -47,5 +47,6 @@ public class ResponseUtils {
 
     private static void sss() throws FileNotFoundException {
         FileOutputStream out = new FileOutputStream(new File(""));
+        FileOutputStream out1 = new FileOutputStream(new File(""));
     }
 }
