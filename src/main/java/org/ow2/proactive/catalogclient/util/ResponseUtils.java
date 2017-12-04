@@ -25,13 +25,13 @@
  */
 package org.ow2.proactive.catalogclient.util;
 
-import org.ow2.proactive.catalogclient.exception.FailedRequestException;
-
-import io.restassured.response.Response;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+
+import org.ow2.proactive.catalogclient.exception.FailedRequestException;
+
+import io.restassured.response.Response;
 
 
 public class ResponseUtils {
