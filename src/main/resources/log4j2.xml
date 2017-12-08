@@ -19,7 +19,7 @@
     </Appenders>
 
     <Loggers>
-        <Logger name="org.ow2.proactive.catalogclient" level="info" additivity="false">
+        <Logger name="org.ow2.proactive.catalogclient" level="warn" additivity="false">
             <AppenderRef ref="RollingFile"/>
         </Logger>
 
