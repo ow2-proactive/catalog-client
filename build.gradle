@@ -7,7 +7,7 @@ targetCompatibility = JavaVersion.VERSION_1_8
 
 version = version
 
-archivesBaseName = 'catalog-client'  
+archivesBaseName = 'catalog-client'
 
 buildscript {
     repositories {
