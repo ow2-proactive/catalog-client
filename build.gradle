@@ -7,22 +7,24 @@ targetCompatibility = JavaVersion.VERSION_1_8
 
 version = version
 
+archivesBaseName = 'catalog-client'
+
 buildscript {
     repositories {
         mavenCentral()
         jcenter()
-        maven{
+        maven {
             url "https://plugins.gradle.org/m2/"
         }
-    maven{
+        maven {
             url "http://repository.activeeon.com/content/groups/proactive/"
-    }
+        }
     }
 
     dependencies {
         classpath "com.diffplug.gradle.spotless:spotless:2.4.0"
         classpath "org.ow2.proactive:coding-rules:1.0.0"
-        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.5"
+        classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.1"
     }
 
     dependencies {
@@ -43,8 +45,8 @@ dependencies {
     compile "org.projectlombok:lombok:1.16.10"
     compile "com.google.guava:guava:19.0"
     compile "org.apache.logging.log4j:log4j-web:2.7"
-    compile 'io.rest-assured:rest-assured:3.0.2'
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.6'
+    compile 'com.jayway.restassured:rest-assured:2.9.0'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.6.6'
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile 'com.google.truth:truth:0.30'
     testCompile 'org.mockito:mockito-core:1.10.19'

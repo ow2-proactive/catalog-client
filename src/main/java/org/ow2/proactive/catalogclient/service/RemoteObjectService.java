@@ -25,11 +25,12 @@
  */
 package org.ow2.proactive.catalogclient.service;
 
-import static io.restassured.RestAssured.given;
+import static com.jayway.restassured.RestAssured.given;
 
 import org.ow2.proactive.catalogclient.util.ResponseUtils;
 
-import io.restassured.response.Response;
+import com.jayway.restassured.response.Response;
+
 import lombok.extern.log4j.Log4j2;
 
 
