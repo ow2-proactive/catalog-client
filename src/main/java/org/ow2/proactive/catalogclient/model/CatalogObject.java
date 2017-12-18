@@ -48,7 +48,7 @@ public class CatalogObject {
 
     private final String kind;
 
-    private final String contentType;
+    private final String objectContentType;
 
     private final String commitMessage;
 
@@ -67,7 +67,7 @@ public class CatalogObject {
 
         private final String kind;
 
-        private final String contentType;
+        private final String objectContentType;
 
         private final String commitMessage;
 
@@ -81,7 +81,7 @@ public class CatalogObject {
             bucketID = catalogObject.bucketId;
             name = catalogObject.name;
             kind = catalogObject.kind;
-            contentType = catalogObject.contentType;
+            objectContentType = catalogObject.objectContentType;
             commitMessage = catalogObject.commitMessage;
             objectKeyValues = Optional.ofNullable(catalogObject.objectKeyValues)
                                       .map(metadata -> ImmutableList.copyOf(metadata))
@@ -111,7 +111,7 @@ public class CatalogObject {
             return new CatalogObject(bucketID,
                                      name,
                                      kind,
-                                     contentType,
+                                     objectContentType,
                                      commitMessage,
                                      objectKeyValues,
                                      links,
