@@ -27,7 +27,7 @@ package org.ow2.proactive.catalogclient.util;
 
 import org.ow2.proactive.catalogclient.exception.FailedRequestException;
 
-import io.restassured.response.Response;
+import com.jayway.restassured.response.Response;
 
 
 public class ResponseUtils {
