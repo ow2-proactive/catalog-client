@@ -42,7 +42,7 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 public class CatalogObject {
 
-    private final int bucketId;
+    private final String bucketName;
 
     private final String name;
 
@@ -61,7 +61,7 @@ public class CatalogObject {
     @RequiredArgsConstructor
     public static class Builder {
 
-        private final int bucketID;
+        private final String bucketName;
 
         private final String name;
 
@@ -78,7 +78,7 @@ public class CatalogObject {
         private String commitTime;
 
         public Builder(CatalogObject catalogObject) {
-            bucketID = catalogObject.bucketId;
+            bucketName = catalogObject.bucketName;
             name = catalogObject.name;
             kind = catalogObject.kind;
             objectContentType = catalogObject.objectContentType;
@@ -108,7 +108,7 @@ public class CatalogObject {
         }
 
         public CatalogObject build() {
-            return new CatalogObject(bucketID,
+            return new CatalogObject(bucketName,
                                      name,
                                      kind,
                                      objectContentType,
