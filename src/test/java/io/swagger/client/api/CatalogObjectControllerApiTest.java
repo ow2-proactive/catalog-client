@@ -15,7 +15,6 @@ package io.swagger.client.api;
 
 import io.swagger.client.model.CatalogObjectMetadataList;
 import java.io.File;
-import io.swagger.client.model.InputStreamResource;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -49,8 +48,8 @@ public class CatalogObjectControllerApiTest {
         String name = null;
         String kind = null;
         String commitMessage = null;
-        String contentType = null;
-        CatalogObjectMetadataList response = api.createUsingPOST1(bucketId, file, sessionID, name, kind, commitMessage, contentType);
+        String objectContentType = null;
+        CatalogObjectMetadataList response = api.createUsingPOST1(bucketId, file, sessionID, name, kind, commitMessage, objectContentType);
 
         // TODO: test validations
     }
@@ -74,7 +73,7 @@ public class CatalogObjectControllerApiTest {
     }
     
     /**
-     * Gets the raw content of a last revision of a catalog object
+     * Gets the raw content of the last revision of a catalog object
      *
      * 
      *
@@ -86,7 +85,7 @@ public class CatalogObjectControllerApiTest {
         Long bucketId = null;
         String name = null;
         String sessionID = null;
-        InputStreamResource response = api.getRawUsingGET(bucketId, name, sessionID);
+        File response = api.getRawUsingGET(bucketId, name, sessionID);
 
         // TODO: test validations
     }
@@ -123,8 +122,8 @@ public class CatalogObjectControllerApiTest {
         String sessionID = null;
         String kind = null;
         String name = null;
-        Object page = null;
-        Object size = null;
+        Integer page = null;
+        Integer size = null;
         List<String> sort = null;
         Object response = api.listUsingGET1(bucketId, sessionID, kind, name, page, size, sort);
 

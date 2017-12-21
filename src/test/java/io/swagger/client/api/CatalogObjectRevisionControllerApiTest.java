@@ -15,7 +15,6 @@ package io.swagger.client.api;
 
 import io.swagger.client.model.CatalogObjectMetadata;
 import java.io.File;
-import io.swagger.client.model.InputStreamResource;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -36,10 +35,6 @@ public class CatalogObjectRevisionControllerApiTest {
     /**
      * Creates a new catalog object revision
      *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
      */
     @Test
     public void createUsingPOST2Test() {
@@ -56,10 +51,6 @@ public class CatalogObjectRevisionControllerApiTest {
     /**
      * Gets the raw content of a specific revision
      *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
      */
     @Test
     public void getRawUsingGET1Test() {
@@ -67,7 +58,7 @@ public class CatalogObjectRevisionControllerApiTest {
         String name = null;
         Long commitTime = null;
         String sessionID = null;
-        InputStreamResource response = api.getRawUsingGET1(bucketId, name, commitTime, sessionID);
+        File response = api.getRawUsingGET1(bucketId, name, commitTime, sessionID);
 
         // TODO: test validations
     }
@@ -75,10 +66,6 @@ public class CatalogObjectRevisionControllerApiTest {
     /**
      * Gets a specific revision
      *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
      */
     @Test
     public void getUsingGET1Test() {
@@ -94,10 +81,6 @@ public class CatalogObjectRevisionControllerApiTest {
     /**
      * Lists a catalog object revisions
      *
-     * 
-     *
-     * @throws ApiException
-     *          if the Api call fails
      */
     @Test
     public void listUsingGET2Test() {
