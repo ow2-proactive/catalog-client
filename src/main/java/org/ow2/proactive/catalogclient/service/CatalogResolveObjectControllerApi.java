@@ -73,6 +73,7 @@ public class CatalogResolveObjectControllerApi {
         Pattern pattern = Pattern.compile(GET_FROM_URL_PATTERN);
 
         String resource = getCatalogObjectAsString(bucketName, myResourceId, sessionId);
+
         if (!resolveLinks) {
             return resource;
         }

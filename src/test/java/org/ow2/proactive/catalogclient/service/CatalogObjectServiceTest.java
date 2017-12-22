@@ -87,7 +87,6 @@ public class CatalogObjectServiceTest {
     @Test
     public void testGetRequestWithMetadataURLWithoutEndingSlash() {
         assertThat(catalogResolveObjectControllerApi.getURL(CATALOG_URL, BUCKET_NAME, OBJECT_NAME, false)).isEqualTo(CATALOG_RESOURCE_URL);
-
     }
 
     @Test
@@ -110,7 +109,6 @@ public class CatalogObjectServiceTest {
         when(remoteObjectService.getStringOnUrl(REMOTE_URL, SESSION_ID)).thenReturn(REMOTE_VALUE);
         when(catalogObjectControllerApi.getRawUsingGET(BUCKET_NAME,OBJECT_NAME,SESSION_ID))
                 .thenReturn(getFileFromRelativeUrl("workflows/workflowWithPAGetFromURL.xml"));
-
 
         String replacedWorkflow = catalogResolveObjectControllerApi.getResolvedCatalogObject(BUCKET_NAME,
                                                                                 OBJECT_NAME,
