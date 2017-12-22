@@ -24,7 +24,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-12-19T10:37:11.145+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-12-22T17:17:55.479+01:00")
 @Component("io.swagger.client.api.CatalogObjectRevisionControllerApi")
 public class CatalogObjectRevisionControllerApi {
     private ApiClient apiClient;
@@ -54,25 +54,30 @@ public class CatalogObjectRevisionControllerApi {
      * <p><b>403</b> - Permission denied
      * <p><b>404</b> - Bucket not found
      * <p><b>422</b> - Invalid catalog object JSON content supplied
-     * @param bucketId bucketId
+     * @param bucketName bucketName
      * @param name name
+     * @param commitMessage The commit message of the CatalogRawObject Revision
      * @param file file
      * @param sessionID sessionID
-     * @param commitMessage The commit message of the CatalogRawObject Revision
      * @return CatalogObjectMetadata
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public CatalogObjectMetadata createUsingPOST2(Long bucketId, String name, File file, String sessionID, String commitMessage) throws RestClientException {
+    public CatalogObjectMetadata createUsingPOST2(String bucketName, String name, String commitMessage, File file, String sessionID) throws RestClientException {
         Object postBody = null;
         
-        // verify the required parameter 'bucketId' is set
-        if (bucketId == null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'bucketId' when calling createUsingPOST2");
+        // verify the required parameter 'bucketName' is set
+        if (bucketName == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'bucketName' when calling createUsingPOST2");
         }
         
         // verify the required parameter 'name' is set
         if (name == null) {
             throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'name' when calling createUsingPOST2");
+        }
+        
+        // verify the required parameter 'commitMessage' is set
+        if (commitMessage == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'commitMessage' when calling createUsingPOST2");
         }
         
         // verify the required parameter 'file' is set
@@ -82,9 +87,9 @@ public class CatalogObjectRevisionControllerApi {
         
         // create path and map variables
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
-        uriVariables.put("bucketId", bucketId);
+        uriVariables.put("bucketName", bucketName);
         uriVariables.put("name", name);
-        String path = UriComponentsBuilder.fromPath("/buckets/{bucketId}/resources/{name}/revisions").buildAndExpand(uriVariables).toUriString();
+        String path = UriComponentsBuilder.fromPath("/buckets/{bucketName}/resources/{name}/revisions").buildAndExpand(uriVariables).toUriString();
         
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
@@ -119,19 +124,19 @@ public class CatalogObjectRevisionControllerApi {
      * <p><b>401</b> - User not authenticated
      * <p><b>403</b> - Permission denied
      * <p><b>404</b> - Bucket, catalog object or catalog object revision not found
-     * @param bucketId bucketId
+     * @param bucketName bucketName
      * @param name name
      * @param commitTime commitTime
      * @param sessionID sessionID
      * @return File
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public File getRawUsingGET1(Long bucketId, String name, Long commitTime, String sessionID) throws RestClientException {
+    public File getRawUsingGET1(String bucketName, String name, Long commitTime, String sessionID) throws RestClientException {
         Object postBody = null;
         
-        // verify the required parameter 'bucketId' is set
-        if (bucketId == null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'bucketId' when calling getRawUsingGET1");
+        // verify the required parameter 'bucketName' is set
+        if (bucketName == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'bucketName' when calling getRawUsingGET1");
         }
         
         // verify the required parameter 'name' is set
@@ -146,10 +151,10 @@ public class CatalogObjectRevisionControllerApi {
         
         // create path and map variables
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
-        uriVariables.put("bucketId", bucketId);
+        uriVariables.put("bucketName", bucketName);
         uriVariables.put("name", name);
         uriVariables.put("commitTime", commitTime);
-        String path = UriComponentsBuilder.fromPath("/buckets/{bucketId}/resources/{name}/revisions/{commitTime}/raw").buildAndExpand(uriVariables).toUriString();
+        String path = UriComponentsBuilder.fromPath("/buckets/{bucketName}/resources/{name}/revisions/{commitTime}/raw").buildAndExpand(uriVariables).toUriString();
         
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
@@ -179,19 +184,19 @@ public class CatalogObjectRevisionControllerApi {
      * <p><b>401</b> - User not authenticated
      * <p><b>403</b> - Permission denied
      * <p><b>404</b> - Bucket, catalog object or catalog object revision not found
-     * @param bucketId bucketId
+     * @param bucketName bucketName
      * @param name name
      * @param commitTime commitTime
      * @param sessionID sessionID
      * @return CatalogObjectMetadata
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public CatalogObjectMetadata getUsingGET1(Long bucketId, String name, Long commitTime, String sessionID) throws RestClientException {
+    public CatalogObjectMetadata getUsingGET1(String bucketName, String name, Long commitTime, String sessionID) throws RestClientException {
         Object postBody = null;
         
-        // verify the required parameter 'bucketId' is set
-        if (bucketId == null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'bucketId' when calling getUsingGET1");
+        // verify the required parameter 'bucketName' is set
+        if (bucketName == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'bucketName' when calling getUsingGET1");
         }
         
         // verify the required parameter 'name' is set
@@ -206,10 +211,10 @@ public class CatalogObjectRevisionControllerApi {
         
         // create path and map variables
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
-        uriVariables.put("bucketId", bucketId);
+        uriVariables.put("bucketName", bucketName);
         uriVariables.put("name", name);
         uriVariables.put("commitTime", commitTime);
-        String path = UriComponentsBuilder.fromPath("/buckets/{bucketId}/resources/{name}/revisions/{commitTime}").buildAndExpand(uriVariables).toUriString();
+        String path = UriComponentsBuilder.fromPath("/buckets/{bucketName}/resources/{name}/revisions/{commitTime}").buildAndExpand(uriVariables).toUriString();
         
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
@@ -239,18 +244,18 @@ public class CatalogObjectRevisionControllerApi {
      * <p><b>401</b> - User not authenticated
      * <p><b>403</b> - Permission denied
      * <p><b>404</b> - Bucket or catalog object not found
-     * @param bucketId bucketId
+     * @param bucketName bucketName
      * @param name name
      * @param sessionID sessionID
      * @return List&lt;CatalogObjectMetadata&gt;
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public List<CatalogObjectMetadata> listUsingGET2(Long bucketId, String name, String sessionID) throws RestClientException {
+    public List<CatalogObjectMetadata> listUsingGET2(String bucketName, String name, String sessionID) throws RestClientException {
         Object postBody = null;
         
-        // verify the required parameter 'bucketId' is set
-        if (bucketId == null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'bucketId' when calling listUsingGET2");
+        // verify the required parameter 'bucketName' is set
+        if (bucketName == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'bucketName' when calling listUsingGET2");
         }
         
         // verify the required parameter 'name' is set
@@ -260,9 +265,9 @@ public class CatalogObjectRevisionControllerApi {
         
         // create path and map variables
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
-        uriVariables.put("bucketId", bucketId);
+        uriVariables.put("bucketName", bucketName);
         uriVariables.put("name", name);
-        String path = UriComponentsBuilder.fromPath("/buckets/{bucketId}/resources/{name}/revisions").buildAndExpand(uriVariables).toUriString();
+        String path = UriComponentsBuilder.fromPath("/buckets/{bucketName}/resources/{name}/revisions").buildAndExpand(uriVariables).toUriString();
         
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();

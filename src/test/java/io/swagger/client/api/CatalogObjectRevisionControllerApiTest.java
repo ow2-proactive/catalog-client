@@ -38,12 +38,12 @@ public class CatalogObjectRevisionControllerApiTest {
      */
     @Test
     public void createUsingPOST2Test() {
-        Long bucketId = null;
+        String bucketName = null;
         String name = null;
+        String commitMessage = null;
         File file = null;
         String sessionID = null;
-        String commitMessage = null;
-        CatalogObjectMetadata response = api.createUsingPOST2(bucketId, name, file, sessionID, commitMessage);
+        CatalogObjectMetadata response = api.createUsingPOST2(bucketName, name, commitMessage, file, sessionID);
 
         // TODO: test validations
     }
@@ -54,11 +54,11 @@ public class CatalogObjectRevisionControllerApiTest {
      */
     @Test
     public void getRawUsingGET1Test() {
-        Long bucketId = null;
+        String bucketName = null;
         String name = null;
         Long commitTime = null;
         String sessionID = null;
-        File response = api.getRawUsingGET1(bucketId, name, commitTime, sessionID);
+        File response = api.getRawUsingGET1(bucketName, name, commitTime, sessionID);
 
         // TODO: test validations
     }
@@ -69,11 +69,11 @@ public class CatalogObjectRevisionControllerApiTest {
      */
     @Test
     public void getUsingGET1Test() {
-        Long bucketId = null;
+        String bucketName = null;
         String name = null;
         Long commitTime = null;
         String sessionID = null;
-        CatalogObjectMetadata response = api.getUsingGET1(bucketId, name, commitTime, sessionID);
+        CatalogObjectMetadata response = api.getUsingGET1(bucketName, name, commitTime, sessionID);
 
         // TODO: test validations
     }
@@ -84,10 +84,10 @@ public class CatalogObjectRevisionControllerApiTest {
      */
     @Test
     public void listUsingGET2Test() {
-        Long bucketId = null;
+        String bucketName = null;
         String name = null;
         String sessionID = null;
-        List<CatalogObjectMetadata> response = api.listUsingGET2(bucketId, name, sessionID);
+        List<CatalogObjectMetadata> response = api.listUsingGET2(bucketName, name, sessionID);
 
         // TODO: test validations
     }

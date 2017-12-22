@@ -24,6 +24,8 @@
 
 src/main/java/org/**
 src/main/java/resources/**
+# In order to regenerate test comment the next line then uncomment the two following lines
+#src/test/java/**
 src/test/java/org/**
 src/test/java/resources/**
 build.gradle

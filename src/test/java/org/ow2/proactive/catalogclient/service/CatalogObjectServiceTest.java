@@ -40,9 +40,11 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.ow2.proactive.catalogclient.model.CatalogObject;
 
+import com.google.common.base.Charsets;
 import com.google.common.io.Files;
+
+import io.swagger.client.api.CatalogObjectControllerApi;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -51,8 +53,11 @@ public class CatalogObjectServiceTest {
     @Mock
     private RemoteObjectService remoteObjectService;
 
+    @Mock
+    private CatalogObjectControllerApi catalogObjectControllerApi;
+
     @InjectMocks
-    private CatalogObjectService catalogObjectService;
+    private CatalogResolveObjectControllerApi catalogResolveObjectControllerApi;
 
     private static final String CATALOG_URL = "http://localhost:8080/catalog";
 
@@ -64,7 +69,11 @@ public class CatalogObjectServiceTest {
 
     private static final String REMOTE_VALUE2 = "remoteValue2";
 
-    private static final String CATALOG_RESOURCE_URL = CATALOG_URL + "/buckets/3/resources/object";
+    private static final String BUCKET_NAME = "testBucket";
+
+    private static final String OBJECT_NAME = "object";
+
+    private static final String CATALOG_RESOURCE_URL = CATALOG_URL + "/buckets/"+BUCKET_NAME+"/resources/"+OBJECT_NAME;
 
     private static final String CATALOG_RESOURCE_URL_RAW = CATALOG_RESOURCE_URL + "/raw";
 
@@ -72,67 +81,73 @@ public class CatalogObjectServiceTest {
 
     @Test
     public void testGetRequestWithMetadataURLWithEndingSlash() {
-        assertThat(catalogObjectService.getURL(CATALOG_URL + "/", 3, "object", false)).isEqualTo(CATALOG_RESOURCE_URL);
+        assertThat(catalogResolveObjectControllerApi.getURL(CATALOG_URL + "/", BUCKET_NAME, OBJECT_NAME, false)).isEqualTo(CATALOG_RESOURCE_URL);
     }
 
     @Test
     public void testGetRequestWithMetadataURLWithoutEndingSlash() {
-        assertThat(catalogObjectService.getURL(CATALOG_URL, 3, "object", false)).isEqualTo(CATALOG_RESOURCE_URL);
+        assertThat(catalogResolveObjectControllerApi.getURL(CATALOG_URL, BUCKET_NAME, OBJECT_NAME, false)).isEqualTo(CATALOG_RESOURCE_URL);
 
     }
 
     @Test
     public void testGetRequestWithRawURLWithEndingSlash() {
-        assertThat(catalogObjectService.getURL(CATALOG_URL + "/",
-                                               3,
-                                               "object",
+        assertThat(catalogResolveObjectControllerApi.getURL(CATALOG_URL + "/",
+                                               BUCKET_NAME,
+                                               OBJECT_NAME,
                                                true)).isEqualTo(CATALOG_RESOURCE_URL_RAW);
 
     }
 
     @Test
     public void testGetRequestWithRawURLWithoutEndingSlash() {
-        assertThat(catalogObjectService.getURL(CATALOG_URL, 3, "object", true)).isEqualTo(CATALOG_RESOURCE_URL_RAW);
+        assertThat(catalogResolveObjectControllerApi.getURL(CATALOG_URL, BUCKET_NAME, OBJECT_NAME, true)).isEqualTo(CATALOG_RESOURCE_URL_RAW);
     }
 
     @Test
     public void testGetRequestWithAResourceWithOneReplacement() throws IOException {
-        when(remoteObjectService.getStringOnUrl(CATALOG_RESOURCE_URL_RAW,
-                                                SESSION_ID)).thenReturn(getWorkflowString("workflows/workflowWithPAGetFromURL.xml"));
-        when(remoteObjectService.getStringOnUrl(REMOTE_URL, SESSION_ID)).thenReturn(REMOTE_VALUE);
 
-        String replacedWorkflow = catalogObjectService.getResolvedCatalogObject(3,
-                                                                                "object",
+        when(remoteObjectService.getStringOnUrl(REMOTE_URL, SESSION_ID)).thenReturn(REMOTE_VALUE);
+        when(catalogObjectControllerApi.getRawUsingGET(BUCKET_NAME,OBJECT_NAME,SESSION_ID))
+                .thenReturn(getFileFromRelativeUrl("workflows/workflowWithPAGetFromURL.xml"));
+
+
+        String replacedWorkflow = catalogResolveObjectControllerApi.getResolvedCatalogObject(BUCKET_NAME,
+                                                                                OBJECT_NAME,
                                                                                 true,
                                                                                 SESSION_ID);
         assertThat(replacedWorkflow).isEqualTo(getWorkflowString("workflows/workflowWithPAGetFromURLReplaced.xml"));
 
-        verify(remoteObjectService, times(1)).getStringOnUrl(CATALOG_RESOURCE_URL_RAW, SESSION_ID);
         verify(remoteObjectService, times(1)).getStringOnUrl(REMOTE_URL, SESSION_ID);
+        verify(catalogObjectControllerApi,times(1)).getRawUsingGET(BUCKET_NAME,OBJECT_NAME,SESSION_ID);
     }
 
     @Test
     public void testGetRequestWithAResourceWithSeveralReplacements() throws IOException {
-        when(remoteObjectService.getStringOnUrl(CATALOG_RESOURCE_URL_RAW,
-                                                SESSION_ID)).thenReturn(getWorkflowString("workflows/workflowWithSeveralPAGetFromURL.xml"));
+
         when(remoteObjectService.getStringOnUrl(REMOTE_URL, SESSION_ID)).thenReturn(REMOTE_VALUE);
         when(remoteObjectService.getStringOnUrl(REMOTE_URL2, SESSION_ID)).thenReturn(REMOTE_VALUE2);
+        when(catalogObjectControllerApi.getRawUsingGET(BUCKET_NAME,OBJECT_NAME,SESSION_ID))
+                .thenReturn(getFileFromRelativeUrl("workflows/workflowWithSeveralPAGetFromURL.xml"));
 
-        String replacedWorkflow = catalogObjectService.getResolvedCatalogObject(3,
-                                                                                "object",
+        String replacedWorkflow = catalogResolveObjectControllerApi.getResolvedCatalogObject(BUCKET_NAME,
+                                                                                OBJECT_NAME,
                                                                                 true,
                                                                                 SESSION_ID);
         assertThat(replacedWorkflow).isEqualTo(getWorkflowString("workflows/workflowWithSeveralPAGetFromURLReplaced.xml"));
 
-        verify(remoteObjectService, times(1)).getStringOnUrl(CATALOG_RESOURCE_URL_RAW, SESSION_ID);
         verify(remoteObjectService, times(2)).getStringOnUrl(REMOTE_URL, SESSION_ID);
         verify(remoteObjectService, times(1)).getStringOnUrl(REMOTE_URL2, SESSION_ID);
+        verify(catalogObjectControllerApi, times(1)).getRawUsingGET(BUCKET_NAME,OBJECT_NAME,SESSION_ID);
     }
 
     private String getWorkflowString(String path) throws IOException {
-        URL relativeUrl = CatalogObjectService.class.getClassLoader().getResource(path);
-        File workflowFile = new File(relativeUrl.getPath());
-        return Files.toString(workflowFile, Charset.forName("UTF-8"));
+        return Files.toString(getFileFromRelativeUrl(path), Charset.forName(Charsets.UTF_8.name()));
+    }
+
+    private File getFileFromRelativeUrl(String path){
+        URL relativeUrl = CatalogResolveObjectControllerApi.class.getClassLoader().getResource(path);
+        return new File(relativeUrl.getPath());
     }
 
 }

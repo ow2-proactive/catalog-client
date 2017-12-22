@@ -26,11 +26,8 @@ import java.util.List;
 /**
  * BucketMetadata
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-12-19T10:37:11.145+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-12-22T17:17:55.479+01:00")
 public class BucketMetadata {
-  @JsonProperty("id")
-  private Long id = null;
-
   @JsonProperty("links")
   private List<Link> links = null;
 
@@ -39,24 +36,6 @@ public class BucketMetadata {
 
   @JsonProperty("owner")
   private String owner = null;
-
-  public BucketMetadata id(Long id) {
-    this.id = id;
-    return this;
-  }
-
-   /**
-   * Get id
-   * @return id
-  **/
-  @ApiModelProperty(value = "")
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
 
   public BucketMetadata links(List<Link> links) {
     this.links = links;
@@ -130,15 +109,14 @@ public class BucketMetadata {
       return false;
     }
     BucketMetadata bucketMetadata = (BucketMetadata) o;
-    return Objects.equals(this.id, bucketMetadata.id) &&
-        Objects.equals(this.links, bucketMetadata.links) &&
+    return Objects.equals(this.links, bucketMetadata.links) &&
         Objects.equals(this.name, bucketMetadata.name) &&
         Objects.equals(this.owner, bucketMetadata.owner);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, links, name, owner);
+    return Objects.hash(links, name, owner);
   }
 
 
@@ -147,7 +125,6 @@ public class BucketMetadata {
     StringBuilder sb = new StringBuilder();
     sb.append("class BucketMetadata {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    links: ").append(toIndentedString(links)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    owner: ").append(toIndentedString(owner)).append("\n");

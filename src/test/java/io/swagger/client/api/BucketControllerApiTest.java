@@ -17,10 +17,7 @@ import io.swagger.client.model.BucketMetadata;
 import org.junit.Test;
 import org.junit.Ignore;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * API tests for BucketControllerApi
@@ -56,10 +53,10 @@ public class BucketControllerApiTest {
      */
     @Test
     public void createUsingPOSTTest() {
-        String name = null;
         String sessionID = null;
+        String name = null;
         String owner = null;
-        BucketMetadata response = api.createUsingPOST(name, sessionID, owner);
+        BucketMetadata response = api.createUsingPOST(sessionID, name, owner);
 
         // TODO: test validations
     }
@@ -74,9 +71,9 @@ public class BucketControllerApiTest {
      */
     @Test
     public void deleteUsingDELETETest() {
-        Long bucketId = null;
+        String bucketName = null;
         String sessionID = null;
-        api.deleteUsingDELETE(bucketId, sessionID);
+        api.deleteUsingDELETE(bucketName, sessionID);
 
         // TODO: test validations
     }
@@ -91,9 +88,9 @@ public class BucketControllerApiTest {
      */
     @Test
     public void getMetadataUsingGETTest() {
-        Long bucketId = null;
+        String bucketName = null;
         String sessionID = null;
-        BucketMetadata response = api.getMetadataUsingGET(bucketId, sessionID);
+        BucketMetadata response = api.getMetadataUsingGET(bucketName, sessionID);
 
         // TODO: test validations
     }

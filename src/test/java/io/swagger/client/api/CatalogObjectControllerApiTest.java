@@ -42,14 +42,14 @@ public class CatalogObjectControllerApiTest {
      */
     @Test
     public void createUsingPOST1Test() {
-        Long bucketId = null;
-        File file = null;
-        String sessionID = null;
-        String name = null;
+        String bucketName = null;
         String kind = null;
         String commitMessage = null;
         String objectContentType = null;
-        CatalogObjectMetadataList response = api.createUsingPOST1(bucketId, file, sessionID, name, kind, commitMessage, objectContentType);
+        File file = null;
+        String sessionID = null;
+        String name = null;
+        CatalogObjectMetadataList response = api.createUsingPOST1(bucketName, kind, commitMessage, objectContentType, file, sessionID, name);
 
         // TODO: test validations
     }
@@ -64,10 +64,10 @@ public class CatalogObjectControllerApiTest {
      */
     @Test
     public void deleteUsingDELETE1Test() {
-        Long bucketId = null;
+        String bucketName = null;
         String name = null;
         String sessionID = null;
-        Object response = api.deleteUsingDELETE1(bucketId, name, sessionID);
+        Object response = api.deleteUsingDELETE1(bucketName, name, sessionID);
 
         // TODO: test validations
     }
@@ -82,10 +82,10 @@ public class CatalogObjectControllerApiTest {
      */
     @Test
     public void getRawUsingGETTest() {
-        Long bucketId = null;
+        String bucketName = null;
         String name = null;
         String sessionID = null;
-        File response = api.getRawUsingGET(bucketId, name, sessionID);
+        File response = api.getRawUsingGET(bucketName, name, sessionID);
 
         // TODO: test validations
     }
@@ -100,10 +100,10 @@ public class CatalogObjectControllerApiTest {
      */
     @Test
     public void getUsingGETTest() {
-        Long bucketId = null;
+        String bucketName = null;
         String name = null;
         String sessionID = null;
-        Object response = api.getUsingGET(bucketId, name, sessionID);
+        Object response = api.getUsingGET(bucketName, name, sessionID);
 
         // TODO: test validations
     }
@@ -118,14 +118,11 @@ public class CatalogObjectControllerApiTest {
      */
     @Test
     public void listUsingGET1Test() {
-        Long bucketId = null;
+        String bucketName = null;
         String sessionID = null;
         String kind = null;
         String name = null;
-        Integer page = null;
-        Integer size = null;
-        List<String> sort = null;
-        Object response = api.listUsingGET1(bucketId, sessionID, kind, name, page, size, sort);
+        Object response = api.listUsingGET1(bucketName, sessionID, kind, name);
 
         // TODO: test validations
     }
@@ -140,11 +137,11 @@ public class CatalogObjectControllerApiTest {
      */
     @Test
     public void restoreUsingPUTTest() {
-        Long bucketId = null;
+        String bucketName = null;
         String name = null;
         Long commitTime = null;
         String sessionID = null;
-        Object response = api.restoreUsingPUT(bucketId, name, commitTime, sessionID);
+        Object response = api.restoreUsingPUT(bucketName, name, commitTime, sessionID);
 
         // TODO: test validations
     }

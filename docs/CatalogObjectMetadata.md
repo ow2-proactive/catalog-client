@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**bucketId** | **Long** |  |  [optional]
+**bucketName** | **String** |  |  [optional]
 **commitMessage** | **String** |  |  [optional]
 **commitTime** | **String** |  |  [optional]
 **commitTimeRaw** | **String** |  |  [optional]

@@ -1,20 +1,20 @@
 # CatalogObjectControllerApi
 
-All URIs are relative to *https://localhost:8080/catalog*
+All URIs are relative to *https://trydev.activeeon.com:8080/catalog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createUsingPOST1**](CatalogObjectControllerApi.md#createUsingPOST1) | **POST** /buckets/{bucketId}/resources | Creates a new catalog object
-[**deleteUsingDELETE1**](CatalogObjectControllerApi.md#deleteUsingDELETE1) | **DELETE** /buckets/{bucketId}/resources/{name} | Delete a catalog object
-[**getRawUsingGET**](CatalogObjectControllerApi.md#getRawUsingGET) | **GET** /buckets/{bucketId}/resources/{name}/raw | Gets the raw content of the last revision of a catalog object
-[**getUsingGET**](CatalogObjectControllerApi.md#getUsingGET) | **GET** /buckets/{bucketId}/resources/{name} | Gets a catalog object&#39;s metadata by IDs
-[**listUsingGET1**](CatalogObjectControllerApi.md#listUsingGET1) | **GET** /buckets/{bucketId}/resources | Lists catalog objects metadata
-[**restoreUsingPUT**](CatalogObjectControllerApi.md#restoreUsingPUT) | **PUT** /buckets/{bucketId}/resources/{name} | Restore a catalog object revision
+[**createUsingPOST1**](CatalogObjectControllerApi.md#createUsingPOST1) | **POST** /buckets/{bucketName}/resources | Creates a new catalog object
+[**deleteUsingDELETE1**](CatalogObjectControllerApi.md#deleteUsingDELETE1) | **DELETE** /buckets/{bucketName}/resources/{name} | Delete a catalog object
+[**getRawUsingGET**](CatalogObjectControllerApi.md#getRawUsingGET) | **GET** /buckets/{bucketName}/resources/{name}/raw | Gets the raw content of the last revision of a catalog object
+[**getUsingGET**](CatalogObjectControllerApi.md#getUsingGET) | **GET** /buckets/{bucketName}/resources/{name} | Gets a catalog object&#39;s metadata by IDs
+[**listUsingGET1**](CatalogObjectControllerApi.md#listUsingGET1) | **GET** /buckets/{bucketName}/resources | Lists catalog objects metadata
+[**restoreUsingPUT**](CatalogObjectControllerApi.md#restoreUsingPUT) | **PUT** /buckets/{bucketName}/resources/{name} | Restore a catalog object revision
 
 
 <a name="createUsingPOST1"></a>
 # **createUsingPOST1**
-> CatalogObjectMetadataList createUsingPOST1(bucketId, file, sessionID, name, kind, commitMessage, objectContentType)
+> CatalogObjectMetadataList createUsingPOST1(bucketName, kind, commitMessage, objectContentType, file, sessionID, name)
 
 Creates a new catalog object
 
@@ -26,15 +26,15 @@ Creates a new catalog object
 
 
 CatalogObjectControllerApi apiInstance = new CatalogObjectControllerApi();
-Long bucketId = 789L; // Long | bucketId
-File file = new File("/path/to/file.txt"); // File | file
-String sessionID = "sessionID_example"; // String | sessionID
-String name = "name_example"; // String | Name of the object or empty when a ZIP archive is uploaded (All objects inside the archive are stored inside the catalog).
+String bucketName = "bucketName_example"; // String | bucketName
 String kind = "kind_example"; // String | Kind of the new object
 String commitMessage = "commitMessage_example"; // String | Commit message
-String objectContentType = "objectContentType_example"; // String | The content type of CatalogRawObject
+String objectContentType = "objectContentType_example"; // String | The content type of CatalogRawObject - MIME type
+File file = new File("/path/to/file.txt"); // File | The content of CatalogRawObject
+String sessionID = "sessionID_example"; // String | sessionID
+String name = "name_example"; // String | Name of the object or empty when a ZIP archive is uploaded (All objects inside the archive are stored inside the catalog).
 try {
-    CatalogObjectMetadataList result = apiInstance.createUsingPOST1(bucketId, file, sessionID, name, kind, commitMessage, objectContentType);
+    CatalogObjectMetadataList result = apiInstance.createUsingPOST1(bucketName, kind, commitMessage, objectContentType, file, sessionID, name);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling CatalogObjectControllerApi#createUsingPOST1");
@@ -46,13 +46,13 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **bucketId** | **Long**| bucketId |
- **file** | **File**| file |
+ **bucketName** | **String**| bucketName |
+ **kind** | **String**| Kind of the new object |
+ **commitMessage** | **String**| Commit message |
+ **objectContentType** | **String**| The content type of CatalogRawObject - MIME type |
+ **file** | **File**| The content of CatalogRawObject |
  **sessionID** | **String**| sessionID | [optional]
  **name** | **String**| Name of the object or empty when a ZIP archive is uploaded (All objects inside the archive are stored inside the catalog). | [optional]
- **kind** | **String**| Kind of the new object | [optional]
- **commitMessage** | **String**| Commit message | [optional]
- **objectContentType** | **String**| The content type of CatalogRawObject | [optional]
 
 ### Return type
 
@@ -69,7 +69,7 @@ No authorization required
 
 <a name="deleteUsingDELETE1"></a>
 # **deleteUsingDELETE1**
-> Object deleteUsingDELETE1(bucketId, name, sessionID)
+> Object deleteUsingDELETE1(bucketName, name, sessionID)
 
 Delete a catalog object
 
@@ -83,11 +83,11 @@ Delete the entire catalog object as well as its revisions. Returns the deleted C
 
 
 CatalogObjectControllerApi apiInstance = new CatalogObjectControllerApi();
-Long bucketId = 789L; // Long | bucketId
+String bucketName = "bucketName_example"; // String | bucketName
 String name = "name_example"; // String | name
 String sessionID = "sessionID_example"; // String | sessionID
 try {
-    Object result = apiInstance.deleteUsingDELETE1(bucketId, name, sessionID);
+    Object result = apiInstance.deleteUsingDELETE1(bucketName, name, sessionID);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling CatalogObjectControllerApi#deleteUsingDELETE1");
@@ -99,7 +99,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **bucketId** | **Long**| bucketId |
+ **bucketName** | **String**| bucketName |
  **name** | **String**| name |
  **sessionID** | **String**| sessionID | [optional]
 
@@ -118,7 +118,7 @@ No authorization required
 
 <a name="getRawUsingGET"></a>
 # **getRawUsingGET**
-> File getRawUsingGET(bucketId, name, sessionID)
+> File getRawUsingGET(bucketName, name, sessionID)
 
 Gets the raw content of the last revision of a catalog object
 
@@ -130,11 +130,11 @@ Gets the raw content of the last revision of a catalog object
 
 
 CatalogObjectControllerApi apiInstance = new CatalogObjectControllerApi();
-Long bucketId = 789L; // Long | bucketId
+String bucketName = "bucketName_example"; // String | bucketName
 String name = "name_example"; // String | name
 String sessionID = "sessionID_example"; // String | sessionID
 try {
-    File result = apiInstance.getRawUsingGET(bucketId, name, sessionID);
+    File result = apiInstance.getRawUsingGET(bucketName, name, sessionID);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling CatalogObjectControllerApi#getRawUsingGET");
@@ -146,7 +146,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **bucketId** | **Long**| bucketId |
+ **bucketName** | **String**| bucketName |
  **name** | **String**| name |
  **sessionID** | **String**| sessionID | [optional]
 
@@ -165,7 +165,7 @@ No authorization required
 
 <a name="getUsingGET"></a>
 # **getUsingGET**
-> Object getUsingGET(bucketId, name, sessionID)
+> Object getUsingGET(bucketName, name, sessionID)
 
 Gets a catalog object&#39;s metadata by IDs
 
@@ -179,11 +179,11 @@ Returns metadata associated to the latest revision of the catalog object.
 
 
 CatalogObjectControllerApi apiInstance = new CatalogObjectControllerApi();
-Long bucketId = 789L; // Long | bucketId
+String bucketName = "bucketName_example"; // String | bucketName
 String name = "name_example"; // String | name
 String sessionID = "sessionID_example"; // String | sessionID
 try {
-    Object result = apiInstance.getUsingGET(bucketId, name, sessionID);
+    Object result = apiInstance.getUsingGET(bucketName, name, sessionID);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling CatalogObjectControllerApi#getUsingGET");
@@ -195,7 +195,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **bucketId** | **Long**| bucketId |
+ **bucketName** | **String**| bucketName |
  **name** | **String**| name |
  **sessionID** | **String**| sessionID | [optional]
 
@@ -214,7 +214,7 @@ No authorization required
 
 <a name="listUsingGET1"></a>
 # **listUsingGET1**
-> Object listUsingGET1(bucketId, sessionID, kind, name, page, size, sort)
+> Object listUsingGET1(bucketName, sessionID, kind, name)
 
 Lists catalog objects metadata
 
@@ -228,15 +228,12 @@ Returns catalog objects metadata associated to the latest revision.
 
 
 CatalogObjectControllerApi apiInstance = new CatalogObjectControllerApi();
-Long bucketId = 789L; // Long | bucketId
+String bucketName = "bucketName_example"; // String | bucketName
 String sessionID = "sessionID_example"; // String | sessionID
 String kind = "kind_example"; // String | Filter according to kind.
 String name = "name_example"; // String | Give a list of name separated by comma to get them in an archive
-Integer page = 56; // Integer | Results page you want to retrieve (0..N)
-Integer size = 56; // Integer | Number of records per page.
-List<String> sort = Arrays.asList("sort_example"); // List<String> | Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
 try {
-    Object result = apiInstance.listUsingGET1(bucketId, sessionID, kind, name, page, size, sort);
+    Object result = apiInstance.listUsingGET1(bucketName, sessionID, kind, name);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling CatalogObjectControllerApi#listUsingGET1");
@@ -248,13 +245,10 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **bucketId** | **Long**| bucketId |
+ **bucketName** | **String**| bucketName |
  **sessionID** | **String**| sessionID | [optional]
  **kind** | **String**| Filter according to kind. | [optional]
  **name** | **String**| Give a list of name separated by comma to get them in an archive | [optional]
- **page** | **Integer**| Results page you want to retrieve (0..N) | [optional]
- **size** | **Integer**| Number of records per page. | [optional]
- **sort** | [**List&lt;String&gt;**](String.md)| Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported. | [optional]
 
 ### Return type
 
@@ -271,7 +265,7 @@ No authorization required
 
 <a name="restoreUsingPUT"></a>
 # **restoreUsingPUT**
-> Object restoreUsingPUT(bucketId, name, commitTime, sessionID)
+> Object restoreUsingPUT(bucketName, name, commitTime, sessionID)
 
 Restore a catalog object revision
 
@@ -283,12 +277,12 @@ Restore a catalog object revision
 
 
 CatalogObjectControllerApi apiInstance = new CatalogObjectControllerApi();
-Long bucketId = 789L; // Long | bucketId
+String bucketName = "bucketName_example"; // String | bucketName
 String name = "name_example"; // String | name
 Long commitTime = 789L; // Long | commitTime
 String sessionID = "sessionID_example"; // String | sessionID
 try {
-    Object result = apiInstance.restoreUsingPUT(bucketId, name, commitTime, sessionID);
+    Object result = apiInstance.restoreUsingPUT(bucketName, name, commitTime, sessionID);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling CatalogObjectControllerApi#restoreUsingPUT");
@@ -300,7 +294,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **bucketId** | **Long**| bucketId |
+ **bucketName** | **String**| bucketName |
  **name** | **String**| name |
  **commitTime** | **Long**| commitTime |
  **sessionID** | **String**| sessionID | [optional]

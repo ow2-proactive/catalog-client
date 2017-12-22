@@ -24,7 +24,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-12-19T10:37:11.145+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-12-22T17:17:55.479+01:00")
 @Component("io.swagger.client.api.CatalogObjectControllerApi")
 public class CatalogObjectControllerApi {
     private ApiClient apiClient;
@@ -54,22 +54,37 @@ public class CatalogObjectControllerApi {
      * <p><b>403</b> - Forbidden
      * <p><b>404</b> - Bucket not found
      * <p><b>422</b> - Invalid file content supplied
-     * @param bucketId bucketId
-     * @param file file
-     * @param sessionID sessionID
-     * @param name Name of the object or empty when a ZIP archive is uploaded (All objects inside the archive are stored inside the catalog).
+     * @param bucketName bucketName
      * @param kind Kind of the new object
      * @param commitMessage Commit message
-     * @param objectContentType The content type of CatalogRawObject
+     * @param objectContentType The content type of CatalogRawObject - MIME type
+     * @param file The content of CatalogRawObject
+     * @param sessionID sessionID
+     * @param name Name of the object or empty when a ZIP archive is uploaded (All objects inside the archive are stored inside the catalog).
      * @return CatalogObjectMetadataList
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public CatalogObjectMetadataList createUsingPOST1(Long bucketId, File file, String sessionID, String name, String kind, String commitMessage, String objectContentType) throws RestClientException {
+    public CatalogObjectMetadataList createUsingPOST1(String bucketName, String kind, String commitMessage, String objectContentType, File file, String sessionID, String name) throws RestClientException {
         Object postBody = null;
         
-        // verify the required parameter 'bucketId' is set
-        if (bucketId == null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'bucketId' when calling createUsingPOST1");
+        // verify the required parameter 'bucketName' is set
+        if (bucketName == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'bucketName' when calling createUsingPOST1");
+        }
+        
+        // verify the required parameter 'kind' is set
+        if (kind == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'kind' when calling createUsingPOST1");
+        }
+        
+        // verify the required parameter 'commitMessage' is set
+        if (commitMessage == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'commitMessage' when calling createUsingPOST1");
+        }
+        
+        // verify the required parameter 'objectContentType' is set
+        if (objectContentType == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'objectContentType' when calling createUsingPOST1");
         }
         
         // verify the required parameter 'file' is set
@@ -79,8 +94,8 @@ public class CatalogObjectControllerApi {
         
         // create path and map variables
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
-        uriVariables.put("bucketId", bucketId);
-        String path = UriComponentsBuilder.fromPath("/buckets/{bucketId}/resources").buildAndExpand(uriVariables).toUriString();
+        uriVariables.put("bucketName", bucketName);
+        String path = UriComponentsBuilder.fromPath("/buckets/{bucketName}/resources").buildAndExpand(uriVariables).toUriString();
         
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
@@ -119,18 +134,18 @@ public class CatalogObjectControllerApi {
      * <p><b>401</b> - User not authenticated
      * <p><b>403</b> - Permission denied
      * <p><b>404</b> - Bucket or object not found
-     * @param bucketId bucketId
+     * @param bucketName bucketName
      * @param name name
      * @param sessionID sessionID
      * @return Object
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public Object deleteUsingDELETE1(Long bucketId, String name, String sessionID) throws RestClientException {
+    public Object deleteUsingDELETE1(String bucketName, String name, String sessionID) throws RestClientException {
         Object postBody = null;
         
-        // verify the required parameter 'bucketId' is set
-        if (bucketId == null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'bucketId' when calling deleteUsingDELETE1");
+        // verify the required parameter 'bucketName' is set
+        if (bucketName == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'bucketName' when calling deleteUsingDELETE1");
         }
         
         // verify the required parameter 'name' is set
@@ -140,9 +155,9 @@ public class CatalogObjectControllerApi {
         
         // create path and map variables
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
-        uriVariables.put("bucketId", bucketId);
+        uriVariables.put("bucketName", bucketName);
         uriVariables.put("name", name);
-        String path = UriComponentsBuilder.fromPath("/buckets/{bucketId}/resources/{name}").buildAndExpand(uriVariables).toUriString();
+        String path = UriComponentsBuilder.fromPath("/buckets/{bucketName}/resources/{name}").buildAndExpand(uriVariables).toUriString();
         
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
@@ -172,18 +187,18 @@ public class CatalogObjectControllerApi {
      * <p><b>401</b> - User not authenticated
      * <p><b>403</b> - Permission denied
      * <p><b>404</b> - Bucket, catalog object or catalog object revision not found
-     * @param bucketId bucketId
+     * @param bucketName bucketName
      * @param name name
      * @param sessionID sessionID
      * @return File
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public File getRawUsingGET(Long bucketId, String name, String sessionID) throws RestClientException {
+    public File getRawUsingGET(String bucketName, String name, String sessionID) throws RestClientException {
         Object postBody = null;
         
-        // verify the required parameter 'bucketId' is set
-        if (bucketId == null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'bucketId' when calling getRawUsingGET");
+        // verify the required parameter 'bucketName' is set
+        if (bucketName == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'bucketName' when calling getRawUsingGET");
         }
         
         // verify the required parameter 'name' is set
@@ -193,9 +208,9 @@ public class CatalogObjectControllerApi {
         
         // create path and map variables
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
-        uriVariables.put("bucketId", bucketId);
+        uriVariables.put("bucketName", bucketName);
         uriVariables.put("name", name);
-        String path = UriComponentsBuilder.fromPath("/buckets/{bucketId}/resources/{name}/raw").buildAndExpand(uriVariables).toUriString();
+        String path = UriComponentsBuilder.fromPath("/buckets/{bucketName}/resources/{name}/raw").buildAndExpand(uriVariables).toUriString();
         
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
@@ -225,18 +240,18 @@ public class CatalogObjectControllerApi {
      * <p><b>401</b> - User not authenticated
      * <p><b>403</b> - Permission denied
      * <p><b>404</b> - Bucket or catalog object not found
-     * @param bucketId bucketId
+     * @param bucketName bucketName
      * @param name name
      * @param sessionID sessionID
      * @return Object
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public Object getUsingGET(Long bucketId, String name, String sessionID) throws RestClientException {
+    public Object getUsingGET(String bucketName, String name, String sessionID) throws RestClientException {
         Object postBody = null;
         
-        // verify the required parameter 'bucketId' is set
-        if (bucketId == null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'bucketId' when calling getUsingGET");
+        // verify the required parameter 'bucketName' is set
+        if (bucketName == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'bucketName' when calling getUsingGET");
         }
         
         // verify the required parameter 'name' is set
@@ -246,9 +261,9 @@ public class CatalogObjectControllerApi {
         
         // create path and map variables
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
-        uriVariables.put("bucketId", bucketId);
+        uriVariables.put("bucketName", bucketName);
         uriVariables.put("name", name);
-        String path = UriComponentsBuilder.fromPath("/buckets/{bucketId}/resources/{name}").buildAndExpand(uriVariables).toUriString();
+        String path = UriComponentsBuilder.fromPath("/buckets/{bucketName}/resources/{name}").buildAndExpand(uriVariables).toUriString();
         
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
@@ -279,28 +294,25 @@ public class CatalogObjectControllerApi {
      * <p><b>401</b> - User not authenticated
      * <p><b>403</b> - Permission denied
      * <p><b>404</b> - Bucket not found
-     * @param bucketId bucketId
+     * @param bucketName bucketName
      * @param sessionID sessionID
      * @param kind Filter according to kind.
      * @param name Give a list of name separated by comma to get them in an archive
-     * @param page Results page you want to retrieve (0..N)
-     * @param size Number of records per page.
-     * @param sort Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @return Object
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public Object listUsingGET1(Long bucketId, String sessionID, String kind, String name, Integer page, Integer size, List<String> sort) throws RestClientException {
+    public Object listUsingGET1(String bucketName, String sessionID, String kind, String name) throws RestClientException {
         Object postBody = null;
         
-        // verify the required parameter 'bucketId' is set
-        if (bucketId == null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'bucketId' when calling listUsingGET1");
+        // verify the required parameter 'bucketName' is set
+        if (bucketName == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'bucketName' when calling listUsingGET1");
         }
         
         // create path and map variables
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
-        uriVariables.put("bucketId", bucketId);
-        String path = UriComponentsBuilder.fromPath("/buckets/{bucketId}/resources").buildAndExpand(uriVariables).toUriString();
+        uriVariables.put("bucketName", bucketName);
+        String path = UriComponentsBuilder.fromPath("/buckets/{bucketName}/resources").buildAndExpand(uriVariables).toUriString();
         
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
@@ -308,9 +320,6 @@ public class CatalogObjectControllerApi {
         
         queryParams.putAll(apiClient.parameterToMultiValueMap(null, "kind", kind));
         queryParams.putAll(apiClient.parameterToMultiValueMap(null, "name", name));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "page", page));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "size", size));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase()), "sort", sort));
         
         if (sessionID != null)
         headerParams.add("sessionID", apiClient.parameterToString(sessionID));
@@ -337,19 +346,19 @@ public class CatalogObjectControllerApi {
      * <p><b>401</b> - User not authenticated
      * <p><b>403</b> - Permission denied
      * <p><b>404</b> - Bucket, object or revision not found
-     * @param bucketId bucketId
+     * @param bucketName bucketName
      * @param name name
      * @param commitTime commitTime
      * @param sessionID sessionID
      * @return Object
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public Object restoreUsingPUT(Long bucketId, String name, Long commitTime, String sessionID) throws RestClientException {
+    public Object restoreUsingPUT(String bucketName, String name, Long commitTime, String sessionID) throws RestClientException {
         Object postBody = null;
         
-        // verify the required parameter 'bucketId' is set
-        if (bucketId == null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'bucketId' when calling restoreUsingPUT");
+        // verify the required parameter 'bucketName' is set
+        if (bucketName == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'bucketName' when calling restoreUsingPUT");
         }
         
         // verify the required parameter 'name' is set
@@ -364,9 +373,9 @@ public class CatalogObjectControllerApi {
         
         // create path and map variables
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
-        uriVariables.put("bucketId", bucketId);
+        uriVariables.put("bucketName", bucketName);
         uriVariables.put("name", name);
-        String path = UriComponentsBuilder.fromPath("/buckets/{bucketId}/resources/{name}").buildAndExpand(uriVariables).toUriString();
+        String path = UriComponentsBuilder.fromPath("/buckets/{bucketName}/resources/{name}").buildAndExpand(uriVariables).toUriString();
         
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();

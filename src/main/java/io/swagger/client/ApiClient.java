@@ -50,7 +50,7 @@ import io.swagger.client.auth.HttpBasicAuth;
 import io.swagger.client.auth.ApiKeyAuth;
 import io.swagger.client.auth.OAuth;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-12-19T10:37:11.145+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-12-22T17:17:55.479+01:00")
 @Component("io.swagger.client.ApiClient")
 public class ApiClient {
     public enum CollectionFormat {
@@ -70,7 +70,7 @@ public class ApiClient {
     
     private HttpHeaders defaultHeaders = new HttpHeaders();
     
-    private String basePath = "https://localhost:8080/catalog";
+    private String basePath = "https://trydev.activeeon.com:8080/catalog";
 
     private RestTemplate restTemplate;
 

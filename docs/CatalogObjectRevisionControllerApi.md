@@ -1,18 +1,18 @@
 # CatalogObjectRevisionControllerApi
 
-All URIs are relative to *https://localhost:8080/catalog*
+All URIs are relative to *https://trydev.activeeon.com:8080/catalog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createUsingPOST2**](CatalogObjectRevisionControllerApi.md#createUsingPOST2) | **POST** /buckets/{bucketId}/resources/{name}/revisions | Creates a new catalog object revision
-[**getRawUsingGET1**](CatalogObjectRevisionControllerApi.md#getRawUsingGET1) | **GET** /buckets/{bucketId}/resources/{name}/revisions/{commitTime}/raw | Gets the raw content of a specific revision
-[**getUsingGET1**](CatalogObjectRevisionControllerApi.md#getUsingGET1) | **GET** /buckets/{bucketId}/resources/{name}/revisions/{commitTime} | Gets a specific revision
-[**listUsingGET2**](CatalogObjectRevisionControllerApi.md#listUsingGET2) | **GET** /buckets/{bucketId}/resources/{name}/revisions | Lists a catalog object revisions
+[**createUsingPOST2**](CatalogObjectRevisionControllerApi.md#createUsingPOST2) | **POST** /buckets/{bucketName}/resources/{name}/revisions | Creates a new catalog object revision
+[**getRawUsingGET1**](CatalogObjectRevisionControllerApi.md#getRawUsingGET1) | **GET** /buckets/{bucketName}/resources/{name}/revisions/{commitTime}/raw | Gets the raw content of a specific revision
+[**getUsingGET1**](CatalogObjectRevisionControllerApi.md#getUsingGET1) | **GET** /buckets/{bucketName}/resources/{name}/revisions/{commitTime} | Gets a specific revision
+[**listUsingGET2**](CatalogObjectRevisionControllerApi.md#listUsingGET2) | **GET** /buckets/{bucketName}/resources/{name}/revisions | Lists a catalog object revisions
 
 
 <a name="createUsingPOST2"></a>
 # **createUsingPOST2**
-> CatalogObjectMetadata createUsingPOST2(bucketId, name, file, sessionID, commitMessage)
+> CatalogObjectMetadata createUsingPOST2(bucketName, name, commitMessage, file, sessionID)
 
 Creates a new catalog object revision
 
@@ -24,13 +24,13 @@ Creates a new catalog object revision
 
 
 CatalogObjectRevisionControllerApi apiInstance = new CatalogObjectRevisionControllerApi();
-Long bucketId = 789L; // Long | bucketId
+String bucketName = "bucketName_example"; // String | bucketName
 String name = "name_example"; // String | name
+String commitMessage = "commitMessage_example"; // String | The commit message of the CatalogRawObject Revision
 File file = new File("/path/to/file.txt"); // File | file
 String sessionID = "sessionID_example"; // String | sessionID
-String commitMessage = "commitMessage_example"; // String | The commit message of the CatalogRawObject Revision
 try {
-    CatalogObjectMetadata result = apiInstance.createUsingPOST2(bucketId, name, file, sessionID, commitMessage);
+    CatalogObjectMetadata result = apiInstance.createUsingPOST2(bucketName, name, commitMessage, file, sessionID);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling CatalogObjectRevisionControllerApi#createUsingPOST2");
@@ -42,11 +42,11 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **bucketId** | **Long**| bucketId |
+ **bucketName** | **String**| bucketName |
  **name** | **String**| name |
+ **commitMessage** | **String**| The commit message of the CatalogRawObject Revision |
  **file** | **File**| file |
  **sessionID** | **String**| sessionID | [optional]
- **commitMessage** | **String**| The commit message of the CatalogRawObject Revision | [optional]
 
 ### Return type
 
@@ -63,7 +63,7 @@ No authorization required
 
 <a name="getRawUsingGET1"></a>
 # **getRawUsingGET1**
-> File getRawUsingGET1(bucketId, name, commitTime, sessionID)
+> File getRawUsingGET1(bucketName, name, commitTime, sessionID)
 
 Gets the raw content of a specific revision
 
@@ -75,12 +75,12 @@ Gets the raw content of a specific revision
 
 
 CatalogObjectRevisionControllerApi apiInstance = new CatalogObjectRevisionControllerApi();
-Long bucketId = 789L; // Long | bucketId
+String bucketName = "bucketName_example"; // String | bucketName
 String name = "name_example"; // String | name
 Long commitTime = 789L; // Long | commitTime
 String sessionID = "sessionID_example"; // String | sessionID
 try {
-    File result = apiInstance.getRawUsingGET1(bucketId, name, commitTime, sessionID);
+    File result = apiInstance.getRawUsingGET1(bucketName, name, commitTime, sessionID);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling CatalogObjectRevisionControllerApi#getRawUsingGET1");
@@ -92,7 +92,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **bucketId** | **Long**| bucketId |
+ **bucketName** | **String**| bucketName |
  **name** | **String**| name |
  **commitTime** | **Long**| commitTime |
  **sessionID** | **String**| sessionID | [optional]
@@ -112,7 +112,7 @@ No authorization required
 
 <a name="getUsingGET1"></a>
 # **getUsingGET1**
-> CatalogObjectMetadata getUsingGET1(bucketId, name, commitTime, sessionID)
+> CatalogObjectMetadata getUsingGET1(bucketName, name, commitTime, sessionID)
 
 Gets a specific revision
 
@@ -124,12 +124,12 @@ Gets a specific revision
 
 
 CatalogObjectRevisionControllerApi apiInstance = new CatalogObjectRevisionControllerApi();
-Long bucketId = 789L; // Long | bucketId
+String bucketName = "bucketName_example"; // String | bucketName
 String name = "name_example"; // String | name
 Long commitTime = 789L; // Long | commitTime
 String sessionID = "sessionID_example"; // String | sessionID
 try {
-    CatalogObjectMetadata result = apiInstance.getUsingGET1(bucketId, name, commitTime, sessionID);
+    CatalogObjectMetadata result = apiInstance.getUsingGET1(bucketName, name, commitTime, sessionID);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling CatalogObjectRevisionControllerApi#getUsingGET1");
@@ -141,7 +141,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **bucketId** | **Long**| bucketId |
+ **bucketName** | **String**| bucketName |
  **name** | **String**| name |
  **commitTime** | **Long**| commitTime |
  **sessionID** | **String**| sessionID | [optional]
@@ -161,7 +161,7 @@ No authorization required
 
 <a name="listUsingGET2"></a>
 # **listUsingGET2**
-> List&lt;CatalogObjectMetadata&gt; listUsingGET2(bucketId, name, sessionID)
+> List&lt;CatalogObjectMetadata&gt; listUsingGET2(bucketName, name, sessionID)
 
 Lists a catalog object revisions
 
@@ -173,11 +173,11 @@ Lists a catalog object revisions
 
 
 CatalogObjectRevisionControllerApi apiInstance = new CatalogObjectRevisionControllerApi();
-Long bucketId = 789L; // Long | bucketId
+String bucketName = "bucketName_example"; // String | bucketName
 String name = "name_example"; // String | name
 String sessionID = "sessionID_example"; // String | sessionID
 try {
-    List<CatalogObjectMetadata> result = apiInstance.listUsingGET2(bucketId, name, sessionID);
+    List<CatalogObjectMetadata> result = apiInstance.listUsingGET2(bucketName, name, sessionID);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling CatalogObjectRevisionControllerApi#listUsingGET2");
@@ -189,7 +189,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **bucketId** | **Long**| bucketId |
+ **bucketName** | **String**| bucketName |
  **name** | **String**| name |
  **sessionID** | **String**| sessionID | [optional]
 

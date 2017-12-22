@@ -41,7 +41,10 @@ import io.swagger.client.api.CatalogObjectControllerApi;
 /**
  *  This service enables to query the catalog service
  */
-public class CatalogObjectService extends CatalogObjectControllerApi {
+public class CatalogResolveObjectControllerApi {
+
+    @Autowired
+    private CatalogObjectControllerApi catalogObjectControllerApi;
 
     @Autowired
     private RemoteObjectService remoteObjectService;
@@ -59,17 +62,17 @@ public class CatalogObjectService extends CatalogObjectControllerApi {
 
     /**
      * Get a resource from the catalog and resolve PA:GET_FROM_URL("url") if necessary
-     * @param bucketId is the resource bucket id
+     * @param bucketName is the resource bucket id
      * @param myResourceId is the resource name
      * @param resolveLinks on true replace PA:GET_FROM_URL("url") by its value otherwise return the raw resource
      * @return a string which contains the
      */
-    public String getResolvedCatalogObject(long bucketId, String myResourceId, boolean resolveLinks,
+    public String getResolvedCatalogObject(String bucketName, String myResourceId, boolean resolveLinks,
             String sessionId) {
 
         Pattern pattern = Pattern.compile(GET_FROM_URL_PATTERN);
 
-        String resource = getCatalogObjectAsString(bucketId, myResourceId, sessionId);
+        String resource = getCatalogObjectAsString(bucketName, myResourceId, sessionId);
         if (!resolveLinks) {
             return resource;
         }
@@ -83,8 +86,8 @@ public class CatalogObjectService extends CatalogObjectControllerApi {
         return resource;
     }
 
-    private String getCatalogObjectAsString(Long bucketId, String objectName, String sessionId){
-        File file = this.getRawUsingGET(bucketId,objectName,sessionId);
+    private String getCatalogObjectAsString(String bucketName, String objectName, String sessionId){
+        File file = catalogObjectControllerApi.getRawUsingGET(bucketName,objectName,sessionId);
         try {
             return Files.toString(file, Charsets.UTF_8);
         }catch (IOException e){
@@ -96,18 +99,18 @@ public class CatalogObjectService extends CatalogObjectControllerApi {
     /**
      * Generate the catalog URL from the argument
      * @param catalogURL is the domain name
-     * @param bucketId is the id of bucket containing the resource
+     * @param bucketName is the id of bucket containing the resource
      * @param name is the resource name
      * @param raw enables to choose for the resource metadata or the resource content
      * @return the resource content if raw is true otherwise return the resource metadata
      */
-    String getURL(String catalogURL, long bucketId, String name, boolean raw) {
+    String getURL(String catalogURL, String bucketName, String name, boolean raw) {
 
         final String bucketsPath = "buckets/";
         final String resourcesPath = "/resources/";
         final String rawPath = "/raw";
 
-        return catalogURL + (catalogURL.endsWith("/") ? "" : "/") + bucketsPath + bucketId + resourcesPath + name +
+        return catalogURL + (catalogURL.endsWith("/") ? "" : "/") + bucketsPath + bucketName + resourcesPath + name +
                (raw ? rawPath : "");
     }
 

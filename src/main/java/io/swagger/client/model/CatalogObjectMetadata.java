@@ -27,10 +27,10 @@ import java.util.List;
 /**
  * CatalogObjectMetadata
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-12-19T10:37:11.145+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-12-22T17:17:55.479+01:00")
 public class CatalogObjectMetadata {
-  @JsonProperty("bucket_id")
-  private Long bucketId = null;
+  @JsonProperty("bucket_name")
+  private String bucketName = null;
 
   @JsonProperty("commit_message")
   private String commitMessage = null;
@@ -56,22 +56,22 @@ public class CatalogObjectMetadata {
   @JsonProperty("object_key_values")
   private List<Metadata> objectKeyValues = null;
 
-  public CatalogObjectMetadata bucketId(Long bucketId) {
-    this.bucketId = bucketId;
+  public CatalogObjectMetadata bucketName(String bucketName) {
+    this.bucketName = bucketName;
     return this;
   }
 
    /**
-   * Get bucketId
-   * @return bucketId
+   * Get bucketName
+   * @return bucketName
   **/
   @ApiModelProperty(value = "")
-  public Long getBucketId() {
-    return bucketId;
+  public String getBucketName() {
+    return bucketName;
   }
 
-  public void setBucketId(Long bucketId) {
-    this.bucketId = bucketId;
+  public void setBucketName(String bucketName) {
+    this.bucketName = bucketName;
   }
 
   public CatalogObjectMetadata commitMessage(String commitMessage) {
@@ -244,7 +244,7 @@ public class CatalogObjectMetadata {
       return false;
     }
     CatalogObjectMetadata catalogObjectMetadata = (CatalogObjectMetadata) o;
-    return Objects.equals(this.bucketId, catalogObjectMetadata.bucketId) &&
+    return Objects.equals(this.bucketName, catalogObjectMetadata.bucketName) &&
         Objects.equals(this.commitMessage, catalogObjectMetadata.commitMessage) &&
         Objects.equals(this.commitTime, catalogObjectMetadata.commitTime) &&
         Objects.equals(this.commitTimeRaw, catalogObjectMetadata.commitTimeRaw) &&
@@ -257,7 +257,7 @@ public class CatalogObjectMetadata {
 
   @Override
   public int hashCode() {
-    return Objects.hash(bucketId, commitMessage, commitTime, commitTimeRaw, contentType, kind, links, name, objectKeyValues);
+    return Objects.hash(bucketName, commitMessage, commitTime, commitTimeRaw, contentType, kind, links, name, objectKeyValues);
   }
 
 
@@ -266,7 +266,7 @@ public class CatalogObjectMetadata {
     StringBuilder sb = new StringBuilder();
     sb.append("class CatalogObjectMetadata {\n");
     
-    sb.append("    bucketId: ").append(toIndentedString(bucketId)).append("\n");
+    sb.append("    bucketName: ").append(toIndentedString(bucketName)).append("\n");
     sb.append("    commitMessage: ").append(toIndentedString(commitMessage)).append("\n");
     sb.append("    commitTime: ").append(toIndentedString(commitTime)).append("\n");
     sb.append("    commitTimeRaw: ").append(toIndentedString(commitTimeRaw)).append("\n");

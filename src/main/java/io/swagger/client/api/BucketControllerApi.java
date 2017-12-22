@@ -23,7 +23,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-12-19T10:37:11.145+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-12-22T17:17:55.479+01:00")
 @Component("io.swagger.client.api.BucketControllerApi")
 public class BucketControllerApi {
     private ApiClient apiClient;
@@ -84,19 +84,14 @@ public class BucketControllerApi {
      * <p><b>401</b> - User not authenticated
      * <p><b>403</b> - Permission denied
      * <p><b>404</b> - Not Found
-     * @param name name
      * @param sessionID sessionID
-     * @param owner The name of the user that will own the Bucket
+     * @param name The unique bucketName of the Bucket. /n The bucket bucketName can be between 3 and 63 characters long, and can contain only lower-case characters, numbers, and dashes. /nA bucket bucketName must start with a lowercase letter and cannot terminate with a dash
+     * @param owner The bucketName of the user that will own the Bucket
      * @return BucketMetadata
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public BucketMetadata createUsingPOST(String name, String sessionID, String owner) throws RestClientException {
+    public BucketMetadata createUsingPOST(String sessionID, String name, String owner) throws RestClientException {
         Object postBody = null;
-        
-        // verify the required parameter 'name' is set
-        if (name == null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'name' when calling createUsingPOST");
-        }
         
         String path = UriComponentsBuilder.fromPath("/buckets").build().toUriString();
         
@@ -131,22 +126,22 @@ public class BucketControllerApi {
      * <p><b>401</b> - User not authenticated
      * <p><b>403</b> - Permission denied
      * <p><b>404</b> - Bucket not found
-     * @param bucketId bucketId
+     * @param bucketName bucketName
      * @param sessionID sessionID
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public void deleteUsingDELETE(Long bucketId, String sessionID) throws RestClientException {
+    public void deleteUsingDELETE(String bucketName, String sessionID) throws RestClientException {
         Object postBody = null;
         
-        // verify the required parameter 'bucketId' is set
-        if (bucketId == null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'bucketId' when calling deleteUsingDELETE");
+        // verify the required parameter 'bucketName' is set
+        if (bucketName == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'bucketName' when calling deleteUsingDELETE");
         }
         
         // create path and map variables
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
-        uriVariables.put("bucketId", bucketId);
-        String path = UriComponentsBuilder.fromPath("/buckets/{bucketId}").buildAndExpand(uriVariables).toUriString();
+        uriVariables.put("bucketName", bucketName);
+        String path = UriComponentsBuilder.fromPath("/buckets/{bucketName}").buildAndExpand(uriVariables).toUriString();
         
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();
@@ -176,23 +171,23 @@ public class BucketControllerApi {
      * <p><b>401</b> - User not authenticated
      * <p><b>403</b> - Permission denied
      * <p><b>404</b> - Bucket not found
-     * @param bucketId bucketId
+     * @param bucketName bucketName
      * @param sessionID sessionID
      * @return BucketMetadata
      * @throws RestClientException if an error occurs while attempting to invoke the API
      */
-    public BucketMetadata getMetadataUsingGET(Long bucketId, String sessionID) throws RestClientException {
+    public BucketMetadata getMetadataUsingGET(String bucketName, String sessionID) throws RestClientException {
         Object postBody = null;
         
-        // verify the required parameter 'bucketId' is set
-        if (bucketId == null) {
-            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'bucketId' when calling getMetadataUsingGET");
+        // verify the required parameter 'bucketName' is set
+        if (bucketName == null) {
+            throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Missing the required parameter 'bucketName' when calling getMetadataUsingGET");
         }
         
         // create path and map variables
         final Map<String, Object> uriVariables = new HashMap<String, Object>();
-        uriVariables.put("bucketId", bucketId);
-        String path = UriComponentsBuilder.fromPath("/buckets/{bucketId}").buildAndExpand(uriVariables).toUriString();
+        uriVariables.put("bucketName", bucketName);
+        String path = UriComponentsBuilder.fromPath("/buckets/{bucketName}").buildAndExpand(uriVariables).toUriString();
         
         final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<String, String>();
         final HttpHeaders headerParams = new HttpHeaders();

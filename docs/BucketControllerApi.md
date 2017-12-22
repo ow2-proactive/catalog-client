@@ -1,13 +1,13 @@
 # BucketControllerApi
 
-All URIs are relative to *https://localhost:8080/catalog*
+All URIs are relative to *https://trydev.activeeon.com:8080/catalog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**cleanEmptyUsingDELETE**](BucketControllerApi.md#cleanEmptyUsingDELETE) | **DELETE** /buckets | Delete the empty buckets
 [**createUsingPOST**](BucketControllerApi.md#createUsingPOST) | **POST** /buckets | Creates a new bucket
-[**deleteUsingDELETE**](BucketControllerApi.md#deleteUsingDELETE) | **DELETE** /buckets/{bucketId} | Delete an empty bucket
-[**getMetadataUsingGET**](BucketControllerApi.md#getMetadataUsingGET) | **GET** /buckets/{bucketId} | Gets a bucket&#39;s metadata by ID
+[**deleteUsingDELETE**](BucketControllerApi.md#deleteUsingDELETE) | **DELETE** /buckets/{bucketName} | Delete an empty bucket
+[**getMetadataUsingGET**](BucketControllerApi.md#getMetadataUsingGET) | **GET** /buckets/{bucketName} | Gets a bucket&#39;s metadata by ID
 [**listUsingGET**](BucketControllerApi.md#listUsingGET) | **GET** /buckets | Lists the buckets
 
 
@@ -51,7 +51,7 @@ No authorization required
 
 <a name="createUsingPOST"></a>
 # **createUsingPOST**
-> BucketMetadata createUsingPOST(name, sessionID, owner)
+> BucketMetadata createUsingPOST(sessionID, name, owner)
 
 Creates a new bucket
 
@@ -63,11 +63,11 @@ Creates a new bucket
 
 
 BucketControllerApi apiInstance = new BucketControllerApi();
-String name = "name_example"; // String | name
 String sessionID = "sessionID_example"; // String | sessionID
-String owner = "GROUP:public-objects"; // String | The name of the user that will own the Bucket
+String name = "name_example"; // String | The unique bucketName of the Bucket. /n The bucket bucketName can be between 3 and 63 characters long, and can contain only lower-case characters, numbers, and dashes. /nA bucket bucketName must start with a lowercase letter and cannot terminate with a dash
+String owner = "GROUP:public-objects"; // String | The bucketName of the user that will own the Bucket
 try {
-    BucketMetadata result = apiInstance.createUsingPOST(name, sessionID, owner);
+    BucketMetadata result = apiInstance.createUsingPOST(sessionID, name, owner);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling BucketControllerApi#createUsingPOST");
@@ -79,9 +79,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **name** | **String**| name |
  **sessionID** | **String**| sessionID | [optional]
- **owner** | **String**| The name of the user that will own the Bucket | [optional] [default to GROUP:public-objects]
+ **name** | **String**| The unique bucketName of the Bucket. /n The bucket bucketName can be between 3 and 63 characters long, and can contain only lower-case characters, numbers, and dashes. /nA bucket bucketName must start with a lowercase letter and cannot terminate with a dash | [optional]
+ **owner** | **String**| The bucketName of the user that will own the Bucket | [optional] [default to GROUP:public-objects]
 
 ### Return type
 
@@ -98,7 +98,7 @@ No authorization required
 
 <a name="deleteUsingDELETE"></a>
 # **deleteUsingDELETE**
-> deleteUsingDELETE(bucketId, sessionID)
+> deleteUsingDELETE(bucketName, sessionID)
 
 Delete an empty bucket
 
@@ -112,10 +112,10 @@ It&#39;s forbidden to delete a non-empty bucket. You need to delete manually all
 
 
 BucketControllerApi apiInstance = new BucketControllerApi();
-Long bucketId = 789L; // Long | bucketId
+String bucketName = "bucketName_example"; // String | bucketName
 String sessionID = "sessionID_example"; // String | sessionID
 try {
-    apiInstance.deleteUsingDELETE(bucketId, sessionID);
+    apiInstance.deleteUsingDELETE(bucketName, sessionID);
 } catch (ApiException e) {
     System.err.println("Exception when calling BucketControllerApi#deleteUsingDELETE");
     e.printStackTrace();
@@ -126,7 +126,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **bucketId** | **Long**| bucketId |
+ **bucketName** | **String**| bucketName |
  **sessionID** | **String**| sessionID | [optional]
 
 ### Return type
@@ -144,7 +144,7 @@ No authorization required
 
 <a name="getMetadataUsingGET"></a>
 # **getMetadataUsingGET**
-> BucketMetadata getMetadataUsingGET(bucketId, sessionID)
+> BucketMetadata getMetadataUsingGET(bucketName, sessionID)
 
 Gets a bucket&#39;s metadata by ID
 
@@ -156,10 +156,10 @@ Gets a bucket&#39;s metadata by ID
 
 
 BucketControllerApi apiInstance = new BucketControllerApi();
-Long bucketId = 789L; // Long | bucketId
+String bucketName = "bucketName_example"; // String | bucketName
 String sessionID = "sessionID_example"; // String | sessionID
 try {
-    BucketMetadata result = apiInstance.getMetadataUsingGET(bucketId, sessionID);
+    BucketMetadata result = apiInstance.getMetadataUsingGET(bucketName, sessionID);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling BucketControllerApi#getMetadataUsingGET");
@@ -171,7 +171,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **bucketId** | **Long**| bucketId |
+ **bucketName** | **String**| bucketName |
  **sessionID** | **String**| sessionID | [optional]
 
 ### Return type
