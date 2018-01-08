@@ -25,28 +25,31 @@
  */
 package org.ow2.proactive.catalogclient.service;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.google.common.base.Charsets;
-import com.google.common.io.Files;
+import org.springframework.stereotype.Component;
 
 import io.swagger.client.api.CatalogObjectControllerApi;
+import lombok.Getter;
+import lombok.Setter;
 
 
 /**
  *  This service enables to query the catalog service
  */
+@Component
 public class CatalogResolveObjectControllerApi {
 
     @Autowired
+    @Getter
+    @Setter
     private CatalogObjectControllerApi catalogObjectControllerApi;
 
     @Autowired
+    @Getter
+    @Setter
     private RemoteObjectService remoteObjectService;
 
     public static final String GET_FROM_URL = "PA:GET_FROM_URL";
@@ -59,6 +62,17 @@ public class CatalogResolveObjectControllerApi {
 
     private static final String GET_FROM_URL_PATTERN = GET_FROM_URL + "\\(((" + CATCH_URL_REGEX + ")|(" +
                                                        CATCH_URL_REGEX_WITH_HTML_QUOTE + "))\\)";
+
+    public CatalogResolveObjectControllerApi() {
+        this(new CatalogObjectControllerApi(), new RemoteObjectService());
+    }
+
+    @Autowired
+    public CatalogResolveObjectControllerApi(CatalogObjectControllerApi catalogObjectControllerApi,
+            RemoteObjectService remoteObjectService) {
+        this.catalogObjectControllerApi = catalogObjectControllerApi;
+        this.remoteObjectService = remoteObjectService;
+    }
 
     /**
      * Get a resource from the catalog and resolve PA:GET_FROM_URL("url") if necessary
@@ -87,14 +101,8 @@ public class CatalogResolveObjectControllerApi {
         return resource;
     }
 
-    private String getCatalogObjectAsString(String bucketName, String objectName, String sessionId){
-        File file = catalogObjectControllerApi.getRawUsingGET(bucketName,objectName,sessionId);
-        try {
-            return Files.toString(file, Charsets.UTF_8);
-        }catch (IOException e){
-            throw new RuntimeException(e);
-        }
-
+    private String getCatalogObjectAsString(String bucketName, String objectName, String sessionId) {
+        return catalogObjectControllerApi.getRawUsingGET(bucketName, objectName, sessionId);
     }
 
     /**

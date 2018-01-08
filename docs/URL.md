@@ -15,6 +15,3 @@ Name | Type | Description | Notes
 **query** | **String** |  |  [optional]
 **ref** | **String** |  |  [optional]
 **userInfo** | **String** |  |  [optional]
-
-
-

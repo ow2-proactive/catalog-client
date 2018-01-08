@@ -72,7 +72,7 @@ import java.util.*;
 public class BucketControllerApiExample {
 
     public static void main(String[] args) {
-        
+
         BucketControllerApi apiInstance = new BucketControllerApi();
         try {
             apiInstance.cleanEmptyUsingDELETE();
@@ -131,6 +131,3 @@ Authentication schemes defined for the API:
 It's recommended to create an instance of `ApiClient` per thread in a multithreaded environment to avoid any potential issues.
 
 ## Author
-
-
-

@@ -1,4 +1,49 @@
+/*
+ * ProActive Parallel Suite(TM):
+ * The Open Source library for parallel and distributed
+ * Workflows & Scheduling, Orchestration, Cloud Automation
+ * and Big Data Analysis on Enterprise Grids & Clouds.
+ *
+ * Copyright (c) 2007 - 2017 ActiveEon
+ * Contact: contact@activeeon.com
+ *
+ * This library is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Affero General Public License
+ * as published by the Free Software Foundation: version 3 of
+ * the License.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * If needed, contact us to obtain a release under GPL Version 2 or 3
+ * or a different license than the AGPL.
+ */
 package io.swagger.client;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TimeZone;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -25,38 +70,24 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.TimeZone;
-
+import io.swagger.client.auth.ApiKeyAuth;
 import io.swagger.client.auth.Authentication;
 import io.swagger.client.auth.HttpBasicAuth;
-import io.swagger.client.auth.ApiKeyAuth;
 import io.swagger.client.auth.OAuth;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-12-22T17:17:55.479+01:00")
+
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-01-08T12:41:35.988+01:00")
 @Component("io.swagger.client.ApiClient")
 public class ApiClient {
     public enum CollectionFormat {
-        CSV(","), TSV("\t"), SSV(" "), PIPES("|"), MULTI(null);
+        CSV(","),
+        TSV("\t"),
+        SSV(" "),
+        PIPES("|"),
+        MULTI(null);
 
         private final String separator;
+
         private CollectionFormat(String separator) {
             this.separator = separator;
         }
@@ -65,33 +96,34 @@ public class ApiClient {
             return StringUtils.collectionToDelimitedString(collection, separator);
         }
     }
-    
+
     private boolean debugging = false;
-    
+
     private HttpHeaders defaultHeaders = new HttpHeaders();
-    
-    private String basePath = "https://trydev.activeeon.com:8080/catalog";
+
+    private String basePath = "https://localhost:8080/catalog";
 
     private RestTemplate restTemplate;
 
     private Map<String, Authentication> authentications;
 
     private HttpStatus statusCode;
+
     private MultiValueMap<String, String> responseHeaders;
-    
+
     private DateFormat dateFormat;
 
     public ApiClient() {
         this.restTemplate = buildRestTemplate();
         init();
     }
-    
+
     @Autowired
     public ApiClient(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
         init();
     }
-    
+
     protected void init() {
         // Use RFC3339 format for date and datetime.
         // See http://xml2rfc.ietf.org/public/rfc/html/rfc3339.html#anchor14
@@ -108,7 +140,7 @@ public class ApiClient {
         // Prevent the authentications from being modified.
         authentications = Collections.unmodifiableMap(authentications);
     }
-    
+
     /**
      * Get the current base path
      * @return String the base path
@@ -255,10 +287,10 @@ public class ApiClient {
         defaultHeaders.add(name, value);
         return this;
     }
-    
+
     public void setDebugging(boolean debugging) {
         List<ClientHttpRequestInterceptor> currentInterceptors = this.restTemplate.getInterceptors();
-        if(debugging) {
+        if (debugging) {
             if (currentInterceptors == null) {
                 currentInterceptors = new ArrayList<ClientHttpRequestInterceptor>();
             }
@@ -305,7 +337,7 @@ public class ApiClient {
         this.dateFormat = dateFormat;
         return this;
     }
-    
+
     /**
      * Parse the given string into Date object.
      */
@@ -333,11 +365,11 @@ public class ApiClient {
         if (param == null) {
             return "";
         } else if (param instanceof Date) {
-            return formatDate( (Date) param);
+            return formatDate((Date) param);
         } else if (param instanceof Collection) {
             StringBuilder b = new StringBuilder();
-            for(Object o : (Collection<?>) param) {
-                if(b.length() > 0) {
+            for (Object o : (Collection<?>) param) {
+                if (b.length() > 0) {
                     b.append(",");
                 }
                 b.append(String.valueOf(o));
@@ -355,14 +387,15 @@ public class ApiClient {
      * @param value The parameter's value
      * @return a Map containing the String value(s) of the input parameter
      */
-    public MultiValueMap<String, String> parameterToMultiValueMap(CollectionFormat collectionFormat, String name, Object value) {
+    public MultiValueMap<String, String> parameterToMultiValueMap(CollectionFormat collectionFormat, String name,
+            Object value) {
         final MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
 
         if (name == null || name.isEmpty() || value == null) {
             return params;
         }
 
-        if(collectionFormat == null) {
+        if (collectionFormat == null) {
             collectionFormat = CollectionFormat.CSV;
         }
 
@@ -374,7 +407,7 @@ public class ApiClient {
             return params;
         }
 
-        if (valueCollection.isEmpty()){
+        if (valueCollection.isEmpty()) {
             return params;
         }
 
@@ -386,7 +419,7 @@ public class ApiClient {
         }
 
         List<String> values = new ArrayList<String>();
-        for(Object o : valueCollection) {
+        for (Object o : valueCollection) {
             values.add(parameterToString(o));
         }
         params.add(name, collectionFormat.collectionToString(values));
@@ -422,7 +455,8 @@ public class ApiClient {
      * @return boolean true if the MediaType represents JSON, false otherwise
      */
     public boolean isJsonMime(MediaType mediaType) {
-        return mediaType != null && (MediaType.APPLICATION_JSON.isCompatibleWith(mediaType) || mediaType.getSubtype().matches("^.*\\+json[;]?\\s*$"));
+        return mediaType != null && (MediaType.APPLICATION_JSON.isCompatibleWith(mediaType) ||
+                                     mediaType.getSubtype().matches("^.*\\+json[;]?\\s*$"));
     }
 
     /**
@@ -475,7 +509,8 @@ public class ApiClient {
      * @return Object the selected body
      */
     protected Object selectBody(Object obj, MultiValueMap<String, Object> formParams, MediaType contentType) {
-        boolean isForm = MediaType.MULTIPART_FORM_DATA.isCompatibleWith(contentType) || MediaType.APPLICATION_FORM_URLENCODED.isCompatibleWith(contentType);
+        boolean isForm = MediaType.MULTIPART_FORM_DATA.isCompatibleWith(contentType) ||
+                         MediaType.APPLICATION_FORM_URLENCODED.isCompatibleWith(contentType);
         return isForm ? formParams : obj;
     }
 
@@ -495,29 +530,32 @@ public class ApiClient {
      * @param returnType The return type into which to deserialize the response
      * @return The response body in chosen type
      */
-    public <T> T invokeAPI(String path, HttpMethod method, MultiValueMap<String, String> queryParams, Object body, HttpHeaders headerParams, MultiValueMap<String, Object> formParams, List<MediaType> accept, MediaType contentType, String[] authNames, ParameterizedTypeReference<T> returnType) throws RestClientException {
+    public <T> T invokeAPI(String path, HttpMethod method, MultiValueMap<String, String> queryParams, Object body,
+            HttpHeaders headerParams, MultiValueMap<String, Object> formParams, List<MediaType> accept,
+            MediaType contentType, String[] authNames, ParameterizedTypeReference<T> returnType)
+            throws RestClientException {
         updateParamsForAuth(authNames, queryParams, headerParams);
-        
+
         final UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(basePath).path(path);
         if (queryParams != null) {
             builder.queryParams(queryParams);
         }
-        
+
         final BodyBuilder requestBuilder = RequestEntity.method(method, builder.build().toUri());
-        if(accept != null) {
+        if (accept != null) {
             requestBuilder.accept(accept.toArray(new MediaType[accept.size()]));
         }
-        if(contentType != null) {
+        if (contentType != null) {
             requestBuilder.contentType(contentType);
         }
-        
+
         addHeadersToRequest(headerParams, requestBuilder);
         addHeadersToRequest(defaultHeaders, requestBuilder);
-        
+
         RequestEntity<Object> requestEntity = requestBuilder.body(selectBody(body, formParams, contentType));
 
         ResponseEntity<T> responseEntity = restTemplate.exchange(requestEntity, returnType);
-        
+
         statusCode = responseEntity.getStatusCode();
         responseHeaders = responseEntity.getHeaders();
 
@@ -530,10 +568,11 @@ public class ApiClient {
             return responseEntity.getBody();
         } else {
             // The error handler built into the RestTemplate should handle 400 and 500 series errors.
-            throw new RestClientException("API returned " + statusCode + " and it wasn't handled by the RestTemplate error handler");
+            throw new RestClientException("API returned " + statusCode +
+                                          " and it wasn't handled by the RestTemplate error handler");
         }
     }
-    
+
     /**
      * Add headers to the request that is being built
      * @param headers The headers to add
@@ -542,7 +581,7 @@ public class ApiClient {
     protected void addHeadersToRequest(HttpHeaders headers, BodyBuilder requestBuilder) {
         for (Entry<String, List<String>> entry : headers.entrySet()) {
             List<String> values = entry.getValue();
-            for(String value : values) {
+            for (String value : values) {
                 if (value != null) {
                     requestBuilder.header(entry.getKey(), value);
                 }
@@ -568,7 +607,8 @@ public class ApiClient {
      * @param queryParams The query parameters
      * @param headerParams The header parameters
      */
-    private void updateParamsForAuth(String[] authNames, MultiValueMap<String, String> queryParams, HttpHeaders headerParams) {
+    private void updateParamsForAuth(String[] authNames, MultiValueMap<String, String> queryParams,
+            HttpHeaders headerParams) {
         for (String authName : authNames) {
             Authentication auth = authentications.get(authName);
             if (auth == null) {
@@ -577,12 +617,13 @@ public class ApiClient {
             auth.applyToParams(queryParams, headerParams);
         }
     }
-    
+
     private class ApiClientHttpRequestInterceptor implements ClientHttpRequestInterceptor {
         private final Log log = LogFactory.getLog(ApiClientHttpRequestInterceptor.class);
 
         @Override
-        public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution) throws IOException {
+        public ClientHttpResponse intercept(HttpRequest request, byte[] body, ClientHttpRequestExecution execution)
+                throws IOException {
             logRequest(request, body);
             ClientHttpResponse response = execution.execute(request, body);
             logResponse(response);
@@ -605,9 +646,9 @@ public class ApiClient {
 
         private String headersToString(HttpHeaders headers) {
             StringBuilder builder = new StringBuilder();
-            for(Entry<String, List<String>> entry : headers.entrySet()) {
+            for (Entry<String, List<String>> entry : headers.entrySet()) {
                 builder.append(entry.getKey()).append("=[");
-                for(String value : entry.getValue()) {
+                for (String value : entry.getValue()) {
                     builder.append(value).append(",");
                 }
                 builder.setLength(builder.length() - 1); // Get rid of trailing comma
@@ -616,7 +657,7 @@ public class ApiClient {
             builder.setLength(builder.length() - 1); // Get rid of trailing comma
             return builder.toString();
         }
-        
+
         private String bodyToString(InputStream body) throws IOException {
             StringBuilder builder = new StringBuilder();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(body, StandardCharsets.UTF_8));

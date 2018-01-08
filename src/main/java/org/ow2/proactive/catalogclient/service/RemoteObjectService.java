@@ -25,12 +25,12 @@
  */
 package org.ow2.proactive.catalogclient.service;
 
-
 import static com.jayway.restassured.RestAssured.given;
 
 import org.springframework.stereotype.Component;
 
 import com.jayway.restassured.response.Response;
+
 
 /**
  * This class enables to send request to remote server
@@ -65,7 +65,7 @@ public class RemoteObjectService {
 
     private void checkResponse(Response response) {
         if (!(200 <= response.getStatusCode() && response.getStatusCode() <= 300)) {
-            throw new RuntimeException(response.getStatusCode() + " " + response.getStatusLine());
+            throw new RequestException(response.getStatusCode() + " " + response.getStatusLine());
         }
     }
 

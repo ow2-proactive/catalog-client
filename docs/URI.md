@@ -21,6 +21,3 @@ Name | Type | Description | Notes
 **scheme** | **String** |  |  [optional]
 **schemeSpecificPart** | **String** |  |  [optional]
 **userInfo** | **String** |  |  [optional]
-
-
-

@@ -23,11 +23,19 @@
  * If needed, contact us to obtain a release under GPL Version 2 or 3
  * or a different license than the AGPL.
  */
-package io.swagger.client.auth;
+package org.ow2.proactive.catalogclient.service;
 
-public enum OAuthFlow {
-    accessCode,
-    implicit,
-    password,
-    application
+public class RequestException extends RuntimeException {
+
+    public RequestException(String message) {
+        super(message);
+    }
+
+    public RequestException(String message, Exception e) {
+        super(message, e);
+    }
+
+    public RequestException(Exception e) {
+        super(e);
+    }
 }

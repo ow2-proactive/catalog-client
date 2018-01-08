@@ -12,6 +12,3 @@ Name | Type | Description | Notes
 **readable** | **Boolean** |  |  [optional]
 **uri** | [**URI**](URI.md) |  |  [optional]
 **url** | [**URL**](URL.md) |  |  [optional]
-
-
-

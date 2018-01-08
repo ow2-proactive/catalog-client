@@ -1,8 +1,10 @@
+apply plugin: 'java'
 apply plugin: 'idea'
-apply plugin: 'eclipse'
 
 group = 'org.ow2.proactive'
-version = '1.0.0'
+version = version
+
+archivesBaseName = 'catalog-client'
 
 buildscript {
     repositories {
@@ -25,6 +27,10 @@ buildscript {
 
 }
 
+apply from: "$rootDir/gradle/ext/coding-format.gradle"
+apply plugin: 'maven'
+apply plugin: 'org.sonarqube'
+
 repositories {
     jcenter()
 }
@@ -34,7 +40,7 @@ if(hasProperty('target') && target == 'android') {
 
     apply plugin: 'com.android.library'
     apply plugin: 'com.github.dcendents.android-maven'
-    
+
     android {
         compileSdkVersion 23
         buildToolsVersion '23.0.2'
@@ -46,7 +52,7 @@ if(hasProperty('target') && target == 'android') {
             sourceCompatibility JavaVersion.VERSION_1_8
             targetCompatibility JavaVersion.VERSION_1_8
         }
-    
+
         // Rename the aar correctly
         libraryVariants.all { variant ->
             variant.outputs.each { output ->
@@ -62,7 +68,7 @@ if(hasProperty('target') && target == 'android') {
             provided 'javax.annotation:jsr250-api:1.0'
         }
     }
-    
+
     afterEvaluate {
         android.libraryVariants.all { variant ->
             def task = project.tasks.create "jar${variant.name.capitalize()}", Jar
@@ -74,12 +80,12 @@ if(hasProperty('target') && target == 'android') {
             artifacts.add('archives', task);
         }
     }
-    
+
     task sourcesJar(type: Jar) {
         from android.sourceSets.main.java.srcDirs
         classifier = 'sources'
     }
-    
+
     artifacts {
         archives sourcesJar
     }
@@ -97,7 +103,7 @@ if(hasProperty('target') && target == 'android') {
             pom.artifactId = 'catalog-client'
         }
     }
-    
+
     task execute(type:JavaExec) {
        main = System.getProperty('mainClass')
        classpath = sourceSets.main.runtimeClasspath
@@ -113,6 +119,7 @@ ext {
 }
 
 dependencies {
+    compile 'com.jayway.restassured:rest-assured:2.9.0'
     compile "io.swagger:swagger-annotations:$swagger_annotations_version"
     compile "org.springframework:spring-web:$spring_web_version"
     compile "com.fasterxml.jackson.core:jackson-core:$jackson_version"
@@ -143,5 +150,11 @@ uploadArchives {
                         password: "${System.getProperty('nexusPassword')}")
             }
         }
+    }
+}
+
+sonarqube {
+    properties {
+        property "sonar.exclusions", "src/main/java/io/**,src/test/java/io/**"
     }
 }

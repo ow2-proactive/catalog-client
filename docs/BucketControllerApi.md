@@ -1,6 +1,6 @@
 # BucketControllerApi
 
-All URIs are relative to *https://trydev.activeeon.com:8080/catalog*
+All URIs are relative to *https://localhost:8080/catalog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -64,8 +64,8 @@ Creates a new bucket
 
 BucketControllerApi apiInstance = new BucketControllerApi();
 String sessionID = "sessionID_example"; // String | sessionID
-String name = "name_example"; // String | The unique bucketName of the Bucket. /n The bucket bucketName can be between 3 and 63 characters long, and can contain only lower-case characters, numbers, and dashes. /nA bucket bucketName must start with a lowercase letter and cannot terminate with a dash
-String owner = "GROUP:public-objects"; // String | The bucketName of the user that will own the Bucket
+String name = "name_example"; // String | The unique name of the Bucket. /n The name of bucket can be between 3 and 63 characters long, and can contain only lower-case characters, numbers, and dashes. /nA bucket's name must start with a lowercase letter and cannot terminate with a dash
+String owner = "GROUP:public-objects"; // String | The name of the user that will own the Bucket
 try {
     BucketMetadata result = apiInstance.createUsingPOST(sessionID, name, owner);
     System.out.println(result);
@@ -80,8 +80,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **sessionID** | **String**| sessionID | [optional]
- **name** | **String**| The unique bucketName of the Bucket. /n The bucket bucketName can be between 3 and 63 characters long, and can contain only lower-case characters, numbers, and dashes. /nA bucket bucketName must start with a lowercase letter and cannot terminate with a dash | [optional]
- **owner** | **String**| The bucketName of the user that will own the Bucket | [optional] [default to GROUP:public-objects]
+ **name** | **String**| The unique name of the Bucket. /n The name of bucket can be between 3 and 63 characters long, and can contain only lower-case characters, numbers, and dashes. /nA bucket&#39;s name must start with a lowercase letter and cannot terminate with a dash | [optional]
+ **owner** | **String**| The name of the user that will own the Bucket | [optional] [default to GROUP:public-objects]
 
 ### Return type
 
@@ -233,4 +233,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

@@ -1,6 +1,6 @@
 # CatalogObjectControllerApi
 
-All URIs are relative to *https://trydev.activeeon.com:8080/catalog*
+All URIs are relative to *https://localhost:8080/catalog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -118,7 +118,7 @@ No authorization required
 
 <a name="getRawUsingGET"></a>
 # **getRawUsingGET**
-> File getRawUsingGET(bucketName, name, sessionID)
+> String getRawUsingGET(bucketName, name, sessionID)
 
 Gets the raw content of the last revision of a catalog object
 
@@ -134,7 +134,7 @@ String bucketName = "bucketName_example"; // String | bucketName
 String name = "name_example"; // String | name
 String sessionID = "sessionID_example"; // String | sessionID
 try {
-    File result = apiInstance.getRawUsingGET(bucketName, name, sessionID);
+    String result = apiInstance.getRawUsingGET(bucketName, name, sessionID);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling CatalogObjectControllerApi#getRawUsingGET");
@@ -152,7 +152,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**File**](File.md)
+**String**
 
 ### Authorization
 
@@ -165,7 +165,7 @@ No authorization required
 
 <a name="getUsingGET"></a>
 # **getUsingGET**
-> Object getUsingGET(bucketName, name, sessionID)
+> CatalogObjectMetadata getUsingGET(bucketName, name, sessionID)
 
 Gets a catalog object&#39;s metadata by IDs
 
@@ -183,7 +183,7 @@ String bucketName = "bucketName_example"; // String | bucketName
 String name = "name_example"; // String | name
 String sessionID = "sessionID_example"; // String | sessionID
 try {
-    Object result = apiInstance.getUsingGET(bucketName, name, sessionID);
+    CatalogObjectMetadata result = apiInstance.getUsingGET(bucketName, name, sessionID);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling CatalogObjectControllerApi#getUsingGET");
@@ -201,7 +201,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**CatalogObjectMetadata**](CatalogObjectMetadata.md)
 
 ### Authorization
 
@@ -214,7 +214,7 @@ No authorization required
 
 <a name="listUsingGET1"></a>
 # **listUsingGET1**
-> Object listUsingGET1(bucketName, sessionID, kind, name)
+> List&lt;CatalogObjectMetadata&gt; listUsingGET1(bucketName, sessionID, kind, name)
 
 Lists catalog objects metadata
 
@@ -233,7 +233,7 @@ String sessionID = "sessionID_example"; // String | sessionID
 String kind = "kind_example"; // String | Filter according to kind.
 String name = "name_example"; // String | Give a list of name separated by comma to get them in an archive
 try {
-    Object result = apiInstance.listUsingGET1(bucketName, sessionID, kind, name);
+    List<CatalogObjectMetadata> result = apiInstance.listUsingGET1(bucketName, sessionID, kind, name);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling CatalogObjectControllerApi#listUsingGET1");
@@ -252,7 +252,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**List&lt;CatalogObjectMetadata&gt;**](CatalogObjectMetadata.md)
 
 ### Authorization
 
@@ -265,7 +265,7 @@ No authorization required
 
 <a name="restoreUsingPUT"></a>
 # **restoreUsingPUT**
-> Object restoreUsingPUT(bucketName, name, commitTime, sessionID)
+> CatalogObjectMetadata restoreUsingPUT(bucketName, name, commitTimeRaw, sessionID)
 
 Restore a catalog object revision
 
@@ -279,10 +279,10 @@ Restore a catalog object revision
 CatalogObjectControllerApi apiInstance = new CatalogObjectControllerApi();
 String bucketName = "bucketName_example"; // String | bucketName
 String name = "name_example"; // String | name
-Long commitTime = 789L; // Long | commitTime
+Long commitTimeRaw = 789L; // Long | commitTimeRaw
 String sessionID = "sessionID_example"; // String | sessionID
 try {
-    Object result = apiInstance.restoreUsingPUT(bucketName, name, commitTime, sessionID);
+    CatalogObjectMetadata result = apiInstance.restoreUsingPUT(bucketName, name, commitTimeRaw, sessionID);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling CatalogObjectControllerApi#restoreUsingPUT");
@@ -296,12 +296,12 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **bucketName** | **String**| bucketName |
  **name** | **String**| name |
- **commitTime** | **Long**| commitTime |
+ **commitTimeRaw** | **Long**| commitTimeRaw |
  **sessionID** | **String**| sessionID | [optional]
 
 ### Return type
 
-**Object**
+[**CatalogObjectMetadata**](CatalogObjectMetadata.md)
 
 ### Authorization
 
@@ -311,4 +311,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-

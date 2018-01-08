@@ -1,12 +1,12 @@
 # CatalogObjectRevisionControllerApi
 
-All URIs are relative to *https://trydev.activeeon.com:8080/catalog*
+All URIs are relative to *https://localhost:8080/catalog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createUsingPOST2**](CatalogObjectRevisionControllerApi.md#createUsingPOST2) | **POST** /buckets/{bucketName}/resources/{name}/revisions | Creates a new catalog object revision
-[**getRawUsingGET1**](CatalogObjectRevisionControllerApi.md#getRawUsingGET1) | **GET** /buckets/{bucketName}/resources/{name}/revisions/{commitTime}/raw | Gets the raw content of a specific revision
-[**getUsingGET1**](CatalogObjectRevisionControllerApi.md#getUsingGET1) | **GET** /buckets/{bucketName}/resources/{name}/revisions/{commitTime} | Gets a specific revision
+[**getRawUsingGET1**](CatalogObjectRevisionControllerApi.md#getRawUsingGET1) | **GET** /buckets/{bucketName}/resources/{name}/revisions/{commitTimeRaw}/raw | Gets the raw content of a specific revision
+[**getUsingGET1**](CatalogObjectRevisionControllerApi.md#getUsingGET1) | **GET** /buckets/{bucketName}/resources/{name}/revisions/{commitTimeRaw} | Gets a specific revision
 [**listUsingGET2**](CatalogObjectRevisionControllerApi.md#listUsingGET2) | **GET** /buckets/{bucketName}/resources/{name}/revisions | Lists a catalog object revisions
 
 
@@ -63,7 +63,7 @@ No authorization required
 
 <a name="getRawUsingGET1"></a>
 # **getRawUsingGET1**
-> File getRawUsingGET1(bucketName, name, commitTime, sessionID)
+> String getRawUsingGET1(bucketName, name, commitTimeRaw, sessionID)
 
 Gets the raw content of a specific revision
 
@@ -77,10 +77,10 @@ Gets the raw content of a specific revision
 CatalogObjectRevisionControllerApi apiInstance = new CatalogObjectRevisionControllerApi();
 String bucketName = "bucketName_example"; // String | bucketName
 String name = "name_example"; // String | name
-Long commitTime = 789L; // Long | commitTime
+Long commitTimeRaw = 789L; // Long | commitTimeRaw
 String sessionID = "sessionID_example"; // String | sessionID
 try {
-    File result = apiInstance.getRawUsingGET1(bucketName, name, commitTime, sessionID);
+    String result = apiInstance.getRawUsingGET1(bucketName, name, commitTimeRaw, sessionID);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling CatalogObjectRevisionControllerApi#getRawUsingGET1");
@@ -94,12 +94,12 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **bucketName** | **String**| bucketName |
  **name** | **String**| name |
- **commitTime** | **Long**| commitTime |
+ **commitTimeRaw** | **Long**| commitTimeRaw |
  **sessionID** | **String**| sessionID | [optional]
 
 ### Return type
 
-[**File**](File.md)
+**String**
 
 ### Authorization
 
@@ -112,7 +112,7 @@ No authorization required
 
 <a name="getUsingGET1"></a>
 # **getUsingGET1**
-> CatalogObjectMetadata getUsingGET1(bucketName, name, commitTime, sessionID)
+> CatalogObjectMetadata getUsingGET1(bucketName, name, commitTimeRaw, sessionID)
 
 Gets a specific revision
 
@@ -126,10 +126,10 @@ Gets a specific revision
 CatalogObjectRevisionControllerApi apiInstance = new CatalogObjectRevisionControllerApi();
 String bucketName = "bucketName_example"; // String | bucketName
 String name = "name_example"; // String | name
-Long commitTime = 789L; // Long | commitTime
+Long commitTimeRaw = 789L; // Long | commitTimeRaw
 String sessionID = "sessionID_example"; // String | sessionID
 try {
-    CatalogObjectMetadata result = apiInstance.getUsingGET1(bucketName, name, commitTime, sessionID);
+    CatalogObjectMetadata result = apiInstance.getUsingGET1(bucketName, name, commitTimeRaw, sessionID);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling CatalogObjectRevisionControllerApi#getUsingGET1");
@@ -143,7 +143,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **bucketName** | **String**| bucketName |
  **name** | **String**| name |
- **commitTime** | **Long**| commitTime |
+ **commitTimeRaw** | **Long**| commitTimeRaw |
  **sessionID** | **String**| sessionID | [optional]
 
 ### Return type
@@ -205,4 +205,3 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
-
