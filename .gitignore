@@ -1,14 +1,3 @@
-build
-generated
-src/generated
-*.iml
-.idea
-.gradle
-gradle/ext/
-/rest-client/build/
-job-planner-core/logs
-logs
-
 # Created by https://www.gitignore.io/api/intellij,eclipse,emacs,vim,gradle,sonar,java
 
 ### Intellij ###

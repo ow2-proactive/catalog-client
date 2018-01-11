@@ -28,18 +28,29 @@ package org.ow2.proactive.catalogclient.service;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.ow2.proactive.catalogclient.model.CatalogObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import com.google.common.annotations.VisibleForTesting;
-
-import lombok.extern.log4j.Log4j2;
+import io.swagger.client.api.CatalogObjectControllerApi;
+import lombok.Getter;
+import lombok.Setter;
 
 
 /**
  *  This service enables to query the catalog service
  */
-@Log4j2
-public class CatalogObjectService {
+@Component
+public class CatalogResolveObjectControllerApi {
+
+    @Autowired
+    @Getter
+    @Setter
+    private CatalogObjectControllerApi catalogObjectControllerApi;
+
+    @Autowired
+    @Getter
+    @Setter
+    private RemoteObjectService remoteObjectService;
 
     public static final String GET_FROM_URL = "PA:GET_FROM_URL";
 
@@ -52,56 +63,31 @@ public class CatalogObjectService {
     private static final String GET_FROM_URL_PATTERN = GET_FROM_URL + "\\(((" + CATCH_URL_REGEX + ")|(" +
                                                        CATCH_URL_REGEX_WITH_HTML_QUOTE + "))\\)";
 
-    private static final CatalogObjectService CATALOG_OBJECT_SERVICE = new CatalogObjectService();
-
-    private RemoteObjectService remoteObjectService = RemoteObjectService.getInstance();
-
-    private CatalogObjectService() {
+    public CatalogResolveObjectControllerApi() {
+        this(new CatalogObjectControllerApi(), new RemoteObjectService());
     }
 
-    public static CatalogObjectService getInstance() {
-        return CATALOG_OBJECT_SERVICE;
-    }
-
-    /**
-     * Get the metadata of a catalog object
-     * @param catalogUrl is the catalog url
-     * @param bucketName is the bucket containing the object id
-     * @param name is the object name
-     * @return a Catalog Object containing the object information
-     */
-    public CatalogObject getCatalogObjectMetadata(String catalogUrl, String bucketName, String name, String sessionId) {
-        final String url = getURL(catalogUrl, bucketName, name, false);
-        return remoteObjectService.getObjectOnUrl(url, sessionId, CatalogObject.class);
-    }
-
-    /**
-     * Get an object from the catalog
-     * @param catalogURL is the catalog url
-     * @param bucketName is the bucket containing the object id
-     * @param name is the object name
-     * @return a Catalog Object containing the object information
-     */
-    public String getRawCatalogObject(String catalogURL, String bucketName, String name, String sessionId) {
-
-        final String url = getURL(catalogURL, bucketName, name, true);
-        return remoteObjectService.getStringOnUrl(url, sessionId);
+    @Autowired
+    public CatalogResolveObjectControllerApi(CatalogObjectControllerApi catalogObjectControllerApi,
+            RemoteObjectService remoteObjectService) {
+        this.catalogObjectControllerApi = catalogObjectControllerApi;
+        this.remoteObjectService = remoteObjectService;
     }
 
     /**
      * Get a resource from the catalog and resolve PA:GET_FROM_URL("url") if necessary
-     * @param catalogUrl is the catalog URL
      * @param bucketName is the resource bucket id
      * @param myResourceId is the resource name
      * @param resolveLinks on true replace PA:GET_FROM_URL("url") by its value otherwise return the raw resource
      * @return a string which contains the
      */
-    public String getResolvedCatalogObject(String catalogUrl, String bucketName, String myResourceId,
-            boolean resolveLinks, String sessionId) {
+    public String getResolvedCatalogObject(String bucketName, String myResourceId, boolean resolveLinks,
+            String sessionId) {
 
         Pattern pattern = Pattern.compile(GET_FROM_URL_PATTERN);
 
-        String resource = getRawCatalogObject(catalogUrl, bucketName, myResourceId, sessionId);
+        String resource = getCatalogObjectAsString(bucketName, myResourceId, sessionId);
+
         if (!resolveLinks) {
             return resource;
         }
@@ -115,6 +101,10 @@ public class CatalogObjectService {
         return resource;
     }
 
+    private String getCatalogObjectAsString(String bucketName, String objectName, String sessionId) {
+        return catalogObjectControllerApi.getRawUsingGET(bucketName, objectName, sessionId);
+    }
+
     /**
      * Generate the catalog URL from the argument
      * @param catalogURL is the domain name
@@ -123,7 +113,6 @@ public class CatalogObjectService {
      * @param raw enables to choose for the resource metadata or the resource content
      * @return the resource content if raw is true otherwise return the resource metadata
      */
-    @VisibleForTesting
     String getURL(String catalogURL, String bucketName, String name, boolean raw) {
 
         final String bucketsPath = "buckets/";

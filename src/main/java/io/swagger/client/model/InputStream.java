@@ -23,21 +23,51 @@
  * If needed, contact us to obtain a release under GPL Version 2 or 3
  * or a different license than the AGPL.
  */
-package org.ow2.proactive.catalogclient.util;
+package io.swagger.client.model;
 
-import org.ow2.proactive.catalogclient.exception.FailedRequestException;
-
-import com.jayway.restassured.response.Response;
+import java.util.Objects;
 
 
-public class ResponseUtils {
+/**
+ * InputStream
+ */
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-01-05T11:32:29.758+01:00")
+public class InputStream {
 
-    private ResponseUtils() {
-    }
-
-    public static void checkResponse(Response response) {
-        if (!(200 <= response.getStatusCode() && response.getStatusCode() <= 300)) {
-            throw new FailedRequestException(response.getStatusCode() + " " + response.getStatusLine());
+    @Override
+    public boolean equals(java.lang.Object o) {
+        if (this == o) {
+            return true;
         }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        return true;
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("class InputStream {\n");
+
+        sb.append("}");
+        return sb.toString();
+    }
+
+    /**
+     * Convert the given object to string with each line indented by 4 spaces
+     * (except the first line).
+     */
+    private String toIndentedString(java.lang.Object o) {
+        if (o == null) {
+            return "null";
+        }
+        return o.toString().replace("\n", "\n    ");
+    }
+
 }

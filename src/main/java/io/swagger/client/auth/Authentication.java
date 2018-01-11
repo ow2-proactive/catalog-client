@@ -23,18 +23,17 @@
  * If needed, contact us to obtain a release under GPL Version 2 or 3
  * or a different license than the AGPL.
  */
-package org.ow2.proactive.catalogclient.service;
+package io.swagger.client.auth;
 
-/**
- * This class enables to get the service beans in order to be used from an outside configuration.
- * The beans enable to access to the service thanks to this class.
- */
-public final class CatalogClientLib {
+import org.springframework.http.HttpHeaders;
+import org.springframework.util.MultiValueMap;
 
-    private CatalogClientLib() {
-    }
 
-    public static CatalogObjectService getCatalogObjectService() {
-        return CatalogObjectService.getInstance();
-    }
+public interface Authentication {
+    /** 
+     * Apply authentication settings to header and / or query parameters.
+     * @param queryParams The query parameters for the request 
+     * @param headerParams The header parameters for the request
+     */
+    public void applyToParams(MultiValueMap<String, String> queryParams, HttpHeaders headerParams);
 }

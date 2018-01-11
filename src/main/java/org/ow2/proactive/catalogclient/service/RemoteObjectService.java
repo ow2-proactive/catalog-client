@@ -27,27 +27,16 @@ package org.ow2.proactive.catalogclient.service;
 
 import static com.jayway.restassured.RestAssured.given;
 
-import org.ow2.proactive.catalogclient.util.ResponseUtils;
+import org.springframework.stereotype.Component;
 
 import com.jayway.restassured.response.Response;
-
-import lombok.extern.log4j.Log4j2;
 
 
 /**
  * This class enables to send request to remote server
  */
-@Log4j2
+@Component
 public class RemoteObjectService {
-
-    private static final RemoteObjectService REMOTE_OBJECT_SERVICE = new RemoteObjectService();
-
-    private RemoteObjectService() {
-    }
-
-    public static RemoteObjectService getInstance() {
-        return REMOTE_OBJECT_SERVICE;
-    }
 
     /**
      * Send a GET request on url with a sessionId returning a returnClass object
@@ -58,7 +47,7 @@ public class RemoteObjectService {
      */
     public <T> T getObjectOnUrl(String url, String sessionId, Class<T> returnClass) {
         Response response = given().headers("sessionID", sessionId).when().get(url).then().extract().response();
-        ResponseUtils.checkResponse(response);
+        checkResponse(response);
         return response.as(returnClass);
     }
 
@@ -70,9 +59,14 @@ public class RemoteObjectService {
      */
     public String getStringOnUrl(String url, String sessionId) {
         Response response = given().headers("sessionID", sessionId).when().get(url).then().extract().response();
-        ResponseUtils.checkResponse(response);
-
+        checkResponse(response);
         return response.asString();
+    }
+
+    private void checkResponse(Response response) {
+        if (!(200 <= response.getStatusCode() && response.getStatusCode() <= 300)) {
+            throw new RequestException(response.getStatusCode() + " " + response.getStatusLine());
+        }
     }
 
 }
