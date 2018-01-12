@@ -57,8 +57,6 @@ dependencyManagement {
     }
 }
 
-
-
 dependencies {
     compile "commons-logging:commons-logging"
     compile 'com.jayway.restassured:rest-assured'
