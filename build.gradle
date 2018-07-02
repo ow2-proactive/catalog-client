@@ -8,17 +8,26 @@ buildscript {
         maven {
             url "https://plugins.gradle.org/m2/"
         }
+        maven {
+            url "http://repository.activeeon.com/content/groups/proactive/"
+        }
 
     }
     dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.3.5.RELEASE'
         classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.4'
+        classpath "io.spring.gradle:dependency-management-plugin:0.3.0.RELEASE"
     }
 }
 
 repositories {
     jcenter()
+    maven {
+        url "http://repository.activeeon.com/content/groups/proactive/"
+    }
 }
 
+apply plugin: "io.spring.dependency-management"
 apply plugin: 'java'
 apply plugin: 'maven'
 
@@ -27,10 +36,13 @@ targetCompatibility = JavaVersion.VERSION_1_8
 
 group = 'org.ow2.proactive'
 
-
-
 archivesBaseName = 'catalog-client'
 
+dependencyManagement {
+    imports {
+        mavenBom "org.ow2.proactive:parent-bom:${version}"
+    }
+}
 
 uploadArchives {
     repositories {
@@ -48,7 +60,7 @@ uploadArchives {
 }
 
 
-ext {
+/*ext {
     swagger_annotations_version = "1.5.13"
     jackson_version = "2.7.9"
     jersey_version = "1.19.4"
@@ -59,6 +71,7 @@ ext {
     mockito_version = "1.10.19"
     restassured_version = "2.9.0"
 }
+
 
 dependencies {
     compile "io.swagger:swagger-annotations:$swagger_annotations_version"
@@ -76,4 +89,23 @@ dependencies {
     testCompile "com.google.truth:truth:$truth_version"
     testCompile "org.mockito:mockito-core:$mockito_version"
     testCompile "junit:junit:$junit_version"
+}
+*/
+
+dependencies {
+    compile "io.swagger:swagger-annotations"
+    compile "com.sun.jersey:jersey-client"
+    compile "com.sun.jersey.contribs:jersey-multipart"
+    compile "com.fasterxml.jackson.core:jackson-core"
+    compile "com.fasterxml.jackson.core:jackson-annotations"
+    compile "com.fasterxml.jackson.core:jackson-databind"
+    compile "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider"
+    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
+    compile "org.projectlombok:lombok"
+    compile "com.google.guava:guava"
+    compile "com.jayway.restassured:rest-assured"
+
+    testCompile "com.google.truth:truth"
+    testCompile "org.mockito:mockito-core"
+    testCompile "junit:junit"
 }
