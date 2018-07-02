@@ -1,6 +1,6 @@
 # CatalogObjectRevisionControllerApi
 
-All URIs are relative to *https://localhost:8080/catalog*
+All URIs are relative to *https://trydev.activeeon.com:8080/catalog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**getRawUsingGET1**](CatalogObjectRevisionControllerApi.md#getRawUsingGET1) | **GET** /buckets/{bucketName}/resources/{name}/revisions/{commitTimeRaw}/raw | Gets the raw content of a specific revision
 [**getUsingGET1**](CatalogObjectRevisionControllerApi.md#getUsingGET1) | **GET** /buckets/{bucketName}/resources/{name}/revisions/{commitTimeRaw} | Gets a specific revision
 [**listUsingGET2**](CatalogObjectRevisionControllerApi.md#listUsingGET2) | **GET** /buckets/{bucketName}/resources/{name}/revisions | Lists a catalog object revisions
+[**restoreUsingPUT**](CatalogObjectRevisionControllerApi.md#restoreUsingPUT) | **PUT** /buckets/{bucketName}/resources/{name}/revisions/{commitTimeRaw} | Restore a catalog object revision
 
 
 <a name="createUsingPOST2"></a>
@@ -19,8 +20,8 @@ Creates a new catalog object revision
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.CatalogObjectRevisionControllerApi;
+//import org.ow2.proactive.catalog.client.ApiException;
+//import org.ow2.proactive.catalog.client.api.CatalogObjectRevisionControllerApi;
 
 
 CatalogObjectRevisionControllerApi apiInstance = new CatalogObjectRevisionControllerApi();
@@ -70,8 +71,8 @@ Gets the raw content of a specific revision
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.CatalogObjectRevisionControllerApi;
+//import org.ow2.proactive.catalog.client.ApiException;
+//import org.ow2.proactive.catalog.client.api.CatalogObjectRevisionControllerApi;
 
 
 CatalogObjectRevisionControllerApi apiInstance = new CatalogObjectRevisionControllerApi();
@@ -119,8 +120,8 @@ Gets a specific revision
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.CatalogObjectRevisionControllerApi;
+//import org.ow2.proactive.catalog.client.ApiException;
+//import org.ow2.proactive.catalog.client.api.CatalogObjectRevisionControllerApi;
 
 
 CatalogObjectRevisionControllerApi apiInstance = new CatalogObjectRevisionControllerApi();
@@ -168,8 +169,8 @@ Lists a catalog object revisions
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.CatalogObjectRevisionControllerApi;
+//import org.ow2.proactive.catalog.client.ApiException;
+//import org.ow2.proactive.catalog.client.api.CatalogObjectRevisionControllerApi;
 
 
 CatalogObjectRevisionControllerApi apiInstance = new CatalogObjectRevisionControllerApi();
@@ -205,3 +206,53 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
+
+<a name="restoreUsingPUT"></a>
+# **restoreUsingPUT**
+> CatalogObjectMetadata restoreUsingPUT(bucketName, name, commitTimeRaw, sessionID)
+
+Restore a catalog object revision
+
+### Example
+```java
+// Import classes:
+//import org.ow2.proactive.catalog.client.ApiException;
+//import org.ow2.proactive.catalog.client.api.CatalogObjectRevisionControllerApi;
+
+
+CatalogObjectRevisionControllerApi apiInstance = new CatalogObjectRevisionControllerApi();
+String bucketName = "bucketName_example"; // String | bucketName
+String name = "name_example"; // String | name
+Long commitTimeRaw = 789L; // Long | commitTimeRaw
+String sessionID = "sessionID_example"; // String | sessionID
+try {
+    CatalogObjectMetadata result = apiInstance.restoreUsingPUT(bucketName, name, commitTimeRaw, sessionID);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling CatalogObjectRevisionControllerApi#restoreUsingPUT");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **bucketName** | **String**| bucketName |
+ **name** | **String**| name |
+ **commitTimeRaw** | **Long**| commitTimeRaw |
+ **sessionID** | **String**| sessionID | [optional]
+
+### Return type
+
+[**CatalogObjectMetadata**](CatalogObjectMetadata.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: */*
+
