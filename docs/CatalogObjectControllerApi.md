@@ -1,6 +1,6 @@
 # CatalogObjectControllerApi
 
-All URIs are relative to *https://localhost:8080/catalog*
+All URIs are relative to *https://trydev.activeeon.com:8080/catalog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -9,7 +9,6 @@ Method | HTTP request | Description
 [**getRawUsingGET**](CatalogObjectControllerApi.md#getRawUsingGET) | **GET** /buckets/{bucketName}/resources/{name}/raw | Gets the raw content of the last revision of a catalog object
 [**getUsingGET**](CatalogObjectControllerApi.md#getUsingGET) | **GET** /buckets/{bucketName}/resources/{name} | Gets a catalog object&#39;s metadata by IDs
 [**listUsingGET1**](CatalogObjectControllerApi.md#listUsingGET1) | **GET** /buckets/{bucketName}/resources | Lists catalog objects metadata
-[**restoreUsingPUT**](CatalogObjectControllerApi.md#restoreUsingPUT) | **PUT** /buckets/{bucketName}/resources/{name} | Restore a catalog object revision
 
 
 <a name="createUsingPOST1"></a>
@@ -21,8 +20,8 @@ Creates a new catalog object
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.CatalogObjectControllerApi;
+//import org.ow2.proactive.catalog.client.ApiException;
+//import org.ow2.proactive.catalog.client.api.CatalogObjectControllerApi;
 
 
 CatalogObjectControllerApi apiInstance = new CatalogObjectControllerApi();
@@ -78,8 +77,8 @@ Delete the entire catalog object as well as its revisions. Returns the deleted C
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.CatalogObjectControllerApi;
+//import org.ow2.proactive.catalog.client.ApiException;
+//import org.ow2.proactive.catalog.client.api.CatalogObjectControllerApi;
 
 
 CatalogObjectControllerApi apiInstance = new CatalogObjectControllerApi();
@@ -125,8 +124,8 @@ Gets the raw content of the last revision of a catalog object
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.CatalogObjectControllerApi;
+//import org.ow2.proactive.catalog.client.ApiException;
+//import org.ow2.proactive.catalog.client.api.CatalogObjectControllerApi;
 
 
 CatalogObjectControllerApi apiInstance = new CatalogObjectControllerApi();
@@ -174,8 +173,8 @@ Returns metadata associated to the latest revision of the catalog object.
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.CatalogObjectControllerApi;
+//import org.ow2.proactive.catalog.client.ApiException;
+//import org.ow2.proactive.catalog.client.api.CatalogObjectControllerApi;
 
 
 CatalogObjectControllerApi apiInstance = new CatalogObjectControllerApi();
@@ -223,8 +222,8 @@ Returns catalog objects metadata associated to the latest revision.
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.CatalogObjectControllerApi;
+//import org.ow2.proactive.catalog.client.ApiException;
+//import org.ow2.proactive.catalog.client.api.CatalogObjectControllerApi;
 
 
 CatalogObjectControllerApi apiInstance = new CatalogObjectControllerApi();
@@ -263,51 +262,3 @@ No authorization required
  - **Content-Type**: application/json
  - **Accept**: */*
 
-<a name="restoreUsingPUT"></a>
-# **restoreUsingPUT**
-> CatalogObjectMetadata restoreUsingPUT(bucketName, name, commitTimeRaw, sessionID)
-
-Restore a catalog object revision
-
-### Example
-```java
-// Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.CatalogObjectControllerApi;
-
-
-CatalogObjectControllerApi apiInstance = new CatalogObjectControllerApi();
-String bucketName = "bucketName_example"; // String | bucketName
-String name = "name_example"; // String | name
-Long commitTimeRaw = 789L; // Long | commitTimeRaw
-String sessionID = "sessionID_example"; // String | sessionID
-try {
-    CatalogObjectMetadata result = apiInstance.restoreUsingPUT(bucketName, name, commitTimeRaw, sessionID);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling CatalogObjectControllerApi#restoreUsingPUT");
-    e.printStackTrace();
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **bucketName** | **String**| bucketName |
- **name** | **String**| name |
- **commitTimeRaw** | **Long**| commitTimeRaw |
- **sessionID** | **String**| sessionID | [optional]
-
-### Return type
-
-[**CatalogObjectMetadata**](CatalogObjectMetadata.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: */*

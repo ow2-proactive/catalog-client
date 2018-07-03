@@ -1,6 +1,6 @@
 # BucketControllerApi
 
-All URIs are relative to *https://localhost:8080/catalog*
+All URIs are relative to *https://trydev.activeeon.com:8080/catalog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -20,8 +20,8 @@ Delete the empty buckets
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.BucketControllerApi;
+//import org.ow2.proactive.catalog.client.ApiException;
+//import org.ow2.proactive.catalog.client.api.BucketControllerApi;
 
 
 BucketControllerApi apiInstance = new BucketControllerApi();
@@ -58,8 +58,8 @@ Creates a new bucket
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.BucketControllerApi;
+//import org.ow2.proactive.catalog.client.ApiException;
+//import org.ow2.proactive.catalog.client.api.BucketControllerApi;
 
 
 BucketControllerApi apiInstance = new BucketControllerApi();
@@ -107,8 +107,8 @@ It&#39;s forbidden to delete a non-empty bucket. You need to delete manually all
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.BucketControllerApi;
+//import org.ow2.proactive.catalog.client.ApiException;
+//import org.ow2.proactive.catalog.client.api.BucketControllerApi;
 
 
 BucketControllerApi apiInstance = new BucketControllerApi();
@@ -151,8 +151,8 @@ Gets a bucket&#39;s metadata by ID
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.BucketControllerApi;
+//import org.ow2.proactive.catalog.client.ApiException;
+//import org.ow2.proactive.catalog.client.api.BucketControllerApi;
 
 
 BucketControllerApi apiInstance = new BucketControllerApi();
@@ -196,8 +196,8 @@ Lists the buckets
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.BucketControllerApi;
+//import org.ow2.proactive.catalog.client.ApiException;
+//import org.ow2.proactive.catalog.client.api.BucketControllerApi;
 
 
 BucketControllerApi apiInstance = new BucketControllerApi();
@@ -233,3 +233,4 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: */*
+
