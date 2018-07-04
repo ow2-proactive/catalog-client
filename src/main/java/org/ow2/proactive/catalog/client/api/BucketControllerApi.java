@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-07-02T10:41:36.662+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-07-04T11:48:46.837+02:00")
 public class BucketControllerApi {
   private ApiClient apiClient;
 
@@ -131,9 +131,10 @@ public class BucketControllerApi {
    * It&#39;s forbidden to delete a non-empty bucket. You need to delete manually all workflows in the bucket before.
    * @param bucketName bucketName (required)
    * @param sessionID sessionID (optional)
+   * @return BucketMetadata
    * @throws ApiException if fails to make API call
    */
-  public void deleteUsingDELETE(String bucketName, String sessionID) throws ApiException {
+  public BucketMetadata deleteUsingDELETE(String bucketName, String sessionID) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'bucketName' is set
@@ -168,9 +169,9 @@ public class BucketControllerApi {
 
     String[] localVarAuthNames = new String[] {  };
 
-
-    apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
-  }
+    GenericType<BucketMetadata> localVarReturnType = new GenericType<BucketMetadata>() {};
+    return apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
   /**
    * Gets a bucket&#39;s metadata by ID
    * 

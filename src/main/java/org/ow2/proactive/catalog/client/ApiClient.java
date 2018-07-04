@@ -53,10 +53,10 @@ import org.ow2.proactive.catalog.client.auth.HttpBasicAuth;
 import org.ow2.proactive.catalog.client.auth.ApiKeyAuth;
 import org.ow2.proactive.catalog.client.auth.OAuth;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-07-02T10:41:36.662+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-07-04T11:48:46.837+02:00")
 public class ApiClient {
   private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
-  private String basePath = "https://trydev.activeeon.com:8080/catalog";
+  private String basePath = "https://localhost:8080/catalog";
   private boolean debugging = false;
   private int connectionTimeout = 0;
 

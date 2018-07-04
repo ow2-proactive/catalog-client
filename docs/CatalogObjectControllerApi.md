@@ -1,6 +1,6 @@
 # CatalogObjectControllerApi
 
-All URIs are relative to *https://trydev.activeeon.com:8080/catalog*
+All URIs are relative to *https://localhost:8080/catalog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -68,11 +68,11 @@ No authorization required
 
 <a name="deleteUsingDELETE1"></a>
 # **deleteUsingDELETE1**
-> Object deleteUsingDELETE1(bucketName, name, sessionID)
+> CatalogObjectMetadata deleteUsingDELETE1(bucketName, name, sessionID)
 
 Delete a catalog object
 
-Delete the entire catalog object as well as its revisions. Returns the deleted CatalogRawObject&#39;s metadata
+Delete the entire catalog object as well as its revisions. Returns the deleted CatalogObject&#39;s metadata.
 
 ### Example
 ```java
@@ -86,7 +86,7 @@ String bucketName = "bucketName_example"; // String | bucketName
 String name = "name_example"; // String | name
 String sessionID = "sessionID_example"; // String | sessionID
 try {
-    Object result = apiInstance.deleteUsingDELETE1(bucketName, name, sessionID);
+    CatalogObjectMetadata result = apiInstance.deleteUsingDELETE1(bucketName, name, sessionID);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling CatalogObjectControllerApi#deleteUsingDELETE1");
@@ -104,7 +104,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**CatalogObjectMetadata**](CatalogObjectMetadata.md)
 
 ### Authorization
 

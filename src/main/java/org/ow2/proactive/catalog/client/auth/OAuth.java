@@ -18,7 +18,7 @@ import org.ow2.proactive.catalog.client.Pair;
 import java.util.Map;
 import java.util.List;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-07-02T10:41:36.662+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-07-04T11:48:46.837+02:00")
 public class OAuth implements Authentication {
   private String accessToken;
 

@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-07-02T10:41:36.662+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-07-04T11:48:46.837+02:00")
 public class CatalogObjectControllerApi {
   private ApiClient apiClient;
 
@@ -129,14 +129,14 @@ public class CatalogObjectControllerApi {
       }
   /**
    * Delete a catalog object
-   * Delete the entire catalog object as well as its revisions. Returns the deleted CatalogRawObject&#39;s metadata
+   * Delete the entire catalog object as well as its revisions. Returns the deleted CatalogObject&#39;s metadata.
    * @param bucketName bucketName (required)
    * @param name name (required)
    * @param sessionID sessionID (optional)
-   * @return Object
+   * @return CatalogObjectMetadata
    * @throws ApiException if fails to make API call
    */
-  public Object deleteUsingDELETE1(String bucketName, String name, String sessionID) throws ApiException {
+  public CatalogObjectMetadata deleteUsingDELETE1(String bucketName, String name, String sessionID) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'bucketName' is set
@@ -177,7 +177,7 @@ public class CatalogObjectControllerApi {
 
     String[] localVarAuthNames = new String[] {  };
 
-    GenericType<Object> localVarReturnType = new GenericType<Object>() {};
+    GenericType<CatalogObjectMetadata> localVarReturnType = new GenericType<CatalogObjectMetadata>() {};
     return apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
   /**

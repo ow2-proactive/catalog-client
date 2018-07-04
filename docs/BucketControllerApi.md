@@ -1,6 +1,6 @@
 # BucketControllerApi
 
-All URIs are relative to *https://trydev.activeeon.com:8080/catalog*
+All URIs are relative to *https://localhost:8080/catalog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -98,7 +98,7 @@ No authorization required
 
 <a name="deleteUsingDELETE"></a>
 # **deleteUsingDELETE**
-> deleteUsingDELETE(bucketName, sessionID)
+> BucketMetadata deleteUsingDELETE(bucketName, sessionID)
 
 Delete an empty bucket
 
@@ -115,7 +115,8 @@ BucketControllerApi apiInstance = new BucketControllerApi();
 String bucketName = "bucketName_example"; // String | bucketName
 String sessionID = "sessionID_example"; // String | sessionID
 try {
-    apiInstance.deleteUsingDELETE(bucketName, sessionID);
+    BucketMetadata result = apiInstance.deleteUsingDELETE(bucketName, sessionID);
+    System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling BucketControllerApi#deleteUsingDELETE");
     e.printStackTrace();
@@ -131,7 +132,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+[**BucketMetadata**](BucketMetadata.md)
 
 ### Authorization
 

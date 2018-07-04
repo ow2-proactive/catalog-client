@@ -26,7 +26,7 @@ import org.ow2.proactive.catalog.client.model.CatalogObjectMetadata;
 /**
  * CatalogObjectMetadataList
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-07-02T10:41:36.662+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-07-04T11:48:46.837+02:00")
 public class CatalogObjectMetadataList {
   @JsonProperty("object")
   private List<CatalogObjectMetadata> object = null;
