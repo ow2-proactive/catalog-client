@@ -25,12 +25,28 @@ import com.sun.jersey.api.client.filter.GZIPContentEncodingFilter;
 import com.sun.jersey.api.client.filter.LoggingFilter;
 import com.sun.jersey.api.client.WebResource.Builder;
 
+import com.sun.jersey.client.urlconnection.HTTPSProperties;
 import com.sun.jersey.multipart.FormDataMultiPart;
 import com.sun.jersey.multipart.file.FileDataBodyPart;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
+import javax.net.ssl.X509ExtendedTrustManager;
+import javax.net.ssl.X509TrustManager;
 import javax.ws.rs.core.Response.Status.Family;
 import javax.ws.rs.core.MediaType;
 
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -48,6 +64,7 @@ import java.io.UnsupportedEncodingException;
 
 import java.text.DateFormat;
 
+import org.apache.http.util.EntityUtils;
 import org.ow2.proactive.catalog.client.auth.Authentication;
 import org.ow2.proactive.catalog.client.auth.HttpBasicAuth;
 import org.ow2.proactive.catalog.client.auth.ApiKeyAuth;
@@ -107,8 +124,11 @@ public class ApiClient {
   public ApiClient rebuildHttpClient() {
     // Add the JSON serialization support to Jersey
     JacksonJsonProvider jsonProvider = new JacksonJsonProvider(objectMapper);
+
     DefaultClientConfig conf = new DefaultClientConfig();
+
     conf.getSingletons().add(jsonProvider);
+    conf.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES, new HTTPSProperties(getHostnameVerifier(),getSslContext()));
     Client client = Client.create(conf);
     client.addFilter(new GZIPContentEncodingFilter(false));
     if (debugging) {
@@ -116,6 +136,40 @@ public class ApiClient {
     }
     this.httpClient = client;
     return this;
+  }
+
+  private SSLContext getSslContext(){
+      try{
+          SSLContext ctx = SSLContext.getInstance("SSL");
+          ctx.init(null,new TrustManager[]{getTrustManager()},new SecureRandom());
+          return ctx;
+      }catch (NoSuchAlgorithmException | KeyManagementException e){
+          throw new RuntimeException("Exception thown when initializing SSL");
+      }
+  }
+
+  private HostnameVerifier getHostnameVerifier(){
+      return  new HostnameVerifier() {
+          @Override
+          public boolean verify(String s, SSLSession sslSession) {
+              return true;
+          }
+      };
+  }
+
+  private X509TrustManager getTrustManager(){
+      return new X509TrustManager() {
+          @Override
+          public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {}
+
+          @Override
+          public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {}
+
+          @Override
+          public X509Certificate[] getAcceptedIssuers() {
+              return null;
+          }
+      };
   }
 
   /**
