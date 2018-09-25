@@ -26,8 +26,9 @@ src/main/java/org/ow2/proactive/catalog/client/service/**
 src/main/java/org/ow2/proactive/catalog/client/api/CatalogResolveObjectControllerApi.java
 src/main/java/resources/**
 
-# In order to regenerate test comment the next line then uncomment the two following lines
-#src/test/java/**
+# ApiClient contains hand written code to allow certificate with https
+src/main/java/org/ow2/proactive/catalog/client/ApiClient.java
+
 src/test/**
 pom.xml
 git_push.sh

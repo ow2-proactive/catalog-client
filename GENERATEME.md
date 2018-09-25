@@ -15,3 +15,5 @@ java -jar ./swagger-codegen/modules/swagger-codegen-cli/target/swagger-codegen-c
 
 In order to get more help about the java language the following command can be used:
 java -jar ./swagger-codegen/modules/swagger-codegen-cli/target/swagger-codegen-cli.jar config-help -l java
+
+The class src/main/java/org/ow2/proactive/catalog/client/api/CatalogResolveObjectControllerApi.java was not generated and the class ApiClient.java was modified manually. As a consequence both files are in .swagger-codegen-ignore. They must be modified with extreme caution. In order to regenerate them they must be removed from .swagger-coden-ignore file.
