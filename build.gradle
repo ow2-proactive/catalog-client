@@ -69,6 +69,7 @@ dependencies {
     compile "org.projectlombok:lombok"
     compile "com.google.guava:guava"
     compile "com.jayway.restassured:rest-assured"
+    compile "javax.ws.rs:javax.ws.rs-api"
 
     testCompile "com.google.truth:truth"
     testCompile "org.mockito:mockito-core"
