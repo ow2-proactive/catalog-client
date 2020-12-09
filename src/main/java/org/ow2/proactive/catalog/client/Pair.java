@@ -13,7 +13,7 @@
 
 package org.ow2.proactive.catalog.client;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-07-04T11:48:46.837+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-12-09T10:37:34.255+01:00")
 public class Pair {
     private String name = "";
     private String value = "";
