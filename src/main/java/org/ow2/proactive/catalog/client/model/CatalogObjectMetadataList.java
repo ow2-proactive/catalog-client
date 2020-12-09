@@ -14,6 +14,7 @@
 package org.ow2.proactive.catalog.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -26,7 +27,10 @@ import org.ow2.proactive.catalog.client.model.CatalogObjectMetadata;
 /**
  * CatalogObjectMetadataList
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-07-04T11:48:46.837+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-12-09T10:37:34.255+01:00")
+
+
+
 public class CatalogObjectMetadataList {
   @JsonProperty("object")
   private List<CatalogObjectMetadata> object = null;

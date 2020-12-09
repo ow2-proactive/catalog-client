@@ -14,6 +14,7 @@
 package org.ow2.proactive.catalog.client.model;
 
 import java.util.Objects;
+import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -27,7 +28,10 @@ import org.ow2.proactive.catalog.client.model.Metadata;
 /**
  * CatalogObjectMetadata
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-07-04T11:48:46.837+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-12-09T10:37:34.255+01:00")
+
+
+
 public class CatalogObjectMetadata {
   @JsonProperty("bucket_name")
   private String bucketName = null;
@@ -44,6 +48,9 @@ public class CatalogObjectMetadata {
   @JsonProperty("content_type")
   private String contentType = null;
 
+  @JsonProperty("extension")
+  private String extension = null;
+
   @JsonProperty("kind")
   private String kind = null;
 
@@ -55,6 +62,12 @@ public class CatalogObjectMetadata {
 
   @JsonProperty("object_key_values")
   private List<Metadata> objectKeyValues = null;
+
+  @JsonProperty("project_name")
+  private String projectName = null;
+
+  @JsonProperty("username")
+  private String username = null;
 
   public CatalogObjectMetadata bucketName(String bucketName) {
     this.bucketName = bucketName;
@@ -146,6 +159,24 @@ public class CatalogObjectMetadata {
     this.contentType = contentType;
   }
 
+  public CatalogObjectMetadata extension(String extension) {
+    this.extension = extension;
+    return this;
+  }
+
+   /**
+   * Get extension
+   * @return extension
+  **/
+  @ApiModelProperty(value = "")
+  public String getExtension() {
+    return extension;
+  }
+
+  public void setExtension(String extension) {
+    this.extension = extension;
+  }
+
   public CatalogObjectMetadata kind(String kind) {
     this.kind = kind;
     return this;
@@ -234,6 +265,42 @@ public class CatalogObjectMetadata {
     this.objectKeyValues = objectKeyValues;
   }
 
+  public CatalogObjectMetadata projectName(String projectName) {
+    this.projectName = projectName;
+    return this;
+  }
+
+   /**
+   * Get projectName
+   * @return projectName
+  **/
+  @ApiModelProperty(value = "")
+  public String getProjectName() {
+    return projectName;
+  }
+
+  public void setProjectName(String projectName) {
+    this.projectName = projectName;
+  }
+
+  public CatalogObjectMetadata username(String username) {
+    this.username = username;
+    return this;
+  }
+
+   /**
+   * Get username
+   * @return username
+  **/
+  @ApiModelProperty(value = "")
+  public String getUsername() {
+    return username;
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -249,15 +316,18 @@ public class CatalogObjectMetadata {
         Objects.equals(this.commitTime, catalogObjectMetadata.commitTime) &&
         Objects.equals(this.commitTimeRaw, catalogObjectMetadata.commitTimeRaw) &&
         Objects.equals(this.contentType, catalogObjectMetadata.contentType) &&
+        Objects.equals(this.extension, catalogObjectMetadata.extension) &&
         Objects.equals(this.kind, catalogObjectMetadata.kind) &&
         Objects.equals(this.links, catalogObjectMetadata.links) &&
         Objects.equals(this.name, catalogObjectMetadata.name) &&
-        Objects.equals(this.objectKeyValues, catalogObjectMetadata.objectKeyValues);
+        Objects.equals(this.objectKeyValues, catalogObjectMetadata.objectKeyValues) &&
+        Objects.equals(this.projectName, catalogObjectMetadata.projectName) &&
+        Objects.equals(this.username, catalogObjectMetadata.username);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(bucketName, commitMessage, commitTime, commitTimeRaw, contentType, kind, links, name, objectKeyValues);
+    return Objects.hash(bucketName, commitMessage, commitTime, commitTimeRaw, contentType, extension, kind, links, name, objectKeyValues, projectName, username);
   }
 
 
@@ -271,10 +341,13 @@ public class CatalogObjectMetadata {
     sb.append("    commitTime: ").append(toIndentedString(commitTime)).append("\n");
     sb.append("    commitTimeRaw: ").append(toIndentedString(commitTimeRaw)).append("\n");
     sb.append("    contentType: ").append(toIndentedString(contentType)).append("\n");
+    sb.append("    extension: ").append(toIndentedString(extension)).append("\n");
     sb.append("    kind: ").append(toIndentedString(kind)).append("\n");
     sb.append("    links: ").append(toIndentedString(links)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    objectKeyValues: ").append(toIndentedString(objectKeyValues)).append("\n");
+    sb.append("    projectName: ").append(toIndentedString(projectName)).append("\n");
+    sb.append("    username: ").append(toIndentedString(username)).append("\n");
     sb.append("}");
     return sb.toString();
   }

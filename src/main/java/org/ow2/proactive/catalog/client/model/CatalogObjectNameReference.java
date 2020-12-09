@@ -20,57 +20,43 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.ArrayList;
-import java.util.List;
-import org.ow2.proactive.catalog.client.model.Link;
 
 /**
- * BucketMetadata
+ * CatalogObjectNameReference
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-12-09T10:37:34.255+01:00")
 
 
 
-public class BucketMetadata {
-  @JsonProperty("links")
-  private List<Link> links = null;
+public class CatalogObjectNameReference {
+  @JsonProperty("bucket_name")
+  private String bucketName = null;
 
   @JsonProperty("name")
   private String name = null;
 
-  @JsonProperty("objectCount")
-  private Integer objectCount = null;
+  @JsonProperty("project_name")
+  private String projectName = null;
 
-  @JsonProperty("owner")
-  private String owner = null;
-
-  public BucketMetadata links(List<Link> links) {
-    this.links = links;
-    return this;
-  }
-
-  public BucketMetadata addLinksItem(Link linksItem) {
-    if (this.links == null) {
-      this.links = new ArrayList<>();
-    }
-    this.links.add(linksItem);
+  public CatalogObjectNameReference bucketName(String bucketName) {
+    this.bucketName = bucketName;
     return this;
   }
 
    /**
-   * Get links
-   * @return links
+   * Get bucketName
+   * @return bucketName
   **/
   @ApiModelProperty(value = "")
-  public List<Link> getLinks() {
-    return links;
+  public String getBucketName() {
+    return bucketName;
   }
 
-  public void setLinks(List<Link> links) {
-    this.links = links;
+  public void setBucketName(String bucketName) {
+    this.bucketName = bucketName;
   }
 
-  public BucketMetadata name(String name) {
+  public CatalogObjectNameReference name(String name) {
     this.name = name;
     return this;
   }
@@ -88,40 +74,22 @@ public class BucketMetadata {
     this.name = name;
   }
 
-  public BucketMetadata objectCount(Integer objectCount) {
-    this.objectCount = objectCount;
+  public CatalogObjectNameReference projectName(String projectName) {
+    this.projectName = projectName;
     return this;
   }
 
    /**
-   * Get objectCount
-   * @return objectCount
+   * Get projectName
+   * @return projectName
   **/
   @ApiModelProperty(value = "")
-  public Integer getObjectCount() {
-    return objectCount;
+  public String getProjectName() {
+    return projectName;
   }
 
-  public void setObjectCount(Integer objectCount) {
-    this.objectCount = objectCount;
-  }
-
-  public BucketMetadata owner(String owner) {
-    this.owner = owner;
-    return this;
-  }
-
-   /**
-   * Get owner
-   * @return owner
-  **/
-  @ApiModelProperty(value = "")
-  public String getOwner() {
-    return owner;
-  }
-
-  public void setOwner(String owner) {
-    this.owner = owner;
+  public void setProjectName(String projectName) {
+    this.projectName = projectName;
   }
 
 
@@ -133,28 +101,26 @@ public class BucketMetadata {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BucketMetadata bucketMetadata = (BucketMetadata) o;
-    return Objects.equals(this.links, bucketMetadata.links) &&
-        Objects.equals(this.name, bucketMetadata.name) &&
-        Objects.equals(this.objectCount, bucketMetadata.objectCount) &&
-        Objects.equals(this.owner, bucketMetadata.owner);
+    CatalogObjectNameReference catalogObjectNameReference = (CatalogObjectNameReference) o;
+    return Objects.equals(this.bucketName, catalogObjectNameReference.bucketName) &&
+        Objects.equals(this.name, catalogObjectNameReference.name) &&
+        Objects.equals(this.projectName, catalogObjectNameReference.projectName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(links, name, objectCount, owner);
+    return Objects.hash(bucketName, name, projectName);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class BucketMetadata {\n");
+    sb.append("class CatalogObjectNameReference {\n");
     
-    sb.append("    links: ").append(toIndentedString(links)).append("\n");
+    sb.append("    bucketName: ").append(toIndentedString(bucketName)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    objectCount: ").append(toIndentedString(objectCount)).append("\n");
-    sb.append("    owner: ").append(toIndentedString(owner)).append("\n");
+    sb.append("    projectName: ").append(toIndentedString(projectName)).append("\n");
     sb.append("}");
     return sb.toString();
   }

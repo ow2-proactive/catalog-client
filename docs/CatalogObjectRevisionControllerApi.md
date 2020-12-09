@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 <a name="createUsingPOST2"></a>
 # **createUsingPOST2**
-> CatalogObjectMetadata createUsingPOST2(bucketName, name, commitMessage, file, sessionID)
+> CatalogObjectMetadata createUsingPOST2(sessionID, bucketName, name, commitMessage, file, projectName)
 
 Creates a new catalog object revision
 
@@ -25,13 +25,14 @@ Creates a new catalog object revision
 
 
 CatalogObjectRevisionControllerApi apiInstance = new CatalogObjectRevisionControllerApi();
+String sessionID = "sessionID_example"; // String | sessionID
 String bucketName = "bucketName_example"; // String | bucketName
 String name = "name_example"; // String | name
 String commitMessage = "commitMessage_example"; // String | The commit message of the CatalogRawObject Revision
 File file = new File("/path/to/file.txt"); // File | file
-String sessionID = "sessionID_example"; // String | sessionID
+String projectName = "projectName_example"; // String | Project of the object
 try {
-    CatalogObjectMetadata result = apiInstance.createUsingPOST2(bucketName, name, commitMessage, file, sessionID);
+    CatalogObjectMetadata result = apiInstance.createUsingPOST2(sessionID, bucketName, name, commitMessage, file, projectName);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling CatalogObjectRevisionControllerApi#createUsingPOST2");
@@ -43,11 +44,12 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **sessionID** | **String**| sessionID |
  **bucketName** | **String**| bucketName |
  **name** | **String**| name |
  **commitMessage** | **String**| The commit message of the CatalogRawObject Revision |
  **file** | **File**| file |
- **sessionID** | **String**| sessionID | [optional]
+ **projectName** | **String**| Project of the object | [optional]
 
 ### Return type
 
@@ -209,7 +211,7 @@ No authorization required
 
 <a name="restoreUsingPUT"></a>
 # **restoreUsingPUT**
-> CatalogObjectMetadata restoreUsingPUT(bucketName, name, commitTimeRaw, sessionID)
+> CatalogObjectMetadata restoreUsingPUT(sessionID, bucketName, name, commitTimeRaw)
 
 Restore a catalog object revision
 
@@ -221,12 +223,12 @@ Restore a catalog object revision
 
 
 CatalogObjectRevisionControllerApi apiInstance = new CatalogObjectRevisionControllerApi();
+String sessionID = "sessionID_example"; // String | sessionID
 String bucketName = "bucketName_example"; // String | bucketName
 String name = "name_example"; // String | name
 Long commitTimeRaw = 789L; // Long | commitTimeRaw
-String sessionID = "sessionID_example"; // String | sessionID
 try {
-    CatalogObjectMetadata result = apiInstance.restoreUsingPUT(bucketName, name, commitTimeRaw, sessionID);
+    CatalogObjectMetadata result = apiInstance.restoreUsingPUT(sessionID, bucketName, name, commitTimeRaw);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling CatalogObjectRevisionControllerApi#restoreUsingPUT");
@@ -238,10 +240,10 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **sessionID** | **String**| sessionID |
  **bucketName** | **String**| bucketName |
  **name** | **String**| name |
  **commitTimeRaw** | **Long**| commitTimeRaw |
- **sessionID** | **String**| sessionID | [optional]
 
 ### Return type
 

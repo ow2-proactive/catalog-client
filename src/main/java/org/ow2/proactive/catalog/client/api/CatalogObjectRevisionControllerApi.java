@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-07-04T11:48:46.837+02:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-12-09T10:37:34.255+01:00")
 public class CatalogObjectRevisionControllerApi {
   private ApiClient apiClient;
 
@@ -52,16 +52,22 @@ public class CatalogObjectRevisionControllerApi {
   /**
    * Creates a new catalog object revision
    * 
+   * @param sessionID sessionID (required)
    * @param bucketName bucketName (required)
    * @param name name (required)
    * @param commitMessage The commit message of the CatalogRawObject Revision (required)
    * @param file file (required)
-   * @param sessionID sessionID (optional)
+   * @param projectName Project of the object (optional)
    * @return CatalogObjectMetadata
    * @throws ApiException if fails to make API call
    */
-  public CatalogObjectMetadata createUsingPOST2(String bucketName, String name, String commitMessage, File file, String sessionID) throws ApiException {
+  public CatalogObjectMetadata createUsingPOST2(String sessionID, String bucketName, String name, String commitMessage, File file, String projectName) throws ApiException {
     Object localVarPostBody = null;
+    
+    // verify the required parameter 'sessionID' is set
+    if (sessionID == null) {
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling createUsingPOST2");
+    }
     
     // verify the required parameter 'bucketName' is set
     if (bucketName == null) {
@@ -95,6 +101,7 @@ public class CatalogObjectRevisionControllerApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
     localVarQueryParams.addAll(apiClient.parameterToPair("commitMessage", commitMessage));
+    localVarQueryParams.addAll(apiClient.parameterToPair("projectName", projectName));
 
     if (sessionID != null)
       localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
@@ -293,15 +300,20 @@ public class CatalogObjectRevisionControllerApi {
   /**
    * Restore a catalog object revision
    * 
+   * @param sessionID sessionID (required)
    * @param bucketName bucketName (required)
    * @param name name (required)
    * @param commitTimeRaw commitTimeRaw (required)
-   * @param sessionID sessionID (optional)
    * @return CatalogObjectMetadata
    * @throws ApiException if fails to make API call
    */
-  public CatalogObjectMetadata restoreUsingPUT(String bucketName, String name, Long commitTimeRaw, String sessionID) throws ApiException {
+  public CatalogObjectMetadata restoreUsingPUT(String sessionID, String bucketName, String name, Long commitTimeRaw) throws ApiException {
     Object localVarPostBody = null;
+    
+    // verify the required parameter 'sessionID' is set
+    if (sessionID == null) {
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling restoreUsingPUT");
+    }
     
     // verify the required parameter 'bucketName' is set
     if (bucketName == null) {
