@@ -13,7 +13,7 @@
 
 package org.ow2.proactive.catalog.client;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-12-09T10:37:34.255+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-26T13:41:32.805+01:00")
 public class Configuration {
     private static ApiClient defaultApiClient = new ApiClient();
 

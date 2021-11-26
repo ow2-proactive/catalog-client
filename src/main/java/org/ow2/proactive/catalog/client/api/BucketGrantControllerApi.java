@@ -20,7 +20,7 @@ import org.ow2.proactive.catalog.client.Configuration;
 import org.ow2.proactive.catalog.client.model.*;
 import org.ow2.proactive.catalog.client.Pair;
 
-import org.ow2.proactive.catalog.client.model.BucketMetadata;
+import org.ow2.proactive.catalog.client.model.BucketGrantMetadata;
 
 
 import java.util.ArrayList;
@@ -29,14 +29,14 @@ import java.util.List;
 import java.util.Map;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-26T13:41:32.805+01:00")
-public class BucketControllerApi {
+public class BucketGrantControllerApi {
   private ApiClient apiClient;
 
-  public BucketControllerApi() {
+  public BucketGrantControllerApi() {
     this(Configuration.getDefaultApiClient());
   }
 
-  public BucketControllerApi(ApiClient apiClient) {
+  public BucketGrantControllerApi(ApiClient apiClient) {
     this.apiClient = apiClient;
   }
 
@@ -49,59 +49,27 @@ public class BucketControllerApi {
   }
 
   /**
-   * Delete the empty buckets
-   * 
-   * @throws ApiException if fails to make API call
-   */
-  public void cleanEmptyUsingDELETE() throws ApiException {
-    Object localVarPostBody = null;
-    
-    // create path and map variables
-    String localVarPath = "/buckets";
-
-    // query params
-    List<Pair> localVarQueryParams = new ArrayList<Pair>();
-    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-
-    
-    
-    final String[] localVarAccepts = {
-      "*/*"
-    };
-    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-
-    final String[] localVarContentTypes = {
-      "application/json"
-    };
-    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-
-    String[] localVarAuthNames = new String[] {  };
-
-
-    apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
-  }
-  /**
-   * Creates a new bucket
+   * Create a new username grant or a user group grant access for a bucket
    * 
    * @param sessionID sessionID (required)
-   * @param name The unique name of the Bucket. /n The name of bucket can be between 3 and 63 characters long, and can contain only lower-case characters, numbers, and dashes. /nA bucket&#39;s name must start with a lowercase letter and cannot terminate with a dash (optional)
-   * @param owner The name of the user that will own the Bucket (optional, default to GROUP:public-objects)
-   * @return BucketMetadata
+   * @param bucketName The name of the Bucket (optional)
+   * @param currentUser The user who is creating this grant (optional)
+   * @param accessType The access type of the grant (optional)
+   * @param username The name of the user that will have grant access (optional)
+   * @param userGroup The name of the user group that will have grant access (optional)
+   * @return BucketGrantMetadata
    * @throws ApiException if fails to make API call
    */
-  public BucketMetadata createUsingPOST(String sessionID, String name, String owner) throws ApiException {
+  public BucketGrantMetadata createBucketGrantUsingPOST(String sessionID, String bucketName, String currentUser, String accessType, String username, String userGroup) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'sessionID' is set
     if (sessionID == null) {
-      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling createUsingPOST");
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling createBucketGrantUsingPOST");
     }
     
     // create path and map variables
-    String localVarPath = "/buckets";
+    String localVarPath = "/buckets/grant";
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -109,8 +77,11 @@ public class BucketControllerApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    localVarQueryParams.addAll(apiClient.parameterToPair("name", name));
-    localVarQueryParams.addAll(apiClient.parameterToPair("owner", owner));
+    localVarQueryParams.addAll(apiClient.parameterToPair("bucketName", bucketName));
+    localVarQueryParams.addAll(apiClient.parameterToPair("currentUser", currentUser));
+    localVarQueryParams.addAll(apiClient.parameterToPair("accessType", accessType));
+    localVarQueryParams.addAll(apiClient.parameterToPair("username", username));
+    localVarQueryParams.addAll(apiClient.parameterToPair("userGroup", userGroup));
 
     if (sessionID != null)
       localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
@@ -128,33 +99,30 @@ public class BucketControllerApi {
 
     String[] localVarAuthNames = new String[] {  };
 
-    GenericType<BucketMetadata> localVarReturnType = new GenericType<BucketMetadata>() {};
+    GenericType<BucketGrantMetadata> localVarReturnType = new GenericType<BucketGrantMetadata>() {};
     return apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
   /**
-   * Delete an empty bucket
-   * It&#39;s forbidden to delete a non-empty bucket. You need to delete manually all workflows in the bucket before.
+   * Delete a grant access for a bucket
+   * 
    * @param sessionID sessionID (required)
-   * @param bucketName bucketName (required)
-   * @return BucketMetadata
+   * @param bucketName The name of the Bucket (optional)
+   * @param currentUser The current user (optional)
+   * @param username The name of the user that have grant access over this bucket (optional)
+   * @param userGroup The name of the user group that have grant access over this bucket (optional)
+   * @return BucketGrantMetadata
    * @throws ApiException if fails to make API call
    */
-  public BucketMetadata deleteUsingDELETE(String sessionID, String bucketName) throws ApiException {
+  public BucketGrantMetadata deleteBucketGrantUsingDELETE(String sessionID, String bucketName, String currentUser, String username, String userGroup) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'sessionID' is set
     if (sessionID == null) {
-      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling deleteUsingDELETE");
-    }
-    
-    // verify the required parameter 'bucketName' is set
-    if (bucketName == null) {
-      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling deleteUsingDELETE");
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling deleteBucketGrantUsingDELETE");
     }
     
     // create path and map variables
-    String localVarPath = "/buckets/{bucketName}"
-      .replaceAll("\\{" + "bucketName" + "\\}", apiClient.escapeString(bucketName.toString()));
+    String localVarPath = "/buckets/grant";
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -162,6 +130,10 @@ public class BucketControllerApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
+    localVarQueryParams.addAll(apiClient.parameterToPair("bucketName", bucketName));
+    localVarQueryParams.addAll(apiClient.parameterToPair("currentUser", currentUser));
+    localVarQueryParams.addAll(apiClient.parameterToPair("username", username));
+    localVarQueryParams.addAll(apiClient.parameterToPair("userGroup", userGroup));
 
     if (sessionID != null)
       localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
@@ -179,127 +151,28 @@ public class BucketControllerApi {
 
     String[] localVarAuthNames = new String[] {  };
 
-    GenericType<BucketMetadata> localVarReturnType = new GenericType<BucketMetadata>() {};
+    GenericType<BucketGrantMetadata> localVarReturnType = new GenericType<BucketGrantMetadata>() {};
     return apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
   /**
-   * Gets a bucket&#39;s metadata by ID
-   * 
-   * @param bucketName bucketName (required)
-   * @param sessionID sessionID (optional)
-   * @return BucketMetadata
-   * @throws ApiException if fails to make API call
-   */
-  public BucketMetadata getMetadataUsingGET(String bucketName, String sessionID) throws ApiException {
-    Object localVarPostBody = null;
-    
-    // verify the required parameter 'bucketName' is set
-    if (bucketName == null) {
-      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling getMetadataUsingGET");
-    }
-    
-    // create path and map variables
-    String localVarPath = "/buckets/{bucketName}"
-      .replaceAll("\\{" + "bucketName" + "\\}", apiClient.escapeString(bucketName.toString()));
-
-    // query params
-    List<Pair> localVarQueryParams = new ArrayList<Pair>();
-    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-
-    if (sessionID != null)
-      localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
-
-    
-    final String[] localVarAccepts = {
-      "*/*"
-    };
-    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-
-    final String[] localVarContentTypes = {
-      "application/json"
-    };
-    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-
-    String[] localVarAuthNames = new String[] {  };
-
-    GenericType<BucketMetadata> localVarReturnType = new GenericType<BucketMetadata>() {};
-    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
-      }
-  /**
-   * Lists the buckets
-   * 
-   * @param sessionID sessionID (optional)
-   * @param owner The name of the user who owns the Bucket (optional)
-   * @param kind The kind(s) of objects that buckets must contain. Multiple kinds can be specified using comma separators (optional)
-   * @param contentType The Content-Type of objects that buckets must contain (optional)
-   * @param objectName The name of objects that buckets must contain (optional)
-   * @return List&lt;BucketMetadata&gt;
-   * @throws ApiException if fails to make API call
-   */
-  public List<BucketMetadata> listUsingGET(String sessionID, String owner, String kind, String contentType, String objectName) throws ApiException {
-    Object localVarPostBody = null;
-    
-    // create path and map variables
-    String localVarPath = "/buckets";
-
-    // query params
-    List<Pair> localVarQueryParams = new ArrayList<Pair>();
-    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-    localVarQueryParams.addAll(apiClient.parameterToPair("owner", owner));
-    localVarQueryParams.addAll(apiClient.parameterToPair("kind", kind));
-    localVarQueryParams.addAll(apiClient.parameterToPair("contentType", contentType));
-    localVarQueryParams.addAll(apiClient.parameterToPair("objectName", objectName));
-
-    if (sessionID != null)
-      localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
-
-    
-    final String[] localVarAccepts = {
-      "*/*"
-    };
-    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-
-    final String[] localVarContentTypes = {
-      "application/json"
-    };
-    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-
-    String[] localVarAuthNames = new String[] {  };
-
-    GenericType<List<BucketMetadata>> localVarReturnType = new GenericType<List<BucketMetadata>>() {};
-    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
-      }
-  /**
-   * Update bucket owner
+   * Get all assigned grants for the user and his groups
    * 
    * @param sessionID sessionID (required)
-   * @param bucketName The name of the existing Bucket  (required)
-   * @param owner The new name of the user that will own the Bucket (optional)
-   * @return BucketMetadata
+   * @param currentUser The current user (optional)
+   * @param userGroups The list of the current user groups (optional)
+   * @return List&lt;BucketGrantMetadata&gt;
    * @throws ApiException if fails to make API call
    */
-  public BucketMetadata updateBucketOwnerUsingPUT(String sessionID, String bucketName, String owner) throws ApiException {
+  public List<BucketGrantMetadata> getAssignedBucketGrantsForUserAndHisGroupUsingGET(String sessionID, String currentUser, List<String> userGroups) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'sessionID' is set
     if (sessionID == null) {
-      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling updateBucketOwnerUsingPUT");
-    }
-    
-    // verify the required parameter 'bucketName' is set
-    if (bucketName == null) {
-      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling updateBucketOwnerUsingPUT");
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling getAssignedBucketGrantsForUserAndHisGroupUsingGET");
     }
     
     // create path and map variables
-    String localVarPath = "/buckets/{bucketName}"
-      .replaceAll("\\{" + "bucketName" + "\\}", apiClient.escapeString(bucketName.toString()));
+    String localVarPath = "/buckets/grant";
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -307,7 +180,8 @@ public class BucketControllerApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    localVarQueryParams.addAll(apiClient.parameterToPair("owner", owner));
+    localVarQueryParams.addAll(apiClient.parameterToPair("currentUser", currentUser));
+    localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("multi", "userGroups", userGroups));
 
     if (sessionID != null)
       localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
@@ -325,7 +199,125 @@ public class BucketControllerApi {
 
     String[] localVarAuthNames = new String[] {  };
 
-    GenericType<BucketMetadata> localVarReturnType = new GenericType<BucketMetadata>() {};
+    GenericType<List<BucketGrantMetadata>> localVarReturnType = new GenericType<List<BucketGrantMetadata>>() {};
+    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
+   * Get all created grants by a specific user
+   * 
+   * @param sessionID sessionID (required)
+   * @param username username (required)
+   * @return List&lt;BucketGrantMetadata&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public List<BucketGrantMetadata> getCreatedBucketGrantsUsingGET(String sessionID, String username) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'sessionID' is set
+    if (sessionID == null) {
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling getCreatedBucketGrantsUsingGET");
+    }
+    
+    // verify the required parameter 'username' is set
+    if (username == null) {
+      throw new ApiException(400, "Missing the required parameter 'username' when calling getCreatedBucketGrantsUsingGET");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/buckets/grant/{username}"
+      .replaceAll("\\{" + "username" + "\\}", apiClient.escapeString(username.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    if (sessionID != null)
+      localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
+
+    
+    final String[] localVarAccepts = {
+      "*/*"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+    GenericType<List<BucketGrantMetadata>> localVarReturnType = new GenericType<List<BucketGrantMetadata>>() {};
+    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
+   * Update the access type of an existing bucket grant
+   * 
+   * @param sessionID sessionID (required)
+   * @param accessType accessType (required)
+   * @param bucketName bucketName (required)
+   * @param currentUser The user who is updating this grant (optional)
+   * @param username username (optional)
+   * @param userGroup userGroup (optional)
+   * @return BucketGrantMetadata
+   * @throws ApiException if fails to make API call
+   */
+  public BucketGrantMetadata updateBucketGrantUsingPUT(String sessionID, String accessType, String bucketName, String currentUser, String username, String userGroup) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'sessionID' is set
+    if (sessionID == null) {
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling updateBucketGrantUsingPUT");
+    }
+    
+    // verify the required parameter 'accessType' is set
+    if (accessType == null) {
+      throw new ApiException(400, "Missing the required parameter 'accessType' when calling updateBucketGrantUsingPUT");
+    }
+    
+    // verify the required parameter 'bucketName' is set
+    if (bucketName == null) {
+      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling updateBucketGrantUsingPUT");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/buckets/grant/{bucketName}"
+      .replaceAll("\\{" + "bucketName" + "\\}", apiClient.escapeString(bucketName.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    localVarQueryParams.addAll(apiClient.parameterToPair("currentUser", currentUser));
+
+    if (sessionID != null)
+      localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
+if (username != null)
+      localVarHeaderParams.put("username", apiClient.parameterToString(username));
+if (userGroup != null)
+      localVarHeaderParams.put("userGroup", apiClient.parameterToString(userGroup));
+if (accessType != null)
+      localVarHeaderParams.put("accessType", apiClient.parameterToString(accessType));
+
+    
+    final String[] localVarAccepts = {
+      "*/*"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+    GenericType<BucketGrantMetadata> localVarReturnType = new GenericType<BucketGrantMetadata>() {};
     return apiClient.invokeAPI(localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
 }

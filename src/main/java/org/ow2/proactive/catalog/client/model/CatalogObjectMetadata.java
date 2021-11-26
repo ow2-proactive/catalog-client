@@ -21,17 +21,17 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import org.ow2.proactive.catalog.client.model.JobVariable;
 import org.ow2.proactive.catalog.client.model.Link;
 import org.ow2.proactive.catalog.client.model.Metadata;
 
 /**
  * CatalogObjectMetadata
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-12-09T10:37:34.255+01:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-26T13:41:32.805+01:00")
 public class CatalogObjectMetadata {
   @JsonProperty("bucket_name")
   private String bucketName = null;
@@ -68,6 +68,9 @@ public class CatalogObjectMetadata {
 
   @JsonProperty("username")
   private String username = null;
+
+  @JsonProperty("variables_order")
+  private Map<String, Map<String, JobVariable>> variablesOrder = null;
 
   public CatalogObjectMetadata bucketName(String bucketName) {
     this.bucketName = bucketName;
@@ -301,6 +304,32 @@ public class CatalogObjectMetadata {
     this.username = username;
   }
 
+  public CatalogObjectMetadata variablesOrder(Map<String, Map<String, JobVariable>> variablesOrder) {
+    this.variablesOrder = variablesOrder;
+    return this;
+  }
+
+  public CatalogObjectMetadata putVariablesOrderItem(String key, Map<String, JobVariable> variablesOrderItem) {
+    if (this.variablesOrder == null) {
+      this.variablesOrder = new HashMap<>();
+    }
+    this.variablesOrder.put(key, variablesOrderItem);
+    return this;
+  }
+
+   /**
+   * Get variablesOrder
+   * @return variablesOrder
+  **/
+  @ApiModelProperty(value = "")
+  public Map<String, Map<String, JobVariable>> getVariablesOrder() {
+    return variablesOrder;
+  }
+
+  public void setVariablesOrder(Map<String, Map<String, JobVariable>> variablesOrder) {
+    this.variablesOrder = variablesOrder;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -322,12 +351,13 @@ public class CatalogObjectMetadata {
         Objects.equals(this.name, catalogObjectMetadata.name) &&
         Objects.equals(this.objectKeyValues, catalogObjectMetadata.objectKeyValues) &&
         Objects.equals(this.projectName, catalogObjectMetadata.projectName) &&
-        Objects.equals(this.username, catalogObjectMetadata.username);
+        Objects.equals(this.username, catalogObjectMetadata.username) &&
+        Objects.equals(this.variablesOrder, catalogObjectMetadata.variablesOrder);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(bucketName, commitMessage, commitTime, commitTimeRaw, contentType, extension, kind, links, name, objectKeyValues, projectName, username);
+    return Objects.hash(bucketName, commitMessage, commitTime, commitTimeRaw, contentType, extension, kind, links, name, objectKeyValues, projectName, username, variablesOrder);
   }
 
 
@@ -348,6 +378,7 @@ public class CatalogObjectMetadata {
     sb.append("    objectKeyValues: ").append(toIndentedString(objectKeyValues)).append("\n");
     sb.append("    projectName: ").append(toIndentedString(projectName)).append("\n");
     sb.append("    username: ").append(toIndentedString(username)).append("\n");
+    sb.append("    variablesOrder: ").append(toIndentedString(variablesOrder)).append("\n");
     sb.append("}");
     return sb.toString();
   }

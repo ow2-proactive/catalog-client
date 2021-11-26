@@ -408,7 +408,7 @@ Returns catalog objects metadata associated to the latest revision.
 CatalogObjectControllerApi apiInstance = new CatalogObjectControllerApi();
 String bucketName = "bucketName_example"; // String | bucketName
 String sessionID = "sessionID_example"; // String | sessionID
-String kind = "kind_example"; // String | Filter according to kind.
+String kind = "kind_example"; // String | Filter according to kind(s). Multiple kinds can be specified using comma separators
 String contentType = "contentType_example"; // String | Filter according to Content-Type.
 String objectName = "objectName_example"; // String | Filter according to Object Name.
 String listObjectNamesForArchive = "listObjectNamesForArchive_example"; // String | Give a list of name separated by comma to get them in an archive
@@ -429,7 +429,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **bucketName** | **String**| bucketName |
  **sessionID** | **String**| sessionID | [optional]
- **kind** | **String**| Filter according to kind. | [optional]
+ **kind** | **String**| Filter according to kind(s). Multiple kinds can be specified using comma separators | [optional]
  **contentType** | **String**| Filter according to Content-Type. | [optional]
  **objectName** | **String**| Filter according to Object Name. | [optional]
  **listObjectNamesForArchive** | **String**| Give a list of name separated by comma to get them in an archive | [optional]

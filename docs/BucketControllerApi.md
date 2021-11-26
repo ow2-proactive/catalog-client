@@ -205,7 +205,7 @@ Lists the buckets
 BucketControllerApi apiInstance = new BucketControllerApi();
 String sessionID = "sessionID_example"; // String | sessionID
 String owner = "owner_example"; // String | The name of the user who owns the Bucket
-String kind = "kind_example"; // String | The kind of objects that buckets must contain
+String kind = "kind_example"; // String | The kind(s) of objects that buckets must contain. Multiple kinds can be specified using comma separators
 String contentType = "contentType_example"; // String | The Content-Type of objects that buckets must contain
 String objectName = "objectName_example"; // String | The name of objects that buckets must contain
 try {
@@ -223,7 +223,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **sessionID** | **String**| sessionID | [optional]
  **owner** | **String**| The name of the user who owns the Bucket | [optional]
- **kind** | **String**| The kind of objects that buckets must contain | [optional]
+ **kind** | **String**| The kind(s) of objects that buckets must contain. Multiple kinds can be specified using comma separators | [optional]
  **contentType** | **String**| The Content-Type of objects that buckets must contain | [optional]
  **objectName** | **String**| The name of objects that buckets must contain | [optional]
 
