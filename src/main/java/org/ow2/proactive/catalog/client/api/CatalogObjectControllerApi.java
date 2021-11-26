@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-12-09T10:37:34.255+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-26T10:38:35.118+01:00")
 public class CatalogObjectControllerApi {
   private ApiClient apiClient;
 
@@ -473,7 +473,7 @@ public class CatalogObjectControllerApi {
    * Returns catalog objects metadata associated to the latest revision.
    * @param bucketName bucketName (required)
    * @param sessionID sessionID (optional)
-   * @param kind Filter according to kind. (optional)
+   * @param kind Filter according to kind(s). Multiple kinds can be specified using comma separators (optional)
    * @param contentType Filter according to Content-Type. (optional)
    * @param objectName Filter according to Object Name. (optional)
    * @param listObjectNamesForArchive Give a list of name separated by comma to get them in an archive (optional)

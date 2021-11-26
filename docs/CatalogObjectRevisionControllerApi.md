@@ -1,6 +1,6 @@
 # CatalogObjectRevisionControllerApi
 
-All URIs are relative to *https://localhost:8080/catalog*
+All URIs are relative to *https://marouns-mbp:8080/catalog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------

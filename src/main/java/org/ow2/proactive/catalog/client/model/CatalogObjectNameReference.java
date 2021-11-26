@@ -24,10 +24,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * CatalogObjectNameReference
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2020-12-09T10:37:34.255+01:00")
-
-
-
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-26T10:38:35.118+01:00")
 public class CatalogObjectNameReference {
   @JsonProperty("bucket_name")
   private String bucketName = null;
