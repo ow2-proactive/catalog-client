@@ -31,7 +31,7 @@ import org.ow2.proactive.catalog.client.model.Metadata;
 /**
  * CatalogObjectMetadata
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-26T13:34:24.732+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-26T13:41:32.805+01:00")
 public class CatalogObjectMetadata {
   @JsonProperty("bucket_name")
   private String bucketName = null;
