@@ -27,7 +27,7 @@ import org.ow2.proactive.catalog.client.model.Link;
 /**
  * CatalogObjectGrantMetadata
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-26T11:22:02.950+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-26T13:34:24.732+01:00")
 public class CatalogObjectGrantMetadata {
   @JsonProperty("accessType")
   private String accessType = null;

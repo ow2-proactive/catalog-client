@@ -1,6 +1,6 @@
 # CatalogObjectControllerApi
 
-All URIs are relative to *https://trydev.activeeon.com:8443/catalog*
+All URIs are relative to *https://localhost:8080/catalog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
