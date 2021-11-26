@@ -1,6 +1,6 @@
 # BucketGrantControllerApi
 
-All URIs are relative to *https://marouns-mbp:8080/catalog*
+All URIs are relative to *https://trydev.activeeon.com:8443/catalog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
