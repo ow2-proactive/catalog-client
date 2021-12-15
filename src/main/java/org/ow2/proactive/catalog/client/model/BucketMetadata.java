@@ -27,7 +27,7 @@ import org.ow2.proactive.catalog.client.model.Link;
 /**
  * BucketMetadata
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-26T13:41:32.805+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-12-15T14:22:22.307+01:00")
 public class BucketMetadata {
   @JsonProperty("links")
   private List<Link> links = null;
@@ -40,6 +40,9 @@ public class BucketMetadata {
 
   @JsonProperty("owner")
   private String owner = null;
+
+  @JsonProperty("rights")
+  private String rights = null;
 
   public BucketMetadata links(List<Link> links) {
     this.links = links;
@@ -121,6 +124,24 @@ public class BucketMetadata {
     this.owner = owner;
   }
 
+  public BucketMetadata rights(String rights) {
+    this.rights = rights;
+    return this;
+  }
+
+   /**
+   * Get rights
+   * @return rights
+  **/
+  @ApiModelProperty(value = "")
+  public String getRights() {
+    return rights;
+  }
+
+  public void setRights(String rights) {
+    this.rights = rights;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -134,12 +155,13 @@ public class BucketMetadata {
     return Objects.equals(this.links, bucketMetadata.links) &&
         Objects.equals(this.name, bucketMetadata.name) &&
         Objects.equals(this.objectCount, bucketMetadata.objectCount) &&
-        Objects.equals(this.owner, bucketMetadata.owner);
+        Objects.equals(this.owner, bucketMetadata.owner) &&
+        Objects.equals(this.rights, bucketMetadata.rights);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(links, name, objectCount, owner);
+    return Objects.hash(links, name, objectCount, owner, rights);
   }
 
 
@@ -152,6 +174,7 @@ public class BucketMetadata {
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    objectCount: ").append(toIndentedString(objectCount)).append("\n");
     sb.append("    owner: ").append(toIndentedString(owner)).append("\n");
+    sb.append("    rights: ").append(toIndentedString(rights)).append("\n");
     sb.append("}");
     return sb.toString();
   }

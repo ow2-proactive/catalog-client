@@ -20,6 +20,7 @@ import org.ow2.proactive.catalog.client.Configuration;
 import org.ow2.proactive.catalog.client.model.*;
 import org.ow2.proactive.catalog.client.Pair;
 
+import org.ow2.proactive.catalog.client.model.AllBucketGrants;
 import org.ow2.proactive.catalog.client.model.BucketGrantMetadata;
 
 
@@ -28,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-26T13:41:32.805+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-12-15T14:22:22.307+01:00")
 public class BucketGrantControllerApi {
   private ApiClient apiClient;
 
@@ -49,27 +50,41 @@ public class BucketGrantControllerApi {
   }
 
   /**
-   * Create a new username grant or a user group grant access for a bucket
+   * Create a new user group grant access for a bucket
    * 
-   * @param sessionID sessionID (required)
-   * @param bucketName The name of the Bucket (optional)
-   * @param currentUser The user who is creating this grant (optional)
-   * @param accessType The access type of the grant (optional)
-   * @param username The name of the user that will have grant access (optional)
-   * @param userGroup The name of the user group that will have grant access (optional)
+   * @param sessionID The session id used to access ProActive REST server (required)
+   * @param bucketName The name of the bucket where the catalog objects are stored. (required)
+   * @param accessType The type of the access grant. It can be either read, write or admin. (required)
+   * @param userGroup The name of the group of users that will benefit of the access grant. (required)
    * @return BucketGrantMetadata
    * @throws ApiException if fails to make API call
    */
-  public BucketGrantMetadata createBucketGrantUsingPOST(String sessionID, String bucketName, String currentUser, String accessType, String username, String userGroup) throws ApiException {
+  public BucketGrantMetadata createBucketGrantForAGroupUsingPOST(String sessionID, String bucketName, String accessType, String userGroup) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'sessionID' is set
     if (sessionID == null) {
-      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling createBucketGrantUsingPOST");
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling createBucketGrantForAGroupUsingPOST");
+    }
+    
+    // verify the required parameter 'bucketName' is set
+    if (bucketName == null) {
+      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling createBucketGrantForAGroupUsingPOST");
+    }
+    
+    // verify the required parameter 'accessType' is set
+    if (accessType == null) {
+      throw new ApiException(400, "Missing the required parameter 'accessType' when calling createBucketGrantForAGroupUsingPOST");
+    }
+    
+    // verify the required parameter 'userGroup' is set
+    if (userGroup == null) {
+      throw new ApiException(400, "Missing the required parameter 'userGroup' when calling createBucketGrantForAGroupUsingPOST");
     }
     
     // create path and map variables
-    String localVarPath = "/buckets/grant";
+    String localVarPath = "/buckets/{bucketName}/grant/group"
+      .replaceAll("\\{" + "bucketName" + "\\}", apiClient.escapeString(bucketName.toString()));
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -77,10 +92,7 @@ public class BucketGrantControllerApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    localVarQueryParams.addAll(apiClient.parameterToPair("bucketName", bucketName));
-    localVarQueryParams.addAll(apiClient.parameterToPair("currentUser", currentUser));
     localVarQueryParams.addAll(apiClient.parameterToPair("accessType", accessType));
-    localVarQueryParams.addAll(apiClient.parameterToPair("username", username));
     localVarQueryParams.addAll(apiClient.parameterToPair("userGroup", userGroup));
 
     if (sessionID != null)
@@ -103,26 +115,41 @@ public class BucketGrantControllerApi {
     return apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
   /**
-   * Delete a grant access for a bucket
+   * Create a new user grant grant access for a bucket
    * 
-   * @param sessionID sessionID (required)
-   * @param bucketName The name of the Bucket (optional)
-   * @param currentUser The current user (optional)
-   * @param username The name of the user that have grant access over this bucket (optional)
-   * @param userGroup The name of the user group that have grant access over this bucket (optional)
+   * @param sessionID The the session id used to access ProActive REST server (required)
+   * @param bucketName The name of the bucket where the catalog objects are stored. (required)
+   * @param accessType The type of the access grant. It can be either read, write or admin. (required)
+   * @param username The name of the user that will benefit of the access grant. (required)
    * @return BucketGrantMetadata
    * @throws ApiException if fails to make API call
    */
-  public BucketGrantMetadata deleteBucketGrantUsingDELETE(String sessionID, String bucketName, String currentUser, String username, String userGroup) throws ApiException {
+  public BucketGrantMetadata createBucketGrantForAUserUsingPOST(String sessionID, String bucketName, String accessType, String username) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'sessionID' is set
     if (sessionID == null) {
-      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling deleteBucketGrantUsingDELETE");
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling createBucketGrantForAUserUsingPOST");
+    }
+    
+    // verify the required parameter 'bucketName' is set
+    if (bucketName == null) {
+      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling createBucketGrantForAUserUsingPOST");
+    }
+    
+    // verify the required parameter 'accessType' is set
+    if (accessType == null) {
+      throw new ApiException(400, "Missing the required parameter 'accessType' when calling createBucketGrantForAUserUsingPOST");
+    }
+    
+    // verify the required parameter 'username' is set
+    if (username == null) {
+      throw new ApiException(400, "Missing the required parameter 'username' when calling createBucketGrantForAUserUsingPOST");
     }
     
     // create path and map variables
-    String localVarPath = "/buckets/grant";
+    String localVarPath = "/buckets/{bucketName}/grant/user"
+      .replaceAll("\\{" + "bucketName" + "\\}", apiClient.escapeString(bucketName.toString()));
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -130,9 +157,167 @@ public class BucketGrantControllerApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    localVarQueryParams.addAll(apiClient.parameterToPair("bucketName", bucketName));
-    localVarQueryParams.addAll(apiClient.parameterToPair("currentUser", currentUser));
+    localVarQueryParams.addAll(apiClient.parameterToPair("accessType", accessType));
     localVarQueryParams.addAll(apiClient.parameterToPair("username", username));
+
+    if (sessionID != null)
+      localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
+
+    
+    final String[] localVarAccepts = {
+      "*/*"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+    GenericType<BucketGrantMetadata> localVarReturnType = new GenericType<BucketGrantMetadata>() {};
+    return apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
+   * Delete all grants assigned to a bucket
+   * 
+   * @param sessionID The session id used to access ProActive REST server. (required)
+   * @param bucketName The name of the bucket where the catalog objects are stored. (required)
+   * @return List&lt;BucketGrantMetadata&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public List<BucketGrantMetadata> deleteAllBucketGrantsAssignedToABucketUsingDELETE(String sessionID, String bucketName) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'sessionID' is set
+    if (sessionID == null) {
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling deleteAllBucketGrantsAssignedToABucketUsingDELETE");
+    }
+    
+    // verify the required parameter 'bucketName' is set
+    if (bucketName == null) {
+      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling deleteAllBucketGrantsAssignedToABucketUsingDELETE");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/buckets/{bucketName}/grant"
+      .replaceAll("\\{" + "bucketName" + "\\}", apiClient.escapeString(bucketName.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    if (sessionID != null)
+      localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
+
+    
+    final String[] localVarAccepts = {
+      "*/*"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+    GenericType<List<BucketGrantMetadata>> localVarReturnType = new GenericType<List<BucketGrantMetadata>>() {};
+    return apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
+   * Get all created grant for a bucket and for its object
+   * 
+   * @param sessionID The session id used to access ProActive REST server. (required)
+   * @param bucketName The name of the bucket where the catalog objects are stored. (required)
+   * @return AllBucketGrants
+   * @throws ApiException if fails to make API call
+   */
+  public AllBucketGrants deleteAllGrantsForABucketAndItsObjectsUsingDELETE(String sessionID, String bucketName) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'sessionID' is set
+    if (sessionID == null) {
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling deleteAllGrantsForABucketAndItsObjectsUsingDELETE");
+    }
+    
+    // verify the required parameter 'bucketName' is set
+    if (bucketName == null) {
+      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling deleteAllGrantsForABucketAndItsObjectsUsingDELETE");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/buckets/{bucketName}/grant/all"
+      .replaceAll("\\{" + "bucketName" + "\\}", apiClient.escapeString(bucketName.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    if (sessionID != null)
+      localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
+
+    
+    final String[] localVarAccepts = {
+      "*/*"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+    GenericType<AllBucketGrants> localVarReturnType = new GenericType<AllBucketGrants>() {};
+    return apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
+   * Delete a group grant access for a bucket
+   * 
+   * @param sessionID The session id used to access ProActive REST server. (required)
+   * @param bucketName The name of the bucket where the catalog objects are stored. (required)
+   * @param userGroup The name of the group of users that are benefiting from the access grant. (required)
+   * @return BucketGrantMetadata
+   * @throws ApiException if fails to make API call
+   */
+  public BucketGrantMetadata deleteBucketGrantForAGroupUsingDELETE(String sessionID, String bucketName, String userGroup) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'sessionID' is set
+    if (sessionID == null) {
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling deleteBucketGrantForAGroupUsingDELETE");
+    }
+    
+    // verify the required parameter 'bucketName' is set
+    if (bucketName == null) {
+      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling deleteBucketGrantForAGroupUsingDELETE");
+    }
+    
+    // verify the required parameter 'userGroup' is set
+    if (userGroup == null) {
+      throw new ApiException(400, "Missing the required parameter 'userGroup' when calling deleteBucketGrantForAGroupUsingDELETE");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/buckets/{bucketName}/grant/group"
+      .replaceAll("\\{" + "bucketName" + "\\}", apiClient.escapeString(bucketName.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
     localVarQueryParams.addAll(apiClient.parameterToPair("userGroup", userGroup));
 
     if (sessionID != null)
@@ -155,136 +340,34 @@ public class BucketGrantControllerApi {
     return apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
   /**
-   * Get all assigned grants for the user and his groups
+   * Delete a user grant access for a bucket
    * 
-   * @param sessionID sessionID (required)
-   * @param currentUser The current user (optional)
-   * @param userGroups The list of the current user groups (optional)
-   * @return List&lt;BucketGrantMetadata&gt;
-   * @throws ApiException if fails to make API call
-   */
-  public List<BucketGrantMetadata> getAssignedBucketGrantsForUserAndHisGroupUsingGET(String sessionID, String currentUser, List<String> userGroups) throws ApiException {
-    Object localVarPostBody = null;
-    
-    // verify the required parameter 'sessionID' is set
-    if (sessionID == null) {
-      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling getAssignedBucketGrantsForUserAndHisGroupUsingGET");
-    }
-    
-    // create path and map variables
-    String localVarPath = "/buckets/grant";
-
-    // query params
-    List<Pair> localVarQueryParams = new ArrayList<Pair>();
-    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-    localVarQueryParams.addAll(apiClient.parameterToPair("currentUser", currentUser));
-    localVarCollectionQueryParams.addAll(apiClient.parameterToPairs("multi", "userGroups", userGroups));
-
-    if (sessionID != null)
-      localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
-
-    
-    final String[] localVarAccepts = {
-      "*/*"
-    };
-    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-
-    final String[] localVarContentTypes = {
-      "application/json"
-    };
-    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-
-    String[] localVarAuthNames = new String[] {  };
-
-    GenericType<List<BucketGrantMetadata>> localVarReturnType = new GenericType<List<BucketGrantMetadata>>() {};
-    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
-      }
-  /**
-   * Get all created grants by a specific user
-   * 
-   * @param sessionID sessionID (required)
-   * @param username username (required)
-   * @return List&lt;BucketGrantMetadata&gt;
-   * @throws ApiException if fails to make API call
-   */
-  public List<BucketGrantMetadata> getCreatedBucketGrantsUsingGET(String sessionID, String username) throws ApiException {
-    Object localVarPostBody = null;
-    
-    // verify the required parameter 'sessionID' is set
-    if (sessionID == null) {
-      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling getCreatedBucketGrantsUsingGET");
-    }
-    
-    // verify the required parameter 'username' is set
-    if (username == null) {
-      throw new ApiException(400, "Missing the required parameter 'username' when calling getCreatedBucketGrantsUsingGET");
-    }
-    
-    // create path and map variables
-    String localVarPath = "/buckets/grant/{username}"
-      .replaceAll("\\{" + "username" + "\\}", apiClient.escapeString(username.toString()));
-
-    // query params
-    List<Pair> localVarQueryParams = new ArrayList<Pair>();
-    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-
-    if (sessionID != null)
-      localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
-
-    
-    final String[] localVarAccepts = {
-      "*/*"
-    };
-    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-
-    final String[] localVarContentTypes = {
-      "application/json"
-    };
-    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-
-    String[] localVarAuthNames = new String[] {  };
-
-    GenericType<List<BucketGrantMetadata>> localVarReturnType = new GenericType<List<BucketGrantMetadata>>() {};
-    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
-      }
-  /**
-   * Update the access type of an existing bucket grant
-   * 
-   * @param sessionID sessionID (required)
-   * @param accessType accessType (required)
-   * @param bucketName bucketName (required)
-   * @param currentUser The user who is updating this grant (optional)
-   * @param username username (optional)
-   * @param userGroup userGroup (optional)
+   * @param sessionID The session id used to access ProActive REST server. (required)
+   * @param bucketName The name of the bucket where the catalog objects are stored. (required)
+   * @param username The name of the user that is benefiting from the access grant. (required)
    * @return BucketGrantMetadata
    * @throws ApiException if fails to make API call
    */
-  public BucketGrantMetadata updateBucketGrantUsingPUT(String sessionID, String accessType, String bucketName, String currentUser, String username, String userGroup) throws ApiException {
+  public BucketGrantMetadata deleteBucketGrantForAUserUsingDELETE(String sessionID, String bucketName, String username) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'sessionID' is set
     if (sessionID == null) {
-      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling updateBucketGrantUsingPUT");
-    }
-    
-    // verify the required parameter 'accessType' is set
-    if (accessType == null) {
-      throw new ApiException(400, "Missing the required parameter 'accessType' when calling updateBucketGrantUsingPUT");
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling deleteBucketGrantForAUserUsingDELETE");
     }
     
     // verify the required parameter 'bucketName' is set
     if (bucketName == null) {
-      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling updateBucketGrantUsingPUT");
+      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling deleteBucketGrantForAUserUsingDELETE");
+    }
+    
+    // verify the required parameter 'username' is set
+    if (username == null) {
+      throw new ApiException(400, "Missing the required parameter 'username' when calling deleteBucketGrantForAUserUsingDELETE");
     }
     
     // create path and map variables
-    String localVarPath = "/buckets/grant/{bucketName}"
+    String localVarPath = "/buckets/{bucketName}/grant/user"
       .replaceAll("\\{" + "bucketName" + "\\}", apiClient.escapeString(bucketName.toString()));
 
     // query params
@@ -293,16 +376,242 @@ public class BucketGrantControllerApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    localVarQueryParams.addAll(apiClient.parameterToPair("currentUser", currentUser));
+    localVarQueryParams.addAll(apiClient.parameterToPair("username", username));
 
     if (sessionID != null)
       localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
-if (username != null)
-      localVarHeaderParams.put("username", apiClient.parameterToString(username));
-if (userGroup != null)
-      localVarHeaderParams.put("userGroup", apiClient.parameterToString(userGroup));
-if (accessType != null)
-      localVarHeaderParams.put("accessType", apiClient.parameterToString(accessType));
+
+    
+    final String[] localVarAccepts = {
+      "*/*"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+    GenericType<BucketGrantMetadata> localVarReturnType = new GenericType<BucketGrantMetadata>() {};
+    return apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
+   * Get all created grant for a bucket and for its object
+   * 
+   * @param sessionID The session id used to access ProActive REST server. (required)
+   * @param bucketName The name of the bucket where the catalog objects are stored. (required)
+   * @return AllBucketGrants
+   * @throws ApiException if fails to make API call
+   */
+  public AllBucketGrants getAllGrantsForABucketAndItsObjectsUsingGET(String sessionID, String bucketName) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'sessionID' is set
+    if (sessionID == null) {
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling getAllGrantsForABucketAndItsObjectsUsingGET");
+    }
+    
+    // verify the required parameter 'bucketName' is set
+    if (bucketName == null) {
+      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling getAllGrantsForABucketAndItsObjectsUsingGET");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/buckets/{bucketName}/grant/all"
+      .replaceAll("\\{" + "bucketName" + "\\}", apiClient.escapeString(bucketName.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    if (sessionID != null)
+      localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
+
+    
+    final String[] localVarAccepts = {
+      "*/*"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+    GenericType<AllBucketGrants> localVarReturnType = new GenericType<AllBucketGrants>() {};
+    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
+   * Get all created grant for a bucket
+   * 
+   * @param sessionID The session id used to access ProActive REST server. (required)
+   * @param bucketName The name of the bucket where the catalog objects are stored. (required)
+   * @return List&lt;BucketGrantMetadata&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public List<BucketGrantMetadata> getAllGrantsForABucketUsingGET(String sessionID, String bucketName) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'sessionID' is set
+    if (sessionID == null) {
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling getAllGrantsForABucketUsingGET");
+    }
+    
+    // verify the required parameter 'bucketName' is set
+    if (bucketName == null) {
+      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling getAllGrantsForABucketUsingGET");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/buckets/{bucketName}/grant"
+      .replaceAll("\\{" + "bucketName" + "\\}", apiClient.escapeString(bucketName.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    if (sessionID != null)
+      localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
+
+    
+    final String[] localVarAccepts = {
+      "*/*"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+    GenericType<List<BucketGrantMetadata>> localVarReturnType = new GenericType<List<BucketGrantMetadata>>() {};
+    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
+   * Update the access type of an existing group bucket grant
+   * 
+   * @param sessionID The session id used to access ProActive REST server. (required)
+   * @param bucketName The name of the bucket where the catalog objects are stored. (required)
+   * @param userGroup The name of the group of users that are benefiting from the access grant. (required)
+   * @param accessType The new type of the access grant. It can be either read, write or admin. (required)
+   * @return BucketGrantMetadata
+   * @throws ApiException if fails to make API call
+   */
+  public BucketGrantMetadata updateBucketGrantForAGroupUsingPUT(String sessionID, String bucketName, String userGroup, String accessType) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'sessionID' is set
+    if (sessionID == null) {
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling updateBucketGrantForAGroupUsingPUT");
+    }
+    
+    // verify the required parameter 'bucketName' is set
+    if (bucketName == null) {
+      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling updateBucketGrantForAGroupUsingPUT");
+    }
+    
+    // verify the required parameter 'userGroup' is set
+    if (userGroup == null) {
+      throw new ApiException(400, "Missing the required parameter 'userGroup' when calling updateBucketGrantForAGroupUsingPUT");
+    }
+    
+    // verify the required parameter 'accessType' is set
+    if (accessType == null) {
+      throw new ApiException(400, "Missing the required parameter 'accessType' when calling updateBucketGrantForAGroupUsingPUT");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/buckets/{bucketName}/grant/group"
+      .replaceAll("\\{" + "bucketName" + "\\}", apiClient.escapeString(bucketName.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    localVarQueryParams.addAll(apiClient.parameterToPair("userGroup", userGroup));
+    localVarQueryParams.addAll(apiClient.parameterToPair("accessType", accessType));
+
+    if (sessionID != null)
+      localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
+
+    
+    final String[] localVarAccepts = {
+      "*/*"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+    GenericType<BucketGrantMetadata> localVarReturnType = new GenericType<BucketGrantMetadata>() {};
+    return apiClient.invokeAPI(localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
+   * Update the access type of an existing user bucket grant
+   * 
+   * @param sessionID The session id used to access ProActive REST server. (required)
+   * @param bucketName The name of the bucket where the catalog objects are stored. (required)
+   * @param username The name of the user that is benefiting from the access grant. (required)
+   * @param accessType The new type of the access grant. It can be either read, write or admin. (required)
+   * @return BucketGrantMetadata
+   * @throws ApiException if fails to make API call
+   */
+  public BucketGrantMetadata updateBucketGrantForAUserUsingPUT(String sessionID, String bucketName, String username, String accessType) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'sessionID' is set
+    if (sessionID == null) {
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling updateBucketGrantForAUserUsingPUT");
+    }
+    
+    // verify the required parameter 'bucketName' is set
+    if (bucketName == null) {
+      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling updateBucketGrantForAUserUsingPUT");
+    }
+    
+    // verify the required parameter 'username' is set
+    if (username == null) {
+      throw new ApiException(400, "Missing the required parameter 'username' when calling updateBucketGrantForAUserUsingPUT");
+    }
+    
+    // verify the required parameter 'accessType' is set
+    if (accessType == null) {
+      throw new ApiException(400, "Missing the required parameter 'accessType' when calling updateBucketGrantForAUserUsingPUT");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/buckets/{bucketName}/grant/user"
+      .replaceAll("\\{" + "bucketName" + "\\}", apiClient.escapeString(bucketName.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    localVarQueryParams.addAll(apiClient.parameterToPair("username", username));
+    localVarQueryParams.addAll(apiClient.parameterToPair("accessType", accessType));
+
+    if (sessionID != null)
+      localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
 
     
     final String[] localVarAccepts = {
