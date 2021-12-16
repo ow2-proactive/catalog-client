@@ -24,7 +24,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * JobVariable
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-12-15T14:22:22.307+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-12-16T15:29:25.212+01:00")
 public class JobVariable {
   @JsonProperty("advanced")
   private Boolean advanced = null;

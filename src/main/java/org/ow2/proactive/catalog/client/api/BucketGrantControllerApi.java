@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-12-15T14:22:22.307+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-12-16T15:29:25.212+01:00")
 public class BucketGrantControllerApi {
   private ApiClient apiClient;
 
@@ -115,7 +115,7 @@ public class BucketGrantControllerApi {
     return apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
   /**
-   * Create a new user grant grant access for a bucket
+   * Create a new user grant access for a bucket
    * 
    * @param sessionID The the session id used to access ProActive REST server (required)
    * @param bucketName The name of the bucket where the catalog objects are stored. (required)
@@ -231,7 +231,7 @@ public class BucketGrantControllerApi {
     return apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
   /**
-   * Get all created grant for a bucket and for its object
+   * Delete all grants associated with a bucket and all objects contained in this bucket
    * 
    * @param sessionID The session id used to access ProActive REST server. (required)
    * @param bucketName The name of the bucket where the catalog objects are stored. (required)
@@ -398,7 +398,7 @@ public class BucketGrantControllerApi {
     return apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
   /**
-   * Get all created grant for a bucket and for its object
+   * Get all grants associated with a bucket and all objects contained in this bucket
    * 
    * @param sessionID The session id used to access ProActive REST server. (required)
    * @param bucketName The name of the bucket where the catalog objects are stored. (required)
@@ -449,7 +449,7 @@ public class BucketGrantControllerApi {
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
   /**
-   * Get all created grant for a bucket
+   * Get all grants associated with a bucket
    * 
    * @param sessionID The session id used to access ProActive REST server. (required)
    * @param bucketName The name of the bucket where the catalog objects are stored. (required)

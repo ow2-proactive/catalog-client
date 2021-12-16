@@ -5,13 +5,13 @@ All URIs are relative to *https://localhost:8080/catalog*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createBucketGrantForAGroupUsingPOST**](BucketGrantControllerApi.md#createBucketGrantForAGroupUsingPOST) | **POST** /buckets/{bucketName}/grant/group | Create a new user group grant access for a bucket
-[**createBucketGrantForAUserUsingPOST**](BucketGrantControllerApi.md#createBucketGrantForAUserUsingPOST) | **POST** /buckets/{bucketName}/grant/user | Create a new user grant grant access for a bucket
+[**createBucketGrantForAUserUsingPOST**](BucketGrantControllerApi.md#createBucketGrantForAUserUsingPOST) | **POST** /buckets/{bucketName}/grant/user | Create a new user grant access for a bucket
 [**deleteAllBucketGrantsAssignedToABucketUsingDELETE**](BucketGrantControllerApi.md#deleteAllBucketGrantsAssignedToABucketUsingDELETE) | **DELETE** /buckets/{bucketName}/grant | Delete all grants assigned to a bucket
-[**deleteAllGrantsForABucketAndItsObjectsUsingDELETE**](BucketGrantControllerApi.md#deleteAllGrantsForABucketAndItsObjectsUsingDELETE) | **DELETE** /buckets/{bucketName}/grant/all | Get all created grant for a bucket and for its object
+[**deleteAllGrantsForABucketAndItsObjectsUsingDELETE**](BucketGrantControllerApi.md#deleteAllGrantsForABucketAndItsObjectsUsingDELETE) | **DELETE** /buckets/{bucketName}/grant/all | Delete all grants associated with a bucket and all objects contained in this bucket
 [**deleteBucketGrantForAGroupUsingDELETE**](BucketGrantControllerApi.md#deleteBucketGrantForAGroupUsingDELETE) | **DELETE** /buckets/{bucketName}/grant/group | Delete a group grant access for a bucket
 [**deleteBucketGrantForAUserUsingDELETE**](BucketGrantControllerApi.md#deleteBucketGrantForAUserUsingDELETE) | **DELETE** /buckets/{bucketName}/grant/user | Delete a user grant access for a bucket
-[**getAllGrantsForABucketAndItsObjectsUsingGET**](BucketGrantControllerApi.md#getAllGrantsForABucketAndItsObjectsUsingGET) | **GET** /buckets/{bucketName}/grant/all | Get all created grant for a bucket and for its object
-[**getAllGrantsForABucketUsingGET**](BucketGrantControllerApi.md#getAllGrantsForABucketUsingGET) | **GET** /buckets/{bucketName}/grant | Get all created grant for a bucket
+[**getAllGrantsForABucketAndItsObjectsUsingGET**](BucketGrantControllerApi.md#getAllGrantsForABucketAndItsObjectsUsingGET) | **GET** /buckets/{bucketName}/grant/all | Get all grants associated with a bucket and all objects contained in this bucket
+[**getAllGrantsForABucketUsingGET**](BucketGrantControllerApi.md#getAllGrantsForABucketUsingGET) | **GET** /buckets/{bucketName}/grant | Get all grants associated with a bucket
 [**updateBucketGrantForAGroupUsingPUT**](BucketGrantControllerApi.md#updateBucketGrantForAGroupUsingPUT) | **PUT** /buckets/{bucketName}/grant/group | Update the access type of an existing group bucket grant
 [**updateBucketGrantForAUserUsingPUT**](BucketGrantControllerApi.md#updateBucketGrantForAUserUsingPUT) | **PUT** /buckets/{bucketName}/grant/user | Update the access type of an existing user bucket grant
 
@@ -69,7 +69,7 @@ No authorization required
 # **createBucketGrantForAUserUsingPOST**
 > BucketGrantMetadata createBucketGrantForAUserUsingPOST(sessionID, bucketName, accessType, username)
 
-Create a new user grant grant access for a bucket
+Create a new user grant access for a bucket
 
 ### Example
 ```java
@@ -163,7 +163,7 @@ No authorization required
 # **deleteAllGrantsForABucketAndItsObjectsUsingDELETE**
 > AllBucketGrants deleteAllGrantsForABucketAndItsObjectsUsingDELETE(sessionID, bucketName)
 
-Get all created grant for a bucket and for its object
+Delete all grants associated with a bucket and all objects contained in this bucket
 
 ### Example
 ```java
@@ -302,7 +302,7 @@ No authorization required
 # **getAllGrantsForABucketAndItsObjectsUsingGET**
 > AllBucketGrants getAllGrantsForABucketAndItsObjectsUsingGET(sessionID, bucketName)
 
-Get all created grant for a bucket and for its object
+Get all grants associated with a bucket and all objects contained in this bucket
 
 ### Example
 ```java
@@ -347,7 +347,7 @@ No authorization required
 # **getAllGrantsForABucketUsingGET**
 > List&lt;BucketGrantMetadata&gt; getAllGrantsForABucketUsingGET(sessionID, bucketName)
 
-Get all created grant for a bucket
+Get all grants associated with a bucket
 
 ### Example
 ```java
