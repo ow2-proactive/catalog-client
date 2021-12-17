@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **name** | **String** |  |  [optional]
 **objectCount** | **Integer** |  |  [optional]
 **owner** | **String** |  |  [optional]
+**rights** | **String** |  |  [optional]
 
 
 

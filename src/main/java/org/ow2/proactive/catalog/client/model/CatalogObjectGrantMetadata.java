@@ -27,16 +27,22 @@ import org.ow2.proactive.catalog.client.model.Link;
 /**
  * CatalogObjectGrantMetadata
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-26T13:41:32.805+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-12-17T17:09:31.558+01:00")
 public class CatalogObjectGrantMetadata {
   @JsonProperty("accessType")
   private String accessType = null;
+
+  @JsonProperty("bucketName")
+  private String bucketName = null;
 
   @JsonProperty("catalogObjectBucketId")
   private Long catalogObjectBucketId = null;
 
   @JsonProperty("catalogObjectId")
   private Long catalogObjectId = null;
+
+  @JsonProperty("catalogObjectName")
+  private String catalogObjectName = null;
 
   @JsonProperty("creator")
   private String creator = null;
@@ -66,6 +72,24 @@ public class CatalogObjectGrantMetadata {
 
   public void setAccessType(String accessType) {
     this.accessType = accessType;
+  }
+
+  public CatalogObjectGrantMetadata bucketName(String bucketName) {
+    this.bucketName = bucketName;
+    return this;
+  }
+
+   /**
+   * Get bucketName
+   * @return bucketName
+  **/
+  @ApiModelProperty(value = "")
+  public String getBucketName() {
+    return bucketName;
+  }
+
+  public void setBucketName(String bucketName) {
+    this.bucketName = bucketName;
   }
 
   public CatalogObjectGrantMetadata catalogObjectBucketId(Long catalogObjectBucketId) {
@@ -102,6 +126,24 @@ public class CatalogObjectGrantMetadata {
 
   public void setCatalogObjectId(Long catalogObjectId) {
     this.catalogObjectId = catalogObjectId;
+  }
+
+  public CatalogObjectGrantMetadata catalogObjectName(String catalogObjectName) {
+    this.catalogObjectName = catalogObjectName;
+    return this;
+  }
+
+   /**
+   * Get catalogObjectName
+   * @return catalogObjectName
+  **/
+  @ApiModelProperty(value = "")
+  public String getCatalogObjectName() {
+    return catalogObjectName;
+  }
+
+  public void setCatalogObjectName(String catalogObjectName) {
+    this.catalogObjectName = catalogObjectName;
   }
 
   public CatalogObjectGrantMetadata creator(String creator) {
@@ -195,8 +237,10 @@ public class CatalogObjectGrantMetadata {
     }
     CatalogObjectGrantMetadata catalogObjectGrantMetadata = (CatalogObjectGrantMetadata) o;
     return Objects.equals(this.accessType, catalogObjectGrantMetadata.accessType) &&
+        Objects.equals(this.bucketName, catalogObjectGrantMetadata.bucketName) &&
         Objects.equals(this.catalogObjectBucketId, catalogObjectGrantMetadata.catalogObjectBucketId) &&
         Objects.equals(this.catalogObjectId, catalogObjectGrantMetadata.catalogObjectId) &&
+        Objects.equals(this.catalogObjectName, catalogObjectGrantMetadata.catalogObjectName) &&
         Objects.equals(this.creator, catalogObjectGrantMetadata.creator) &&
         Objects.equals(this.grantee, catalogObjectGrantMetadata.grantee) &&
         Objects.equals(this.granteeType, catalogObjectGrantMetadata.granteeType) &&
@@ -205,7 +249,7 @@ public class CatalogObjectGrantMetadata {
 
   @Override
   public int hashCode() {
-    return Objects.hash(accessType, catalogObjectBucketId, catalogObjectId, creator, grantee, granteeType, links);
+    return Objects.hash(accessType, bucketName, catalogObjectBucketId, catalogObjectId, catalogObjectName, creator, grantee, granteeType, links);
   }
 
 
@@ -215,8 +259,10 @@ public class CatalogObjectGrantMetadata {
     sb.append("class CatalogObjectGrantMetadata {\n");
     
     sb.append("    accessType: ").append(toIndentedString(accessType)).append("\n");
+    sb.append("    bucketName: ").append(toIndentedString(bucketName)).append("\n");
     sb.append("    catalogObjectBucketId: ").append(toIndentedString(catalogObjectBucketId)).append("\n");
     sb.append("    catalogObjectId: ").append(toIndentedString(catalogObjectId)).append("\n");
+    sb.append("    catalogObjectName: ").append(toIndentedString(catalogObjectName)).append("\n");
     sb.append("    creator: ").append(toIndentedString(creator)).append("\n");
     sb.append("    grantee: ").append(toIndentedString(grantee)).append("\n");
     sb.append("    granteeType: ").append(toIndentedString(granteeType)).append("\n");

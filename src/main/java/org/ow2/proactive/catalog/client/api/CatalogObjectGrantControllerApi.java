@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-26T13:41:32.805+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-12-17T17:09:31.558+01:00")
 public class CatalogObjectGrantControllerApi {
   private ApiClient apiClient;
 
@@ -49,38 +49,46 @@ public class CatalogObjectGrantControllerApi {
   }
 
   /**
-   * Create a new username grant or a user group grant access for a catalog object
+   * Create a new group grant for a catalog object
    * 
-   * @param sessionID sessionID (required)
-   * @param bucketName bucketName (required)
-   * @param catalogObjectName catalogObjectName (required)
-   * @param currentUser The user who is creating this grant (optional)
-   * @param accessType The access type of the grant (optional)
-   * @param username The name of the user that will have grant access (optional)
-   * @param userGroup The name of the user group that will have grant access (optional)
+   * @param sessionID The session id used to access ProActive REST server. (required)
+   * @param bucketName The name of the bucket where the catalog object is stored. (required)
+   * @param catalogObjectName The name of the object in the bucket. (required)
+   * @param accessType The type of the access grant. It can be either read, write or admin. (required)
+   * @param userGroup The name of the group of users that will benefit of the access grant. (required)
    * @return CatalogObjectGrantMetadata
    * @throws ApiException if fails to make API call
    */
-  public CatalogObjectGrantMetadata createCatalogObjectGrantUsingPOST(String sessionID, String bucketName, String catalogObjectName, String currentUser, String accessType, String username, String userGroup) throws ApiException {
+  public CatalogObjectGrantMetadata createCatalogObjectGrantForAGroupUsingPOST(String sessionID, String bucketName, String catalogObjectName, String accessType, String userGroup) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'sessionID' is set
     if (sessionID == null) {
-      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling createCatalogObjectGrantUsingPOST");
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling createCatalogObjectGrantForAGroupUsingPOST");
     }
     
     // verify the required parameter 'bucketName' is set
     if (bucketName == null) {
-      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling createCatalogObjectGrantUsingPOST");
+      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling createCatalogObjectGrantForAGroupUsingPOST");
     }
     
     // verify the required parameter 'catalogObjectName' is set
     if (catalogObjectName == null) {
-      throw new ApiException(400, "Missing the required parameter 'catalogObjectName' when calling createCatalogObjectGrantUsingPOST");
+      throw new ApiException(400, "Missing the required parameter 'catalogObjectName' when calling createCatalogObjectGrantForAGroupUsingPOST");
+    }
+    
+    // verify the required parameter 'accessType' is set
+    if (accessType == null) {
+      throw new ApiException(400, "Missing the required parameter 'accessType' when calling createCatalogObjectGrantForAGroupUsingPOST");
+    }
+    
+    // verify the required parameter 'userGroup' is set
+    if (userGroup == null) {
+      throw new ApiException(400, "Missing the required parameter 'userGroup' when calling createCatalogObjectGrantForAGroupUsingPOST");
     }
     
     // create path and map variables
-    String localVarPath = "/buckets/{bucketName}/grant/resources/{catalogObjectName}/grant"
+    String localVarPath = "/buckets/{bucketName}/resources/{catalogObjectName}/grant/group"
       .replaceAll("\\{" + "bucketName" + "\\}", apiClient.escapeString(bucketName.toString()))
       .replaceAll("\\{" + "catalogObjectName" + "\\}", apiClient.escapeString(catalogObjectName.toString()));
 
@@ -90,9 +98,7 @@ public class CatalogObjectGrantControllerApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    localVarQueryParams.addAll(apiClient.parameterToPair("currentUser", currentUser));
     localVarQueryParams.addAll(apiClient.parameterToPair("accessType", accessType));
-    localVarQueryParams.addAll(apiClient.parameterToPair("username", username));
     localVarQueryParams.addAll(apiClient.parameterToPair("userGroup", userGroup));
 
     if (sessionID != null)
@@ -115,37 +121,46 @@ public class CatalogObjectGrantControllerApi {
     return apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
   /**
-   * Delete a username grant or a user group grant access for a catalog object
+   * Create a new user grant for a catalog object
    * 
-   * @param sessionID sessionID (required)
-   * @param bucketName bucketName (required)
-   * @param catalogObjectName catalogObjectName (required)
-   * @param currentUser The current user (optional)
-   * @param username The name of the user that will have grant access (optional)
-   * @param userGroup The name of the user group that will have grant access (optional)
+   * @param sessionID The session id used to access ProActive REST server. (required)
+   * @param bucketName The name of the bucket where the catalog object is stored. (required)
+   * @param catalogObjectName The name of the object in the bucket. (required)
+   * @param accessType The type of the access grant. It can be either read, write or admin. (required)
+   * @param username The name of the user that will benefit of the access grant. (required)
    * @return CatalogObjectGrantMetadata
    * @throws ApiException if fails to make API call
    */
-  public CatalogObjectGrantMetadata deleteCatalogObjectGrantUsingDELETE(String sessionID, String bucketName, String catalogObjectName, String currentUser, String username, String userGroup) throws ApiException {
+  public CatalogObjectGrantMetadata createCatalogObjectGrantForAUserUsingPOST(String sessionID, String bucketName, String catalogObjectName, String accessType, String username) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'sessionID' is set
     if (sessionID == null) {
-      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling deleteCatalogObjectGrantUsingDELETE");
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling createCatalogObjectGrantForAUserUsingPOST");
     }
     
     // verify the required parameter 'bucketName' is set
     if (bucketName == null) {
-      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling deleteCatalogObjectGrantUsingDELETE");
+      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling createCatalogObjectGrantForAUserUsingPOST");
     }
     
     // verify the required parameter 'catalogObjectName' is set
     if (catalogObjectName == null) {
-      throw new ApiException(400, "Missing the required parameter 'catalogObjectName' when calling deleteCatalogObjectGrantUsingDELETE");
+      throw new ApiException(400, "Missing the required parameter 'catalogObjectName' when calling createCatalogObjectGrantForAUserUsingPOST");
+    }
+    
+    // verify the required parameter 'accessType' is set
+    if (accessType == null) {
+      throw new ApiException(400, "Missing the required parameter 'accessType' when calling createCatalogObjectGrantForAUserUsingPOST");
+    }
+    
+    // verify the required parameter 'username' is set
+    if (username == null) {
+      throw new ApiException(400, "Missing the required parameter 'username' when calling createCatalogObjectGrantForAUserUsingPOST");
     }
     
     // create path and map variables
-    String localVarPath = "/buckets/{bucketName}/grant/resources/{catalogObjectName}/grant"
+    String localVarPath = "/buckets/{bucketName}/resources/{catalogObjectName}/grant/user"
       .replaceAll("\\{" + "bucketName" + "\\}", apiClient.escapeString(bucketName.toString()))
       .replaceAll("\\{" + "catalogObjectName" + "\\}", apiClient.escapeString(catalogObjectName.toString()));
 
@@ -155,8 +170,130 @@ public class CatalogObjectGrantControllerApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    localVarQueryParams.addAll(apiClient.parameterToPair("currentUser", currentUser));
+    localVarQueryParams.addAll(apiClient.parameterToPair("accessType", accessType));
     localVarQueryParams.addAll(apiClient.parameterToPair("username", username));
+
+    if (sessionID != null)
+      localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
+
+    
+    final String[] localVarAccepts = {
+      "*/*"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+    GenericType<CatalogObjectGrantMetadata> localVarReturnType = new GenericType<CatalogObjectGrantMetadata>() {};
+    return apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
+   * Delete all grant associated with a catalog object
+   * 
+   * @param sessionID The session id used to access ProActive REST server. (required)
+   * @param bucketName The name of the bucket where the catalog objects are stored. (required)
+   * @param catalogObjectName The name of the object in the bucket. (required)
+   * @return List&lt;CatalogObjectGrantMetadata&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public List<CatalogObjectGrantMetadata> deleteAllCatalogObjectGrantsUsingDELETE(String sessionID, String bucketName, String catalogObjectName) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'sessionID' is set
+    if (sessionID == null) {
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling deleteAllCatalogObjectGrantsUsingDELETE");
+    }
+    
+    // verify the required parameter 'bucketName' is set
+    if (bucketName == null) {
+      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling deleteAllCatalogObjectGrantsUsingDELETE");
+    }
+    
+    // verify the required parameter 'catalogObjectName' is set
+    if (catalogObjectName == null) {
+      throw new ApiException(400, "Missing the required parameter 'catalogObjectName' when calling deleteAllCatalogObjectGrantsUsingDELETE");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/buckets/{bucketName}/resources/{catalogObjectName}/grant"
+      .replaceAll("\\{" + "bucketName" + "\\}", apiClient.escapeString(bucketName.toString()))
+      .replaceAll("\\{" + "catalogObjectName" + "\\}", apiClient.escapeString(catalogObjectName.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    if (sessionID != null)
+      localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
+
+    
+    final String[] localVarAccepts = {
+      "*/*"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+    GenericType<List<CatalogObjectGrantMetadata>> localVarReturnType = new GenericType<List<CatalogObjectGrantMetadata>>() {};
+    return apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
+   * Delete a user group grant access for a catalog object
+   * 
+   * @param sessionID The session id used to access ProActive REST server. (required)
+   * @param bucketName The name of the bucket where the catalog object is stored. (required)
+   * @param catalogObjectName The name of the object in the bucket. (required)
+   * @param userGroup The name of the group of users that are benefiting of the access grant. (required)
+   * @return CatalogObjectGrantMetadata
+   * @throws ApiException if fails to make API call
+   */
+  public CatalogObjectGrantMetadata deleteCatalogObjectGrantForAGroupUsingDELETE(String sessionID, String bucketName, String catalogObjectName, String userGroup) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'sessionID' is set
+    if (sessionID == null) {
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling deleteCatalogObjectGrantForAGroupUsingDELETE");
+    }
+    
+    // verify the required parameter 'bucketName' is set
+    if (bucketName == null) {
+      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling deleteCatalogObjectGrantForAGroupUsingDELETE");
+    }
+    
+    // verify the required parameter 'catalogObjectName' is set
+    if (catalogObjectName == null) {
+      throw new ApiException(400, "Missing the required parameter 'catalogObjectName' when calling deleteCatalogObjectGrantForAGroupUsingDELETE");
+    }
+    
+    // verify the required parameter 'userGroup' is set
+    if (userGroup == null) {
+      throw new ApiException(400, "Missing the required parameter 'userGroup' when calling deleteCatalogObjectGrantForAGroupUsingDELETE");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/buckets/{bucketName}/resources/{catalogObjectName}/grant/group"
+      .replaceAll("\\{" + "bucketName" + "\\}", apiClient.escapeString(bucketName.toString()))
+      .replaceAll("\\{" + "catalogObjectName" + "\\}", apiClient.escapeString(catalogObjectName.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
     localVarQueryParams.addAll(apiClient.parameterToPair("userGroup", userGroup));
 
     if (sessionID != null)
@@ -179,153 +316,40 @@ public class CatalogObjectGrantControllerApi {
     return apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
   /**
-   * Get all assigned grants for the user and his group on a specific catalog object
+   * Delete a user grant access for a catalog object
    * 
-   * @param sessionID sessionID (required)
-   * @param bucketName bucketName (required)
-   * @param catalogObjectName catalogObjectName (required)
-   * @param currentUser The current user (optional)
-   * @param userGroup The current userGroup (optional)
-   * @return List&lt;CatalogObjectGrantMetadata&gt;
-   * @throws ApiException if fails to make API call
-   */
-  public List<CatalogObjectGrantMetadata> getAllAssignedCatalogObjectGrantsForTheCurrentUserAndHisGroupUsingGET(String sessionID, String bucketName, String catalogObjectName, String currentUser, String userGroup) throws ApiException {
-    Object localVarPostBody = null;
-    
-    // verify the required parameter 'sessionID' is set
-    if (sessionID == null) {
-      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling getAllAssignedCatalogObjectGrantsForTheCurrentUserAndHisGroupUsingGET");
-    }
-    
-    // verify the required parameter 'bucketName' is set
-    if (bucketName == null) {
-      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling getAllAssignedCatalogObjectGrantsForTheCurrentUserAndHisGroupUsingGET");
-    }
-    
-    // verify the required parameter 'catalogObjectName' is set
-    if (catalogObjectName == null) {
-      throw new ApiException(400, "Missing the required parameter 'catalogObjectName' when calling getAllAssignedCatalogObjectGrantsForTheCurrentUserAndHisGroupUsingGET");
-    }
-    
-    // create path and map variables
-    String localVarPath = "/buckets/{bucketName}/grant/resources/{catalogObjectName}/grant"
-      .replaceAll("\\{" + "bucketName" + "\\}", apiClient.escapeString(bucketName.toString()))
-      .replaceAll("\\{" + "catalogObjectName" + "\\}", apiClient.escapeString(catalogObjectName.toString()));
-
-    // query params
-    List<Pair> localVarQueryParams = new ArrayList<Pair>();
-    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-    localVarQueryParams.addAll(apiClient.parameterToPair("currentUser", currentUser));
-    localVarQueryParams.addAll(apiClient.parameterToPair("userGroup", userGroup));
-
-    if (sessionID != null)
-      localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
-
-    
-    final String[] localVarAccepts = {
-      "*/*"
-    };
-    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-
-    final String[] localVarContentTypes = {
-      "application/json"
-    };
-    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-
-    String[] localVarAuthNames = new String[] {  };
-
-    GenericType<List<CatalogObjectGrantMetadata>> localVarReturnType = new GenericType<List<CatalogObjectGrantMetadata>>() {};
-    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
-      }
-  /**
-   * Get all created grants by the current user on all bucket&#39;s object
-   * 
-   * @param sessionID sessionID (required)
-   * @param bucketName bucketName (required)
-   * @param currentUser The current user (optional)
-   * @return List&lt;CatalogObjectGrantMetadata&gt;
-   * @throws ApiException if fails to make API call
-   */
-  public List<CatalogObjectGrantMetadata> getAllCreatedCatalogObjectGrantsByTheCurrentUserForTheCurrentUserBucketUsingGET(String sessionID, String bucketName, String currentUser) throws ApiException {
-    Object localVarPostBody = null;
-    
-    // verify the required parameter 'sessionID' is set
-    if (sessionID == null) {
-      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling getAllCreatedCatalogObjectGrantsByTheCurrentUserForTheCurrentUserBucketUsingGET");
-    }
-    
-    // verify the required parameter 'bucketName' is set
-    if (bucketName == null) {
-      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling getAllCreatedCatalogObjectGrantsByTheCurrentUserForTheCurrentUserBucketUsingGET");
-    }
-    
-    // create path and map variables
-    String localVarPath = "/buckets/{bucketName}/grant"
-      .replaceAll("\\{" + "bucketName" + "\\}", apiClient.escapeString(bucketName.toString()));
-
-    // query params
-    List<Pair> localVarQueryParams = new ArrayList<Pair>();
-    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-    localVarQueryParams.addAll(apiClient.parameterToPair("currentUser", currentUser));
-
-    if (sessionID != null)
-      localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
-
-    
-    final String[] localVarAccepts = {
-      "*/*"
-    };
-    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-
-    final String[] localVarContentTypes = {
-      "application/json"
-    };
-    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
-
-    String[] localVarAuthNames = new String[] {  };
-
-    GenericType<List<CatalogObjectGrantMetadata>> localVarReturnType = new GenericType<List<CatalogObjectGrantMetadata>>() {};
-    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
-      }
-  /**
-   * Update a username grant or a user group grant access for a catalog object
-   * 
-   * @param sessionID sessionID (required)
-   * @param bucketName bucketName (required)
-   * @param catalogObjectName catalogObjectName (required)
-   * @param currentUser The current user (optional)
-   * @param accessType The new access type (optional)
-   * @param username The name of the user that have the grant access (optional)
-   * @param userGroup The name of the user group that have the grant access (optional)
+   * @param sessionID The session id used to access ProActive REST server. (required)
+   * @param bucketName The name of the bucket where the catalog object is stored. (required)
+   * @param catalogObjectName The name of the object in the bucket. (required)
+   * @param username The name of the user that is benefiting of the access grant. (required)
    * @return CatalogObjectGrantMetadata
    * @throws ApiException if fails to make API call
    */
-  public CatalogObjectGrantMetadata updateCatalogObjectGrantUsingPUT(String sessionID, String bucketName, String catalogObjectName, String currentUser, String accessType, String username, String userGroup) throws ApiException {
+  public CatalogObjectGrantMetadata deleteCatalogObjectGrantForAUserUsingDELETE(String sessionID, String bucketName, String catalogObjectName, String username) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'sessionID' is set
     if (sessionID == null) {
-      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling updateCatalogObjectGrantUsingPUT");
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling deleteCatalogObjectGrantForAUserUsingDELETE");
     }
     
     // verify the required parameter 'bucketName' is set
     if (bucketName == null) {
-      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling updateCatalogObjectGrantUsingPUT");
+      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling deleteCatalogObjectGrantForAUserUsingDELETE");
     }
     
     // verify the required parameter 'catalogObjectName' is set
     if (catalogObjectName == null) {
-      throw new ApiException(400, "Missing the required parameter 'catalogObjectName' when calling updateCatalogObjectGrantUsingPUT");
+      throw new ApiException(400, "Missing the required parameter 'catalogObjectName' when calling deleteCatalogObjectGrantForAUserUsingDELETE");
+    }
+    
+    // verify the required parameter 'username' is set
+    if (username == null) {
+      throw new ApiException(400, "Missing the required parameter 'username' when calling deleteCatalogObjectGrantForAUserUsingDELETE");
     }
     
     // create path and map variables
-    String localVarPath = "/buckets/{bucketName}/grant/resources/{catalogObjectName}/grant"
+    String localVarPath = "/buckets/{bucketName}/resources/{catalogObjectName}/grant/user"
       .replaceAll("\\{" + "bucketName" + "\\}", apiClient.escapeString(bucketName.toString()))
       .replaceAll("\\{" + "catalogObjectName" + "\\}", apiClient.escapeString(catalogObjectName.toString()));
 
@@ -335,10 +359,204 @@ public class CatalogObjectGrantControllerApi {
     Map<String, String> localVarHeaderParams = new HashMap<String, String>();
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
-    localVarQueryParams.addAll(apiClient.parameterToPair("currentUser", currentUser));
+    localVarQueryParams.addAll(apiClient.parameterToPair("username", username));
+
+    if (sessionID != null)
+      localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
+
+    
+    final String[] localVarAccepts = {
+      "*/*"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+    GenericType<CatalogObjectGrantMetadata> localVarReturnType = new GenericType<CatalogObjectGrantMetadata>() {};
+    return apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
+   * Get all grants associated with a catalog object
+   * 
+   * @param sessionID The session id used to access ProActive REST server. (required)
+   * @param bucketName The name of the bucket where the catalog objects are stored. (required)
+   * @param catalogObjectName The name of the object in the bucket. (required)
+   * @return List&lt;CatalogObjectGrantMetadata&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public List<CatalogObjectGrantMetadata> getAllCreatedCatalogObjectGrantsByAdminsUsingGET(String sessionID, String bucketName, String catalogObjectName) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'sessionID' is set
+    if (sessionID == null) {
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling getAllCreatedCatalogObjectGrantsByAdminsUsingGET");
+    }
+    
+    // verify the required parameter 'bucketName' is set
+    if (bucketName == null) {
+      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling getAllCreatedCatalogObjectGrantsByAdminsUsingGET");
+    }
+    
+    // verify the required parameter 'catalogObjectName' is set
+    if (catalogObjectName == null) {
+      throw new ApiException(400, "Missing the required parameter 'catalogObjectName' when calling getAllCreatedCatalogObjectGrantsByAdminsUsingGET");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/buckets/{bucketName}/resources/{catalogObjectName}/grant"
+      .replaceAll("\\{" + "bucketName" + "\\}", apiClient.escapeString(bucketName.toString()))
+      .replaceAll("\\{" + "catalogObjectName" + "\\}", apiClient.escapeString(catalogObjectName.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    if (sessionID != null)
+      localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
+
+    
+    final String[] localVarAccepts = {
+      "*/*"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+    GenericType<List<CatalogObjectGrantMetadata>> localVarReturnType = new GenericType<List<CatalogObjectGrantMetadata>>() {};
+    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
+   * Update a user group grant access for a catalog object
+   * 
+   * @param sessionID The session id used to access ProActive REST server. (required)
+   * @param bucketName The name of the bucket where the catalog object is stored. (required)
+   * @param catalogObjectName The name of the object in the bucket. (required)
+   * @param accessType The new type of the access grant. It can be either read, write or admin. (required)
+   * @param userGroup The name of the group of users that are benefiting of the access grant. (optional)
+   * @return CatalogObjectGrantMetadata
+   * @throws ApiException if fails to make API call
+   */
+  public CatalogObjectGrantMetadata updateCatalogObjectGrantForAGroupUsingPUT(String sessionID, String bucketName, String catalogObjectName, String accessType, String userGroup) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'sessionID' is set
+    if (sessionID == null) {
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling updateCatalogObjectGrantForAGroupUsingPUT");
+    }
+    
+    // verify the required parameter 'bucketName' is set
+    if (bucketName == null) {
+      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling updateCatalogObjectGrantForAGroupUsingPUT");
+    }
+    
+    // verify the required parameter 'catalogObjectName' is set
+    if (catalogObjectName == null) {
+      throw new ApiException(400, "Missing the required parameter 'catalogObjectName' when calling updateCatalogObjectGrantForAGroupUsingPUT");
+    }
+    
+    // verify the required parameter 'accessType' is set
+    if (accessType == null) {
+      throw new ApiException(400, "Missing the required parameter 'accessType' when calling updateCatalogObjectGrantForAGroupUsingPUT");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/buckets/{bucketName}/resources/{catalogObjectName}/grant/group"
+      .replaceAll("\\{" + "bucketName" + "\\}", apiClient.escapeString(bucketName.toString()))
+      .replaceAll("\\{" + "catalogObjectName" + "\\}", apiClient.escapeString(catalogObjectName.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    localVarQueryParams.addAll(apiClient.parameterToPair("accessType", accessType));
+    localVarQueryParams.addAll(apiClient.parameterToPair("userGroup", userGroup));
+
+    if (sessionID != null)
+      localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
+
+    
+    final String[] localVarAccepts = {
+      "*/*"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+    GenericType<CatalogObjectGrantMetadata> localVarReturnType = new GenericType<CatalogObjectGrantMetadata>() {};
+    return apiClient.invokeAPI(localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
+   * Update a user grant access for a catalog object
+   * 
+   * @param sessionID The session id used to access ProActive REST server. (required)
+   * @param bucketName The name of the bucket where the catalog object is stored. (required)
+   * @param catalogObjectName The name of the object in the bucket. (required)
+   * @param accessType The new type of the access grant. It can be either read, write or admin. (required)
+   * @param username The name of the user that is benefiting from the access grant. (required)
+   * @return CatalogObjectGrantMetadata
+   * @throws ApiException if fails to make API call
+   */
+  public CatalogObjectGrantMetadata updateCatalogObjectGrantForAUserUsingPUT(String sessionID, String bucketName, String catalogObjectName, String accessType, String username) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'sessionID' is set
+    if (sessionID == null) {
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling updateCatalogObjectGrantForAUserUsingPUT");
+    }
+    
+    // verify the required parameter 'bucketName' is set
+    if (bucketName == null) {
+      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling updateCatalogObjectGrantForAUserUsingPUT");
+    }
+    
+    // verify the required parameter 'catalogObjectName' is set
+    if (catalogObjectName == null) {
+      throw new ApiException(400, "Missing the required parameter 'catalogObjectName' when calling updateCatalogObjectGrantForAUserUsingPUT");
+    }
+    
+    // verify the required parameter 'accessType' is set
+    if (accessType == null) {
+      throw new ApiException(400, "Missing the required parameter 'accessType' when calling updateCatalogObjectGrantForAUserUsingPUT");
+    }
+    
+    // verify the required parameter 'username' is set
+    if (username == null) {
+      throw new ApiException(400, "Missing the required parameter 'username' when calling updateCatalogObjectGrantForAUserUsingPUT");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/buckets/{bucketName}/resources/{catalogObjectName}/grant/user"
+      .replaceAll("\\{" + "bucketName" + "\\}", apiClient.escapeString(bucketName.toString()))
+      .replaceAll("\\{" + "catalogObjectName" + "\\}", apiClient.escapeString(catalogObjectName.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
     localVarQueryParams.addAll(apiClient.parameterToPair("accessType", accessType));
     localVarQueryParams.addAll(apiClient.parameterToPair("username", username));
-    localVarQueryParams.addAll(apiClient.parameterToPair("userGroup", userGroup));
 
     if (sessionID != null)
       localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));

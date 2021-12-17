@@ -15,6 +15,7 @@ Name | Type | Description | Notes
 **name** | **String** |  |  [optional]
 **objectKeyValues** | [**List&lt;Metadata&gt;**](Metadata.md) |  |  [optional]
 **projectName** | **String** |  |  [optional]
+**rights** | **String** |  |  [optional]
 **username** | **String** |  |  [optional]
 **variablesOrder** | [**Map&lt;String, Map&lt;String, JobVariable&gt;&gt;**](Map.md) |  |  [optional]
 

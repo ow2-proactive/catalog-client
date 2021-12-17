@@ -27,13 +27,16 @@ import org.ow2.proactive.catalog.client.model.Link;
 /**
  * BucketGrantMetadata
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-11-26T13:41:32.805+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-12-17T17:09:31.558+01:00")
 public class BucketGrantMetadata {
   @JsonProperty("accessType")
   private String accessType = null;
 
   @JsonProperty("bucketId")
   private Long bucketId = null;
+
+  @JsonProperty("bucketName")
+  private String bucketName = null;
 
   @JsonProperty("creator")
   private String creator = null;
@@ -81,6 +84,24 @@ public class BucketGrantMetadata {
 
   public void setBucketId(Long bucketId) {
     this.bucketId = bucketId;
+  }
+
+  public BucketGrantMetadata bucketName(String bucketName) {
+    this.bucketName = bucketName;
+    return this;
+  }
+
+   /**
+   * Get bucketName
+   * @return bucketName
+  **/
+  @ApiModelProperty(value = "")
+  public String getBucketName() {
+    return bucketName;
+  }
+
+  public void setBucketName(String bucketName) {
+    this.bucketName = bucketName;
   }
 
   public BucketGrantMetadata creator(String creator) {
@@ -175,6 +196,7 @@ public class BucketGrantMetadata {
     BucketGrantMetadata bucketGrantMetadata = (BucketGrantMetadata) o;
     return Objects.equals(this.accessType, bucketGrantMetadata.accessType) &&
         Objects.equals(this.bucketId, bucketGrantMetadata.bucketId) &&
+        Objects.equals(this.bucketName, bucketGrantMetadata.bucketName) &&
         Objects.equals(this.creator, bucketGrantMetadata.creator) &&
         Objects.equals(this.grantee, bucketGrantMetadata.grantee) &&
         Objects.equals(this.granteeType, bucketGrantMetadata.granteeType) &&
@@ -183,7 +205,7 @@ public class BucketGrantMetadata {
 
   @Override
   public int hashCode() {
-    return Objects.hash(accessType, bucketId, creator, grantee, granteeType, links);
+    return Objects.hash(accessType, bucketId, bucketName, creator, grantee, granteeType, links);
   }
 
 
@@ -194,6 +216,7 @@ public class BucketGrantMetadata {
     
     sb.append("    accessType: ").append(toIndentedString(accessType)).append("\n");
     sb.append("    bucketId: ").append(toIndentedString(bucketId)).append("\n");
+    sb.append("    bucketName: ").append(toIndentedString(bucketName)).append("\n");
     sb.append("    creator: ").append(toIndentedString(creator)).append("\n");
     sb.append("    grantee: ").append(toIndentedString(grantee)).append("\n");
     sb.append("    granteeType: ").append(toIndentedString(granteeType)).append("\n");
