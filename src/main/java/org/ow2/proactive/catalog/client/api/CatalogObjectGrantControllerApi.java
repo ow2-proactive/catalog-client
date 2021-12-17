@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-12-16T15:29:25.212+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-12-17T17:09:31.558+01:00")
 public class CatalogObjectGrantControllerApi {
   private ApiClient apiClient;
 
@@ -193,7 +193,7 @@ public class CatalogObjectGrantControllerApi {
     return apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
   /**
-   * Delete all object grants inside a bucket
+   * Delete all grant associated with a catalog object
    * 
    * @param sessionID The session id used to access ProActive REST server. (required)
    * @param bucketName The name of the bucket where the catalog objects are stored. (required)
@@ -201,22 +201,22 @@ public class CatalogObjectGrantControllerApi {
    * @return List&lt;CatalogObjectGrantMetadata&gt;
    * @throws ApiException if fails to make API call
    */
-  public List<CatalogObjectGrantMetadata> deleteAllCatalogObjectGrantsInABucketUsingDELETE(String sessionID, String bucketName, String catalogObjectName) throws ApiException {
+  public List<CatalogObjectGrantMetadata> deleteAllCatalogObjectGrantsUsingDELETE(String sessionID, String bucketName, String catalogObjectName) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'sessionID' is set
     if (sessionID == null) {
-      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling deleteAllCatalogObjectGrantsInABucketUsingDELETE");
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling deleteAllCatalogObjectGrantsUsingDELETE");
     }
     
     // verify the required parameter 'bucketName' is set
     if (bucketName == null) {
-      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling deleteAllCatalogObjectGrantsInABucketUsingDELETE");
+      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling deleteAllCatalogObjectGrantsUsingDELETE");
     }
     
     // verify the required parameter 'catalogObjectName' is set
     if (catalogObjectName == null) {
-      throw new ApiException(400, "Missing the required parameter 'catalogObjectName' when calling deleteAllCatalogObjectGrantsInABucketUsingDELETE");
+      throw new ApiException(400, "Missing the required parameter 'catalogObjectName' when calling deleteAllCatalogObjectGrantsUsingDELETE");
     }
     
     // create path and map variables
@@ -381,7 +381,7 @@ public class CatalogObjectGrantControllerApi {
     return apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
   /**
-   * Get all created grants for one object
+   * Get all grants associated with a catalog object
    * 
    * @param sessionID The session id used to access ProActive REST server. (required)
    * @param bucketName The name of the bucket where the catalog objects are stored. (required)

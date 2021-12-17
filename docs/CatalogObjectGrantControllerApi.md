@@ -6,10 +6,10 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createCatalogObjectGrantForAGroupUsingPOST**](CatalogObjectGrantControllerApi.md#createCatalogObjectGrantForAGroupUsingPOST) | **POST** /buckets/{bucketName}/resources/{catalogObjectName}/grant/group | Create a new group grant for a catalog object
 [**createCatalogObjectGrantForAUserUsingPOST**](CatalogObjectGrantControllerApi.md#createCatalogObjectGrantForAUserUsingPOST) | **POST** /buckets/{bucketName}/resources/{catalogObjectName}/grant/user | Create a new user grant for a catalog object
-[**deleteAllCatalogObjectGrantsInABucketUsingDELETE**](CatalogObjectGrantControllerApi.md#deleteAllCatalogObjectGrantsInABucketUsingDELETE) | **DELETE** /buckets/{bucketName}/resources/{catalogObjectName}/grant | Delete all object grants inside a bucket
+[**deleteAllCatalogObjectGrantsUsingDELETE**](CatalogObjectGrantControllerApi.md#deleteAllCatalogObjectGrantsUsingDELETE) | **DELETE** /buckets/{bucketName}/resources/{catalogObjectName}/grant | Delete all grant associated with a catalog object
 [**deleteCatalogObjectGrantForAGroupUsingDELETE**](CatalogObjectGrantControllerApi.md#deleteCatalogObjectGrantForAGroupUsingDELETE) | **DELETE** /buckets/{bucketName}/resources/{catalogObjectName}/grant/group | Delete a user group grant access for a catalog object
 [**deleteCatalogObjectGrantForAUserUsingDELETE**](CatalogObjectGrantControllerApi.md#deleteCatalogObjectGrantForAUserUsingDELETE) | **DELETE** /buckets/{bucketName}/resources/{catalogObjectName}/grant/user | Delete a user grant access for a catalog object
-[**getAllCreatedCatalogObjectGrantsByAdminsUsingGET**](CatalogObjectGrantControllerApi.md#getAllCreatedCatalogObjectGrantsByAdminsUsingGET) | **GET** /buckets/{bucketName}/resources/{catalogObjectName}/grant | Get all created grants for one object
+[**getAllCreatedCatalogObjectGrantsByAdminsUsingGET**](CatalogObjectGrantControllerApi.md#getAllCreatedCatalogObjectGrantsByAdminsUsingGET) | **GET** /buckets/{bucketName}/resources/{catalogObjectName}/grant | Get all grants associated with a catalog object
 [**updateCatalogObjectGrantForAGroupUsingPUT**](CatalogObjectGrantControllerApi.md#updateCatalogObjectGrantForAGroupUsingPUT) | **PUT** /buckets/{bucketName}/resources/{catalogObjectName}/grant/group | Update a user group grant access for a catalog object
 [**updateCatalogObjectGrantForAUserUsingPUT**](CatalogObjectGrantControllerApi.md#updateCatalogObjectGrantForAUserUsingPUT) | **PUT** /buckets/{bucketName}/resources/{catalogObjectName}/grant/user | Update a user grant access for a catalog object
 
@@ -116,11 +116,11 @@ No authorization required
  - **Content-Type**: application/json
  - **Accept**: */*
 
-<a name="deleteAllCatalogObjectGrantsInABucketUsingDELETE"></a>
-# **deleteAllCatalogObjectGrantsInABucketUsingDELETE**
-> List&lt;CatalogObjectGrantMetadata&gt; deleteAllCatalogObjectGrantsInABucketUsingDELETE(sessionID, bucketName, catalogObjectName)
+<a name="deleteAllCatalogObjectGrantsUsingDELETE"></a>
+# **deleteAllCatalogObjectGrantsUsingDELETE**
+> List&lt;CatalogObjectGrantMetadata&gt; deleteAllCatalogObjectGrantsUsingDELETE(sessionID, bucketName, catalogObjectName)
 
-Delete all object grants inside a bucket
+Delete all grant associated with a catalog object
 
 ### Example
 ```java
@@ -134,10 +134,10 @@ String sessionID = "sessionID_example"; // String | The session id used to acces
 String bucketName = "bucketName_example"; // String | The name of the bucket where the catalog objects are stored.
 String catalogObjectName = "catalogObjectName_example"; // String | The name of the object in the bucket.
 try {
-    List<CatalogObjectGrantMetadata> result = apiInstance.deleteAllCatalogObjectGrantsInABucketUsingDELETE(sessionID, bucketName, catalogObjectName);
+    List<CatalogObjectGrantMetadata> result = apiInstance.deleteAllCatalogObjectGrantsUsingDELETE(sessionID, bucketName, catalogObjectName);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling CatalogObjectGrantControllerApi#deleteAllCatalogObjectGrantsInABucketUsingDELETE");
+    System.err.println("Exception when calling CatalogObjectGrantControllerApi#deleteAllCatalogObjectGrantsUsingDELETE");
     e.printStackTrace();
 }
 ```
@@ -265,7 +265,7 @@ No authorization required
 # **getAllCreatedCatalogObjectGrantsByAdminsUsingGET**
 > List&lt;CatalogObjectGrantMetadata&gt; getAllCreatedCatalogObjectGrantsByAdminsUsingGET(sessionID, bucketName, catalogObjectName)
 
-Get all created grants for one object
+Get all grants associated with a catalog object
 
 ### Example
 ```java
