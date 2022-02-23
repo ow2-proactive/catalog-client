@@ -28,7 +28,7 @@ import org.ow2.proactive.catalog.client.model.CatalogObjectGrantMetadata;
 /**
  * AllBucketGrants
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-12-17T17:09:31.558+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2022-02-23T15:02:04.659+01:00")
 public class AllBucketGrants {
   @JsonProperty("bucketGrants")
   private List<BucketGrantMetadata> bucketGrants = null;
