@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **grantee** | **String** |  |  [optional]
 **granteeType** | **String** |  |  [optional]
 **links** | [**List&lt;Link&gt;**](Link.md) |  |  [optional]
+**priority** | **Integer** |  |  [optional]
 
 
 

@@ -27,7 +27,7 @@ import org.ow2.proactive.catalog.client.model.Link;
 /**
  * CatalogObjectGrantMetadata
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-12-17T17:09:31.558+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2022-02-23T15:02:04.659+01:00")
 public class CatalogObjectGrantMetadata {
   @JsonProperty("accessType")
   private String accessType = null;
@@ -55,6 +55,9 @@ public class CatalogObjectGrantMetadata {
 
   @JsonProperty("links")
   private List<Link> links = null;
+
+  @JsonProperty("priority")
+  private Integer priority = null;
 
   public CatalogObjectGrantMetadata accessType(String accessType) {
     this.accessType = accessType;
@@ -226,6 +229,24 @@ public class CatalogObjectGrantMetadata {
     this.links = links;
   }
 
+  public CatalogObjectGrantMetadata priority(Integer priority) {
+    this.priority = priority;
+    return this;
+  }
+
+   /**
+   * Get priority
+   * @return priority
+  **/
+  @ApiModelProperty(value = "")
+  public Integer getPriority() {
+    return priority;
+  }
+
+  public void setPriority(Integer priority) {
+    this.priority = priority;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -244,12 +265,13 @@ public class CatalogObjectGrantMetadata {
         Objects.equals(this.creator, catalogObjectGrantMetadata.creator) &&
         Objects.equals(this.grantee, catalogObjectGrantMetadata.grantee) &&
         Objects.equals(this.granteeType, catalogObjectGrantMetadata.granteeType) &&
-        Objects.equals(this.links, catalogObjectGrantMetadata.links);
+        Objects.equals(this.links, catalogObjectGrantMetadata.links) &&
+        Objects.equals(this.priority, catalogObjectGrantMetadata.priority);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(accessType, bucketName, catalogObjectBucketId, catalogObjectId, catalogObjectName, creator, grantee, granteeType, links);
+    return Objects.hash(accessType, bucketName, catalogObjectBucketId, catalogObjectId, catalogObjectName, creator, grantee, granteeType, links, priority);
   }
 
 
@@ -267,6 +289,7 @@ public class CatalogObjectGrantMetadata {
     sb.append("    grantee: ").append(toIndentedString(grantee)).append("\n");
     sb.append("    granteeType: ").append(toIndentedString(granteeType)).append("\n");
     sb.append("    links: ").append(toIndentedString(links)).append("\n");
+    sb.append("    priority: ").append(toIndentedString(priority)).append("\n");
     sb.append("}");
     return sb.toString();
   }

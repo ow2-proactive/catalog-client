@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-12-17T17:09:31.558+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2022-02-23T15:02:04.659+01:00")
 public class BucketGrantControllerApi {
   private ApiClient apiClient;
 
@@ -54,12 +54,13 @@ public class BucketGrantControllerApi {
    * 
    * @param sessionID The session id used to access ProActive REST server (required)
    * @param bucketName The name of the bucket where the catalog objects are stored. (required)
-   * @param accessType The type of the access grant. It can be either read, write or admin. (required)
+   * @param accessType The type of the access grant. It can be either noAccess, read, write or admin. (required)
+   * @param priority The new priority of the access grant. It can be a value from 1 (lowest) to 10 (highest), with 5 as default. Priorities are used to compute the final access rights of a user belonging to multiple groups. Group grants with the same priority will resolve with the default accessType order (admin &gt; write &gt; read &gt; noAccess). Finally, please note that a user grant has always more priority than a group grant. (required)
    * @param userGroup The name of the group of users that will benefit of the access grant. (required)
    * @return BucketGrantMetadata
    * @throws ApiException if fails to make API call
    */
-  public BucketGrantMetadata createBucketGrantForAGroupUsingPOST(String sessionID, String bucketName, String accessType, String userGroup) throws ApiException {
+  public BucketGrantMetadata createBucketGrantForAGroupUsingPOST(String sessionID, String bucketName, String accessType, Integer priority, String userGroup) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'sessionID' is set
@@ -75,6 +76,11 @@ public class BucketGrantControllerApi {
     // verify the required parameter 'accessType' is set
     if (accessType == null) {
       throw new ApiException(400, "Missing the required parameter 'accessType' when calling createBucketGrantForAGroupUsingPOST");
+    }
+    
+    // verify the required parameter 'priority' is set
+    if (priority == null) {
+      throw new ApiException(400, "Missing the required parameter 'priority' when calling createBucketGrantForAGroupUsingPOST");
     }
     
     // verify the required parameter 'userGroup' is set
@@ -93,6 +99,7 @@ public class BucketGrantControllerApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
     localVarQueryParams.addAll(apiClient.parameterToPair("accessType", accessType));
+    localVarQueryParams.addAll(apiClient.parameterToPair("priority", priority));
     localVarQueryParams.addAll(apiClient.parameterToPair("userGroup", userGroup));
 
     if (sessionID != null)
@@ -119,7 +126,7 @@ public class BucketGrantControllerApi {
    * 
    * @param sessionID The the session id used to access ProActive REST server (required)
    * @param bucketName The name of the bucket where the catalog objects are stored. (required)
-   * @param accessType The type of the access grant. It can be either read, write or admin. (required)
+   * @param accessType The type of the access grant. It can be either noAccess, read, write or admin. (required)
    * @param username The name of the user that will benefit of the access grant. (required)
    * @return BucketGrantMetadata
    * @throws ApiException if fails to make API call
@@ -505,11 +512,12 @@ public class BucketGrantControllerApi {
    * @param sessionID The session id used to access ProActive REST server. (required)
    * @param bucketName The name of the bucket where the catalog objects are stored. (required)
    * @param userGroup The name of the group of users that are benefiting from the access grant. (required)
-   * @param accessType The new type of the access grant. It can be either read, write or admin. (required)
+   * @param accessType The new type of the access grant. It can be either noAccess, read, write or admin. (required)
+   * @param priority The new priority of the access grant. It can be a value from 1 (lowest) to 10 (highest), with 5 as default. Priorities are used to compute the final access rights of a user belonging to multiple groups. Group grants with the same priority will resolve with the default accessType order (admin &gt; write &gt; read &gt; noAccess). Finally, please note that a user grant has always more priority than a group grant. (required)
    * @return BucketGrantMetadata
    * @throws ApiException if fails to make API call
    */
-  public BucketGrantMetadata updateBucketGrantForAGroupUsingPUT(String sessionID, String bucketName, String userGroup, String accessType) throws ApiException {
+  public BucketGrantMetadata updateBucketGrantForAGroupUsingPUT(String sessionID, String bucketName, String userGroup, String accessType, Integer priority) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'sessionID' is set
@@ -532,6 +540,11 @@ public class BucketGrantControllerApi {
       throw new ApiException(400, "Missing the required parameter 'accessType' when calling updateBucketGrantForAGroupUsingPUT");
     }
     
+    // verify the required parameter 'priority' is set
+    if (priority == null) {
+      throw new ApiException(400, "Missing the required parameter 'priority' when calling updateBucketGrantForAGroupUsingPUT");
+    }
+    
     // create path and map variables
     String localVarPath = "/buckets/{bucketName}/grant/group"
       .replaceAll("\\{" + "bucketName" + "\\}", apiClient.escapeString(bucketName.toString()));
@@ -544,6 +557,7 @@ public class BucketGrantControllerApi {
 
     localVarQueryParams.addAll(apiClient.parameterToPair("userGroup", userGroup));
     localVarQueryParams.addAll(apiClient.parameterToPair("accessType", accessType));
+    localVarQueryParams.addAll(apiClient.parameterToPair("priority", priority));
 
     if (sessionID != null)
       localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
@@ -570,7 +584,7 @@ public class BucketGrantControllerApi {
    * @param sessionID The session id used to access ProActive REST server. (required)
    * @param bucketName The name of the bucket where the catalog objects are stored. (required)
    * @param username The name of the user that is benefiting from the access grant. (required)
-   * @param accessType The new type of the access grant. It can be either read, write or admin. (required)
+   * @param accessType The new type of the access grant. It can be either noAccess, read, write or admin. (required)
    * @return BucketGrantMetadata
    * @throws ApiException if fails to make API call
    */

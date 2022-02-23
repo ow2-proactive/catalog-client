@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-12-17T17:09:31.558+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2022-02-23T15:02:04.659+01:00")
 public class CatalogObjectGrantControllerApi {
   private ApiClient apiClient;
 
@@ -53,13 +53,14 @@ public class CatalogObjectGrantControllerApi {
    * 
    * @param sessionID The session id used to access ProActive REST server. (required)
    * @param bucketName The name of the bucket where the catalog object is stored. (required)
-   * @param catalogObjectName The name of the object in the bucket. (required)
-   * @param accessType The type of the access grant. It can be either read, write or admin. (required)
+   * @param catalogObjectName The name of the object in the bucket, which is the subject of the grant. (required)
+   * @param accessType The type of the access grant. It can be either noAccess, read, write or admin. (required)
+   * @param priority The new priority of the access grant. It can be a value from 1 (lowest) to 10 (highest), with 5 as default. Priorities are used to compute the final access rights of a user belonging to multiple groups. Group grants with the same priority will resolve with the default accessType order (admin &gt; write &gt; read &gt; noAccess). Finally, please note that a user grant has always more priority than a group grant. (required)
    * @param userGroup The name of the group of users that will benefit of the access grant. (required)
    * @return CatalogObjectGrantMetadata
    * @throws ApiException if fails to make API call
    */
-  public CatalogObjectGrantMetadata createCatalogObjectGrantForAGroupUsingPOST(String sessionID, String bucketName, String catalogObjectName, String accessType, String userGroup) throws ApiException {
+  public CatalogObjectGrantMetadata createCatalogObjectGrantForAGroupUsingPOST(String sessionID, String bucketName, String catalogObjectName, String accessType, Integer priority, String userGroup) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'sessionID' is set
@@ -82,6 +83,11 @@ public class CatalogObjectGrantControllerApi {
       throw new ApiException(400, "Missing the required parameter 'accessType' when calling createCatalogObjectGrantForAGroupUsingPOST");
     }
     
+    // verify the required parameter 'priority' is set
+    if (priority == null) {
+      throw new ApiException(400, "Missing the required parameter 'priority' when calling createCatalogObjectGrantForAGroupUsingPOST");
+    }
+    
     // verify the required parameter 'userGroup' is set
     if (userGroup == null) {
       throw new ApiException(400, "Missing the required parameter 'userGroup' when calling createCatalogObjectGrantForAGroupUsingPOST");
@@ -99,6 +105,7 @@ public class CatalogObjectGrantControllerApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
     localVarQueryParams.addAll(apiClient.parameterToPair("accessType", accessType));
+    localVarQueryParams.addAll(apiClient.parameterToPair("priority", priority));
     localVarQueryParams.addAll(apiClient.parameterToPair("userGroup", userGroup));
 
     if (sessionID != null)
@@ -125,8 +132,8 @@ public class CatalogObjectGrantControllerApi {
    * 
    * @param sessionID The session id used to access ProActive REST server. (required)
    * @param bucketName The name of the bucket where the catalog object is stored. (required)
-   * @param catalogObjectName The name of the object in the bucket. (required)
-   * @param accessType The type of the access grant. It can be either read, write or admin. (required)
+   * @param catalogObjectName The name of the object in the bucket, which is the subject of the grant. (required)
+   * @param accessType The type of the access grant. It can be either noAccess, read, write or admin. (required)
    * @param username The name of the user that will benefit of the access grant. (required)
    * @return CatalogObjectGrantMetadata
    * @throws ApiException if fails to make API call
@@ -197,7 +204,7 @@ public class CatalogObjectGrantControllerApi {
    * 
    * @param sessionID The session id used to access ProActive REST server. (required)
    * @param bucketName The name of the bucket where the catalog objects are stored. (required)
-   * @param catalogObjectName The name of the object in the bucket. (required)
+   * @param catalogObjectName The name of the object in the bucket, which is the subject of the grant. (required)
    * @return List&lt;CatalogObjectGrantMetadata&gt;
    * @throws ApiException if fails to make API call
    */
@@ -255,7 +262,7 @@ public class CatalogObjectGrantControllerApi {
    * 
    * @param sessionID The session id used to access ProActive REST server. (required)
    * @param bucketName The name of the bucket where the catalog object is stored. (required)
-   * @param catalogObjectName The name of the object in the bucket. (required)
+   * @param catalogObjectName The name of the object in the bucket, which is the subject of the grant. (required)
    * @param userGroup The name of the group of users that are benefiting of the access grant. (required)
    * @return CatalogObjectGrantMetadata
    * @throws ApiException if fails to make API call
@@ -320,7 +327,7 @@ public class CatalogObjectGrantControllerApi {
    * 
    * @param sessionID The session id used to access ProActive REST server. (required)
    * @param bucketName The name of the bucket where the catalog object is stored. (required)
-   * @param catalogObjectName The name of the object in the bucket. (required)
+   * @param catalogObjectName The name of the object in the bucket, which is the subject of the grant. (required)
    * @param username The name of the user that is benefiting of the access grant. (required)
    * @return CatalogObjectGrantMetadata
    * @throws ApiException if fails to make API call
@@ -385,7 +392,7 @@ public class CatalogObjectGrantControllerApi {
    * 
    * @param sessionID The session id used to access ProActive REST server. (required)
    * @param bucketName The name of the bucket where the catalog objects are stored. (required)
-   * @param catalogObjectName The name of the object in the bucket. (required)
+   * @param catalogObjectName The name of the object in the bucket, which is the subject of the grant. (required)
    * @return List&lt;CatalogObjectGrantMetadata&gt;
    * @throws ApiException if fails to make API call
    */
@@ -443,13 +450,14 @@ public class CatalogObjectGrantControllerApi {
    * 
    * @param sessionID The session id used to access ProActive REST server. (required)
    * @param bucketName The name of the bucket where the catalog object is stored. (required)
-   * @param catalogObjectName The name of the object in the bucket. (required)
-   * @param accessType The new type of the access grant. It can be either read, write or admin. (required)
-   * @param userGroup The name of the group of users that are benefiting of the access grant. (optional)
+   * @param catalogObjectName The name of the object in the bucket, which is the subject of the grant. (required)
+   * @param accessType The new type of the access grant. It can be either noAccess, read, write or admin. (required)
+   * @param priority The new priority of the access grant. It can be a value from 1 (lowest) to 10 (highest), with 5 as default. Priorities are used to compute the final access rights of a user belonging to multiple groups. Group grants with the same priority will resolve with the default accessType order (admin &gt; write &gt; read &gt; noAccess). Finally, please note that a user grant has always more priority than a group grant. (required)
+   * @param userGroup The name of the group of users that are benefiting of the access grant. (required)
    * @return CatalogObjectGrantMetadata
    * @throws ApiException if fails to make API call
    */
-  public CatalogObjectGrantMetadata updateCatalogObjectGrantForAGroupUsingPUT(String sessionID, String bucketName, String catalogObjectName, String accessType, String userGroup) throws ApiException {
+  public CatalogObjectGrantMetadata updateCatalogObjectGrantForAGroupUsingPUT(String sessionID, String bucketName, String catalogObjectName, String accessType, Integer priority, String userGroup) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'sessionID' is set
@@ -472,6 +480,16 @@ public class CatalogObjectGrantControllerApi {
       throw new ApiException(400, "Missing the required parameter 'accessType' when calling updateCatalogObjectGrantForAGroupUsingPUT");
     }
     
+    // verify the required parameter 'priority' is set
+    if (priority == null) {
+      throw new ApiException(400, "Missing the required parameter 'priority' when calling updateCatalogObjectGrantForAGroupUsingPUT");
+    }
+    
+    // verify the required parameter 'userGroup' is set
+    if (userGroup == null) {
+      throw new ApiException(400, "Missing the required parameter 'userGroup' when calling updateCatalogObjectGrantForAGroupUsingPUT");
+    }
+    
     // create path and map variables
     String localVarPath = "/buckets/{bucketName}/resources/{catalogObjectName}/grant/group"
       .replaceAll("\\{" + "bucketName" + "\\}", apiClient.escapeString(bucketName.toString()))
@@ -484,6 +502,7 @@ public class CatalogObjectGrantControllerApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
     localVarQueryParams.addAll(apiClient.parameterToPair("accessType", accessType));
+    localVarQueryParams.addAll(apiClient.parameterToPair("priority", priority));
     localVarQueryParams.addAll(apiClient.parameterToPair("userGroup", userGroup));
 
     if (sessionID != null)
@@ -510,8 +529,8 @@ public class CatalogObjectGrantControllerApi {
    * 
    * @param sessionID The session id used to access ProActive REST server. (required)
    * @param bucketName The name of the bucket where the catalog object is stored. (required)
-   * @param catalogObjectName The name of the object in the bucket. (required)
-   * @param accessType The new type of the access grant. It can be either read, write or admin. (required)
+   * @param catalogObjectName The name of the object in the bucket, which is the subject of the grant. (required)
+   * @param accessType The new type of the access grant. It can be either noAccess, read, write or admin. (required)
    * @param username The name of the user that is benefiting from the access grant. (required)
    * @return CatalogObjectGrantMetadata
    * @throws ApiException if fails to make API call

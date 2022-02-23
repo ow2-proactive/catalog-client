@@ -27,7 +27,7 @@ import org.ow2.proactive.catalog.client.model.Link;
 /**
  * BucketGrantMetadata
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-12-17T17:09:31.558+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2022-02-23T15:02:04.659+01:00")
 public class BucketGrantMetadata {
   @JsonProperty("accessType")
   private String accessType = null;
@@ -49,6 +49,9 @@ public class BucketGrantMetadata {
 
   @JsonProperty("links")
   private List<Link> links = null;
+
+  @JsonProperty("priority")
+  private Integer priority = null;
 
   public BucketGrantMetadata accessType(String accessType) {
     this.accessType = accessType;
@@ -184,6 +187,24 @@ public class BucketGrantMetadata {
     this.links = links;
   }
 
+  public BucketGrantMetadata priority(Integer priority) {
+    this.priority = priority;
+    return this;
+  }
+
+   /**
+   * Get priority
+   * @return priority
+  **/
+  @ApiModelProperty(value = "")
+  public Integer getPriority() {
+    return priority;
+  }
+
+  public void setPriority(Integer priority) {
+    this.priority = priority;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -200,12 +221,13 @@ public class BucketGrantMetadata {
         Objects.equals(this.creator, bucketGrantMetadata.creator) &&
         Objects.equals(this.grantee, bucketGrantMetadata.grantee) &&
         Objects.equals(this.granteeType, bucketGrantMetadata.granteeType) &&
-        Objects.equals(this.links, bucketGrantMetadata.links);
+        Objects.equals(this.links, bucketGrantMetadata.links) &&
+        Objects.equals(this.priority, bucketGrantMetadata.priority);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(accessType, bucketId, bucketName, creator, grantee, granteeType, links);
+    return Objects.hash(accessType, bucketId, bucketName, creator, grantee, granteeType, links, priority);
   }
 
 
@@ -221,6 +243,7 @@ public class BucketGrantMetadata {
     sb.append("    grantee: ").append(toIndentedString(grantee)).append("\n");
     sb.append("    granteeType: ").append(toIndentedString(granteeType)).append("\n");
     sb.append("    links: ").append(toIndentedString(links)).append("\n");
+    sb.append("    priority: ").append(toIndentedString(priority)).append("\n");
     sb.append("}");
     return sb.toString();
   }

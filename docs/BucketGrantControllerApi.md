@@ -18,7 +18,7 @@ Method | HTTP request | Description
 
 <a name="createBucketGrantForAGroupUsingPOST"></a>
 # **createBucketGrantForAGroupUsingPOST**
-> BucketGrantMetadata createBucketGrantForAGroupUsingPOST(sessionID, bucketName, accessType, userGroup)
+> BucketGrantMetadata createBucketGrantForAGroupUsingPOST(sessionID, bucketName, accessType, priority, userGroup)
 
 Create a new user group grant access for a bucket
 
@@ -32,10 +32,11 @@ Create a new user group grant access for a bucket
 BucketGrantControllerApi apiInstance = new BucketGrantControllerApi();
 String sessionID = "sessionID_example"; // String | The session id used to access ProActive REST server
 String bucketName = "bucketName_example"; // String | The name of the bucket where the catalog objects are stored.
-String accessType = "accessType_example"; // String | The type of the access grant. It can be either read, write or admin.
+String accessType = "accessType_example"; // String | The type of the access grant. It can be either noAccess, read, write or admin.
+Integer priority = 5; // Integer | The new priority of the access grant. It can be a value from 1 (lowest) to 10 (highest), with 5 as default. Priorities are used to compute the final access rights of a user belonging to multiple groups. Group grants with the same priority will resolve with the default accessType order (admin > write > read > noAccess). Finally, please note that a user grant has always more priority than a group grant.
 String userGroup = "userGroup_example"; // String | The name of the group of users that will benefit of the access grant.
 try {
-    BucketGrantMetadata result = apiInstance.createBucketGrantForAGroupUsingPOST(sessionID, bucketName, accessType, userGroup);
+    BucketGrantMetadata result = apiInstance.createBucketGrantForAGroupUsingPOST(sessionID, bucketName, accessType, priority, userGroup);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling BucketGrantControllerApi#createBucketGrantForAGroupUsingPOST");
@@ -49,7 +50,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **sessionID** | **String**| The session id used to access ProActive REST server |
  **bucketName** | **String**| The name of the bucket where the catalog objects are stored. |
- **accessType** | **String**| The type of the access grant. It can be either read, write or admin. |
+ **accessType** | **String**| The type of the access grant. It can be either noAccess, read, write or admin. |
+ **priority** | **Integer**| The new priority of the access grant. It can be a value from 1 (lowest) to 10 (highest), with 5 as default. Priorities are used to compute the final access rights of a user belonging to multiple groups. Group grants with the same priority will resolve with the default accessType order (admin &gt; write &gt; read &gt; noAccess). Finally, please note that a user grant has always more priority than a group grant. | [default to 5]
  **userGroup** | **String**| The name of the group of users that will benefit of the access grant. |
 
 ### Return type
@@ -81,7 +83,7 @@ Create a new user grant access for a bucket
 BucketGrantControllerApi apiInstance = new BucketGrantControllerApi();
 String sessionID = "sessionID_example"; // String | The the session id used to access ProActive REST server
 String bucketName = "bucketName_example"; // String | The name of the bucket where the catalog objects are stored.
-String accessType = "accessType_example"; // String | The type of the access grant. It can be either read, write or admin.
+String accessType = "accessType_example"; // String | The type of the access grant. It can be either noAccess, read, write or admin.
 String username = "username_example"; // String | The name of the user that will benefit of the access grant.
 try {
     BucketGrantMetadata result = apiInstance.createBucketGrantForAUserUsingPOST(sessionID, bucketName, accessType, username);
@@ -98,7 +100,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **sessionID** | **String**| The the session id used to access ProActive REST server |
  **bucketName** | **String**| The name of the bucket where the catalog objects are stored. |
- **accessType** | **String**| The type of the access grant. It can be either read, write or admin. |
+ **accessType** | **String**| The type of the access grant. It can be either noAccess, read, write or admin. |
  **username** | **String**| The name of the user that will benefit of the access grant. |
 
 ### Return type
@@ -390,7 +392,7 @@ No authorization required
 
 <a name="updateBucketGrantForAGroupUsingPUT"></a>
 # **updateBucketGrantForAGroupUsingPUT**
-> BucketGrantMetadata updateBucketGrantForAGroupUsingPUT(sessionID, bucketName, userGroup, accessType)
+> BucketGrantMetadata updateBucketGrantForAGroupUsingPUT(sessionID, bucketName, userGroup, accessType, priority)
 
 Update the access type of an existing group bucket grant
 
@@ -405,9 +407,10 @@ BucketGrantControllerApi apiInstance = new BucketGrantControllerApi();
 String sessionID = "sessionID_example"; // String | The session id used to access ProActive REST server.
 String bucketName = "bucketName_example"; // String | The name of the bucket where the catalog objects are stored.
 String userGroup = "userGroup_example"; // String | The name of the group of users that are benefiting from the access grant.
-String accessType = "accessType_example"; // String | The new type of the access grant. It can be either read, write or admin.
+String accessType = "accessType_example"; // String | The new type of the access grant. It can be either noAccess, read, write or admin.
+Integer priority = 56; // Integer | The new priority of the access grant. It can be a value from 1 (lowest) to 10 (highest), with 5 as default. Priorities are used to compute the final access rights of a user belonging to multiple groups. Group grants with the same priority will resolve with the default accessType order (admin > write > read > noAccess). Finally, please note that a user grant has always more priority than a group grant.
 try {
-    BucketGrantMetadata result = apiInstance.updateBucketGrantForAGroupUsingPUT(sessionID, bucketName, userGroup, accessType);
+    BucketGrantMetadata result = apiInstance.updateBucketGrantForAGroupUsingPUT(sessionID, bucketName, userGroup, accessType, priority);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling BucketGrantControllerApi#updateBucketGrantForAGroupUsingPUT");
@@ -422,7 +425,8 @@ Name | Type | Description  | Notes
  **sessionID** | **String**| The session id used to access ProActive REST server. |
  **bucketName** | **String**| The name of the bucket where the catalog objects are stored. |
  **userGroup** | **String**| The name of the group of users that are benefiting from the access grant. |
- **accessType** | **String**| The new type of the access grant. It can be either read, write or admin. |
+ **accessType** | **String**| The new type of the access grant. It can be either noAccess, read, write or admin. |
+ **priority** | **Integer**| The new priority of the access grant. It can be a value from 1 (lowest) to 10 (highest), with 5 as default. Priorities are used to compute the final access rights of a user belonging to multiple groups. Group grants with the same priority will resolve with the default accessType order (admin &gt; write &gt; read &gt; noAccess). Finally, please note that a user grant has always more priority than a group grant. |
 
 ### Return type
 
@@ -454,7 +458,7 @@ BucketGrantControllerApi apiInstance = new BucketGrantControllerApi();
 String sessionID = "sessionID_example"; // String | The session id used to access ProActive REST server.
 String bucketName = "bucketName_example"; // String | The name of the bucket where the catalog objects are stored.
 String username = "username_example"; // String | The name of the user that is benefiting from the access grant.
-String accessType = "accessType_example"; // String | The new type of the access grant. It can be either read, write or admin.
+String accessType = "accessType_example"; // String | The new type of the access grant. It can be either noAccess, read, write or admin.
 try {
     BucketGrantMetadata result = apiInstance.updateBucketGrantForAUserUsingPUT(sessionID, bucketName, username, accessType);
     System.out.println(result);
@@ -471,7 +475,7 @@ Name | Type | Description  | Notes
  **sessionID** | **String**| The session id used to access ProActive REST server. |
  **bucketName** | **String**| The name of the bucket where the catalog objects are stored. |
  **username** | **String**| The name of the user that is benefiting from the access grant. |
- **accessType** | **String**| The new type of the access grant. It can be either read, write or admin. |
+ **accessType** | **String**| The new type of the access grant. It can be either noAccess, read, write or admin. |
 
 ### Return type
 

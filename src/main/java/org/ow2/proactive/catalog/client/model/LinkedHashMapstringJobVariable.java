@@ -22,7 +22,7 @@ import org.ow2.proactive.catalog.client.model.JobVariable;
 /**
  * LinkedHashMapstringJobVariable
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2021-12-17T17:09:31.558+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2022-02-23T15:02:04.659+01:00")
 public class LinkedHashMapstringJobVariable extends HashMap<String, JobVariable> {
 
   @Override
