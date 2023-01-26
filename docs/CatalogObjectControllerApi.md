@@ -12,13 +12,14 @@ Method | HTTP request | Description
 [**listCatalogObjectNameReferenceUsingGET**](CatalogObjectControllerApi.md#listCatalogObjectNameReferenceUsingGET) | **GET** /buckets/references | Lists catalog object name references by kind and Content-Type
 [**listContentTypesUsingGET**](CatalogObjectControllerApi.md#listContentTypesUsingGET) | **GET** /buckets/content-types | Lists all Content-Types for all objects
 [**listKindsUsingGET**](CatalogObjectControllerApi.md#listKindsUsingGET) | **GET** /buckets/kinds | Lists all kinds for all objects
+[**listObjectTagsUsingGET**](CatalogObjectControllerApi.md#listObjectTagsUsingGET) | **GET** /buckets/tags | Lists all tags values for all objects stored in the catalog
 [**listUsingGET1**](CatalogObjectControllerApi.md#listUsingGET1) | **GET** /buckets/{bucketName}/resources | Lists catalog objects metadata
 [**updateObjectMetadataUsingPUT**](CatalogObjectControllerApi.md#updateObjectMetadataUsingPUT) | **PUT** /buckets/{bucketName}/resources/{name} | Update a catalog object metadata, like kind, Content-Type and project name
 
 
 <a name="createUsingPOST1"></a>
 # **createUsingPOST1**
-> CatalogObjectMetadataList createUsingPOST1(sessionID, bucketName, kind, commitMessage, objectContentType, file, name, projectName)
+> CatalogObjectMetadataList createUsingPOST1(sessionID, bucketName, kind, commitMessage, objectContentType, file, name, projectName, tags)
 
 Creates a new catalog object
 
@@ -38,8 +39,9 @@ String objectContentType = "objectContentType_example"; // String | The Content-
 File file = new File("/path/to/file.txt"); // File | The content of CatalogRawObject
 String name = "name_example"; // String | Name of the object or empty when a ZIP archive is uploaded (All objects inside the archive are stored inside the catalog).
 String projectName = "projectName_example"; // String | Project of the object
+String tags = "tags_example"; // String | List of comma separated tags of the object
 try {
-    CatalogObjectMetadataList result = apiInstance.createUsingPOST1(sessionID, bucketName, kind, commitMessage, objectContentType, file, name, projectName);
+    CatalogObjectMetadataList result = apiInstance.createUsingPOST1(sessionID, bucketName, kind, commitMessage, objectContentType, file, name, projectName, tags);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling CatalogObjectControllerApi#createUsingPOST1");
@@ -59,6 +61,7 @@ Name | Type | Description  | Notes
  **file** | **File**| The content of CatalogRawObject |
  **name** | **String**| Name of the object or empty when a ZIP archive is uploaded (All objects inside the archive are stored inside the catalog). | [optional]
  **projectName** | **String**| Project of the object | [optional]
+ **tags** | **String**| List of comma separated tags of the object | [optional]
 
 ### Return type
 
@@ -390,9 +393,48 @@ No authorization required
  - **Content-Type**: application/json
  - **Accept**: application/json
 
+<a name="listObjectTagsUsingGET"></a>
+# **listObjectTagsUsingGET**
+> List&lt;String&gt; listObjectTagsUsingGET()
+
+Lists all tags values for all objects stored in the catalog
+
+### Example
+```java
+// Import classes:
+//import org.ow2.proactive.catalog.client.ApiException;
+//import org.ow2.proactive.catalog.client.api.CatalogObjectControllerApi;
+
+
+CatalogObjectControllerApi apiInstance = new CatalogObjectControllerApi();
+try {
+    List<String> result = apiInstance.listObjectTagsUsingGET();
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling CatalogObjectControllerApi#listObjectTagsUsingGET");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+**List&lt;String&gt;**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
 <a name="listUsingGET1"></a>
 # **listUsingGET1**
-> List&lt;CatalogObjectMetadata&gt; listUsingGET1(bucketName, sessionID, kind, contentType, objectName, listObjectNamesForArchive, pageNo, pageSize)
+> List&lt;CatalogObjectMetadata&gt; listUsingGET1(bucketName, sessionID, kind, contentType, objectName, objectTag, listObjectNamesForArchive, pageNo, pageSize)
 
 Lists catalog objects metadata
 
@@ -411,11 +453,12 @@ String sessionID = "sessionID_example"; // String | sessionID
 String kind = "kind_example"; // String | Filter according to kind(s). Multiple kinds can be specified using comma separators
 String contentType = "contentType_example"; // String | Filter according to Content-Type.
 String objectName = "objectName_example"; // String | Filter according to Object Name.
+String objectTag = "objectTag_example"; // String | Filter according to Object Tag.
 String listObjectNamesForArchive = "listObjectNamesForArchive_example"; // String | Give a list of name separated by comma to get them in an archive
 Integer pageNo = 0; // Integer | Page number
 Integer pageSize = 2147483647; // Integer | Page size
 try {
-    List<CatalogObjectMetadata> result = apiInstance.listUsingGET1(bucketName, sessionID, kind, contentType, objectName, listObjectNamesForArchive, pageNo, pageSize);
+    List<CatalogObjectMetadata> result = apiInstance.listUsingGET1(bucketName, sessionID, kind, contentType, objectName, objectTag, listObjectNamesForArchive, pageNo, pageSize);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling CatalogObjectControllerApi#listUsingGET1");
@@ -432,6 +475,7 @@ Name | Type | Description  | Notes
  **kind** | **String**| Filter according to kind(s). Multiple kinds can be specified using comma separators | [optional]
  **contentType** | **String**| Filter according to Content-Type. | [optional]
  **objectName** | **String**| Filter according to Object Name. | [optional]
+ **objectTag** | **String**| Filter according to Object Tag. | [optional]
  **listObjectNamesForArchive** | **String**| Give a list of name separated by comma to get them in an archive | [optional]
  **pageNo** | **Integer**| Page number | [optional] [default to 0]
  **pageSize** | **Integer**| Page size | [optional] [default to 2147483647]
@@ -451,7 +495,7 @@ No authorization required
 
 <a name="updateObjectMetadataUsingPUT"></a>
 # **updateObjectMetadataUsingPUT**
-> CatalogObjectMetadata updateObjectMetadataUsingPUT(sessionID, bucketName, name, kind, contentType, projectName)
+> CatalogObjectMetadata updateObjectMetadataUsingPUT(sessionID, bucketName, name, kind, contentType, projectName, tags)
 
 Update a catalog object metadata, like kind, Content-Type and project name
 
@@ -469,8 +513,9 @@ String name = "name_example"; // String | name
 String kind = "kind_example"; // String | The new kind of an object
 String contentType = "contentType_example"; // String | The new Content-Type of an object - MIME type
 String projectName = "projectName_example"; // String | The new project name of an object
+String tags = "tags_example"; // String | List of comma separated tags of the object
 try {
-    CatalogObjectMetadata result = apiInstance.updateObjectMetadataUsingPUT(sessionID, bucketName, name, kind, contentType, projectName);
+    CatalogObjectMetadata result = apiInstance.updateObjectMetadataUsingPUT(sessionID, bucketName, name, kind, contentType, projectName, tags);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling CatalogObjectControllerApi#updateObjectMetadataUsingPUT");
@@ -488,6 +533,7 @@ Name | Type | Description  | Notes
  **kind** | **String**| The new kind of an object | [optional]
  **contentType** | **String**| The new Content-Type of an object - MIME type | [optional]
  **projectName** | **String**| The new project name of an object | [optional]
+ **tags** | **String**| List of comma separated tags of the object | [optional]
 
 ### Return type
 

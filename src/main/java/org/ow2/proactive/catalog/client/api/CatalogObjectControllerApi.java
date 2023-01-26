@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2022-02-23T15:02:04.659+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2023-01-26T17:28:06.013+01:00")
 public class CatalogObjectControllerApi {
   private ApiClient apiClient;
 
@@ -63,10 +63,11 @@ public class CatalogObjectControllerApi {
    * @param file The content of CatalogRawObject (required)
    * @param name Name of the object or empty when a ZIP archive is uploaded (All objects inside the archive are stored inside the catalog). (optional)
    * @param projectName Project of the object (optional)
+   * @param tags List of comma separated tags of the object (optional)
    * @return CatalogObjectMetadataList
    * @throws ApiException if fails to make API call
    */
-  public CatalogObjectMetadataList createUsingPOST1(String sessionID, String bucketName, String kind, String commitMessage, String objectContentType, File file, String name, String projectName) throws ApiException {
+  public CatalogObjectMetadataList createUsingPOST1(String sessionID, String bucketName, String kind, String commitMessage, String objectContentType, File file, String name, String projectName, String tags) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'sessionID' is set
@@ -111,6 +112,7 @@ public class CatalogObjectControllerApi {
 
     localVarQueryParams.addAll(apiClient.parameterToPair("name", name));
     localVarQueryParams.addAll(apiClient.parameterToPair("projectName", projectName));
+    localVarQueryParams.addAll(apiClient.parameterToPair("tags", tags));
     localVarQueryParams.addAll(apiClient.parameterToPair("kind", kind));
     localVarQueryParams.addAll(apiClient.parameterToPair("commitMessage", commitMessage));
     localVarQueryParams.addAll(apiClient.parameterToPair("objectContentType", objectContentType));
@@ -469,6 +471,42 @@ public class CatalogObjectControllerApi {
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
   /**
+   * Lists all tags values for all objects stored in the catalog
+   * 
+   * @return List&lt;String&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public List<String> listObjectTagsUsingGET() throws ApiException {
+    Object localVarPostBody = null;
+    
+    // create path and map variables
+    String localVarPath = "/buckets/tags";
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    
+    
+    final String[] localVarAccepts = {
+      "application/json"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+    GenericType<List<String>> localVarReturnType = new GenericType<List<String>>() {};
+    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
    * Lists catalog objects metadata
    * Returns catalog objects metadata associated to the latest revision.
    * @param bucketName bucketName (required)
@@ -476,13 +514,14 @@ public class CatalogObjectControllerApi {
    * @param kind Filter according to kind(s). Multiple kinds can be specified using comma separators (optional)
    * @param contentType Filter according to Content-Type. (optional)
    * @param objectName Filter according to Object Name. (optional)
+   * @param objectTag Filter according to Object Tag. (optional)
    * @param listObjectNamesForArchive Give a list of name separated by comma to get them in an archive (optional)
    * @param pageNo Page number (optional, default to 0)
    * @param pageSize Page size (optional, default to 2147483647)
    * @return List&lt;CatalogObjectMetadata&gt;
    * @throws ApiException if fails to make API call
    */
-  public List<CatalogObjectMetadata> listUsingGET1(String bucketName, String sessionID, String kind, String contentType, String objectName, String listObjectNamesForArchive, Integer pageNo, Integer pageSize) throws ApiException {
+  public List<CatalogObjectMetadata> listUsingGET1(String bucketName, String sessionID, String kind, String contentType, String objectName, String objectTag, String listObjectNamesForArchive, Integer pageNo, Integer pageSize) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'bucketName' is set
@@ -503,6 +542,7 @@ public class CatalogObjectControllerApi {
     localVarQueryParams.addAll(apiClient.parameterToPair("kind", kind));
     localVarQueryParams.addAll(apiClient.parameterToPair("contentType", contentType));
     localVarQueryParams.addAll(apiClient.parameterToPair("objectName", objectName));
+    localVarQueryParams.addAll(apiClient.parameterToPair("objectTag", objectTag));
     localVarQueryParams.addAll(apiClient.parameterToPair("listObjectNamesForArchive", listObjectNamesForArchive));
     localVarQueryParams.addAll(apiClient.parameterToPair("pageNo", pageNo));
     localVarQueryParams.addAll(apiClient.parameterToPair("pageSize", pageSize));
@@ -535,10 +575,11 @@ public class CatalogObjectControllerApi {
    * @param kind The new kind of an object (optional)
    * @param contentType The new Content-Type of an object - MIME type (optional)
    * @param projectName The new project name of an object (optional)
+   * @param tags List of comma separated tags of the object (optional)
    * @return CatalogObjectMetadata
    * @throws ApiException if fails to make API call
    */
-  public CatalogObjectMetadata updateObjectMetadataUsingPUT(String sessionID, String bucketName, String name, String kind, String contentType, String projectName) throws ApiException {
+  public CatalogObjectMetadata updateObjectMetadataUsingPUT(String sessionID, String bucketName, String name, String kind, String contentType, String projectName, String tags) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'sessionID' is set
@@ -570,6 +611,7 @@ public class CatalogObjectControllerApi {
     localVarQueryParams.addAll(apiClient.parameterToPair("kind", kind));
     localVarQueryParams.addAll(apiClient.parameterToPair("contentType", contentType));
     localVarQueryParams.addAll(apiClient.parameterToPair("projectName", projectName));
+    localVarQueryParams.addAll(apiClient.parameterToPair("tags", tags));
 
     if (sessionID != null)
       localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));

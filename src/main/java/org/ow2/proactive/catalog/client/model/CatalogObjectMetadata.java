@@ -31,7 +31,7 @@ import org.ow2.proactive.catalog.client.model.Metadata;
 /**
  * CatalogObjectMetadata
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2022-02-23T15:02:04.659+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2023-01-26T17:28:06.013+01:00")
 public class CatalogObjectMetadata {
   @JsonProperty("bucket_name")
   private String bucketName = null;
@@ -68,6 +68,9 @@ public class CatalogObjectMetadata {
 
   @JsonProperty("rights")
   private String rights = null;
+
+  @JsonProperty("tags")
+  private String tags = null;
 
   @JsonProperty("username")
   private String username = null;
@@ -307,6 +310,24 @@ public class CatalogObjectMetadata {
     this.rights = rights;
   }
 
+  public CatalogObjectMetadata tags(String tags) {
+    this.tags = tags;
+    return this;
+  }
+
+   /**
+   * Get tags
+   * @return tags
+  **/
+  @ApiModelProperty(value = "")
+  public String getTags() {
+    return tags;
+  }
+
+  public void setTags(String tags) {
+    this.tags = tags;
+  }
+
   public CatalogObjectMetadata username(String username) {
     this.username = username;
     return this;
@@ -373,13 +394,14 @@ public class CatalogObjectMetadata {
         Objects.equals(this.objectKeyValues, catalogObjectMetadata.objectKeyValues) &&
         Objects.equals(this.projectName, catalogObjectMetadata.projectName) &&
         Objects.equals(this.rights, catalogObjectMetadata.rights) &&
+        Objects.equals(this.tags, catalogObjectMetadata.tags) &&
         Objects.equals(this.username, catalogObjectMetadata.username) &&
         Objects.equals(this.variablesOrder, catalogObjectMetadata.variablesOrder);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(bucketName, commitMessage, commitTime, commitTimeRaw, contentType, extension, kind, links, name, objectKeyValues, projectName, rights, username, variablesOrder);
+    return Objects.hash(bucketName, commitMessage, commitTime, commitTimeRaw, contentType, extension, kind, links, name, objectKeyValues, projectName, rights, tags, username, variablesOrder);
   }
 
 
@@ -400,6 +422,7 @@ public class CatalogObjectMetadata {
     sb.append("    objectKeyValues: ").append(toIndentedString(objectKeyValues)).append("\n");
     sb.append("    projectName: ").append(toIndentedString(projectName)).append("\n");
     sb.append("    rights: ").append(toIndentedString(rights)).append("\n");
+    sb.append("    tags: ").append(toIndentedString(tags)).append("\n");
     sb.append("    username: ").append(toIndentedString(username)).append("\n");
     sb.append("    variablesOrder: ").append(toIndentedString(variablesOrder)).append("\n");
     sb.append("}");

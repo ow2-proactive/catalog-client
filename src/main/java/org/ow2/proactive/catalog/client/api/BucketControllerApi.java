@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2022-02-23T15:02:04.659+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2023-01-26T17:28:06.013+01:00")
 public class BucketControllerApi {
   private ApiClient apiClient;
 
@@ -235,11 +235,13 @@ public class BucketControllerApi {
    * @param owner The name of the user who owns the Bucket (optional)
    * @param kind The kind(s) of objects that buckets must contain. Multiple kinds can be specified using comma separators (optional)
    * @param contentType The Content-Type of objects that buckets must contain (optional)
+   * @param objectTag The tag of objects that buckets must contain (optional)
    * @param objectName The name of objects that buckets must contain (optional)
+   * @param bucketName The bucket name contains the value of this parameter (case insensitive) (optional)
    * @return List&lt;BucketMetadata&gt;
    * @throws ApiException if fails to make API call
    */
-  public List<BucketMetadata> listUsingGET(String sessionID, String owner, String kind, String contentType, String objectName) throws ApiException {
+  public List<BucketMetadata> listUsingGET(String sessionID, String owner, String kind, String contentType, String objectTag, String objectName, String bucketName) throws ApiException {
     Object localVarPostBody = null;
     
     // create path and map variables
@@ -254,7 +256,9 @@ public class BucketControllerApi {
     localVarQueryParams.addAll(apiClient.parameterToPair("owner", owner));
     localVarQueryParams.addAll(apiClient.parameterToPair("kind", kind));
     localVarQueryParams.addAll(apiClient.parameterToPair("contentType", contentType));
+    localVarQueryParams.addAll(apiClient.parameterToPair("objectTag", objectTag));
     localVarQueryParams.addAll(apiClient.parameterToPair("objectName", objectName));
+    localVarQueryParams.addAll(apiClient.parameterToPair("bucketName", bucketName));
 
     if (sessionID != null)
       localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));

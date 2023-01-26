@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2022-02-23T15:02:04.659+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2023-01-26T17:28:06.013+01:00")
 public class CatalogObjectRevisionControllerApi {
   private ApiClient apiClient;
 
@@ -58,10 +58,11 @@ public class CatalogObjectRevisionControllerApi {
    * @param commitMessage The commit message of the CatalogRawObject Revision (required)
    * @param file file (required)
    * @param projectName Project of the object (optional)
+   * @param tags Tags of the object (optional)
    * @return CatalogObjectMetadata
    * @throws ApiException if fails to make API call
    */
-  public CatalogObjectMetadata createUsingPOST2(String sessionID, String bucketName, String name, String commitMessage, File file, String projectName) throws ApiException {
+  public CatalogObjectMetadata createUsingPOST2(String sessionID, String bucketName, String name, String commitMessage, File file, String projectName, String tags) throws ApiException {
     Object localVarPostBody = null;
     
     // verify the required parameter 'sessionID' is set
@@ -102,6 +103,7 @@ public class CatalogObjectRevisionControllerApi {
 
     localVarQueryParams.addAll(apiClient.parameterToPair("commitMessage", commitMessage));
     localVarQueryParams.addAll(apiClient.parameterToPair("projectName", projectName));
+    localVarQueryParams.addAll(apiClient.parameterToPair("tags", tags));
 
     if (sessionID != null)
       localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
