@@ -22,71 +22,29 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * Metadata
+ * OptionalOfListOfstring
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2023-01-26T17:28:06.013+01:00")
-public class Metadata {
-  @JsonProperty("key")
-  private String key = null;
+public class OptionalOfListOfstring {
+  @JsonProperty("present")
+  private Boolean present = null;
 
-  @JsonProperty("label")
-  private String label = null;
-
-  @JsonProperty("value")
-  private String value = null;
-
-  public Metadata key(String key) {
-    this.key = key;
+  public OptionalOfListOfstring present(Boolean present) {
+    this.present = present;
     return this;
   }
 
    /**
-   * Get key
-   * @return key
+   * Get present
+   * @return present
   **/
   @ApiModelProperty(value = "")
-  public String getKey() {
-    return key;
+  public Boolean isPresent() {
+    return present;
   }
 
-  public void setKey(String key) {
-    this.key = key;
-  }
-
-  public Metadata label(String label) {
-    this.label = label;
-    return this;
-  }
-
-   /**
-   * Get label
-   * @return label
-  **/
-  @ApiModelProperty(value = "")
-  public String getLabel() {
-    return label;
-  }
-
-  public void setLabel(String label) {
-    this.label = label;
-  }
-
-  public Metadata value(String value) {
-    this.value = value;
-    return this;
-  }
-
-   /**
-   * Get value
-   * @return value
-  **/
-  @ApiModelProperty(value = "")
-  public String getValue() {
-    return value;
-  }
-
-  public void setValue(String value) {
-    this.value = value;
+  public void setPresent(Boolean present) {
+    this.present = present;
   }
 
 
@@ -98,26 +56,22 @@ public class Metadata {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Metadata metadata = (Metadata) o;
-    return Objects.equals(this.key, metadata.key) &&
-        Objects.equals(this.label, metadata.label) &&
-        Objects.equals(this.value, metadata.value);
+    OptionalOfListOfstring optionalOfListOfstring = (OptionalOfListOfstring) o;
+    return Objects.equals(this.present, optionalOfListOfstring.present);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(key, label, value);
+    return Objects.hash(present);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Metadata {\n");
+    sb.append("class OptionalOfListOfstring {\n");
     
-    sb.append("    key: ").append(toIndentedString(key)).append("\n");
-    sb.append("    label: ").append(toIndentedString(label)).append("\n");
-    sb.append("    value: ").append(toIndentedString(value)).append("\n");
+    sb.append("    present: ").append(toIndentedString(present)).append("\n");
     sb.append("}");
     return sb.toString();
   }

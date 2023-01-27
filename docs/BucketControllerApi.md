@@ -191,7 +191,7 @@ No authorization required
 
 <a name="listUsingGET"></a>
 # **listUsingGET**
-> List&lt;BucketMetadata&gt; listUsingGET(sessionID, owner, kind, contentType, objectName)
+> List&lt;BucketMetadata&gt; listUsingGET(sessionID, owner, kind, contentType, objectTag, objectName, bucketName)
 
 Lists the buckets
 
@@ -207,9 +207,11 @@ String sessionID = "sessionID_example"; // String | sessionID
 String owner = "owner_example"; // String | The name of the user who owns the Bucket
 String kind = "kind_example"; // String | The kind(s) of objects that buckets must contain. Multiple kinds can be specified using comma separators
 String contentType = "contentType_example"; // String | The Content-Type of objects that buckets must contain
+String objectTag = "objectTag_example"; // String | The tag of objects that buckets must contain
 String objectName = "objectName_example"; // String | The name of objects that buckets must contain
+String bucketName = "bucketName_example"; // String | The bucket name contains the value of this parameter (case insensitive)
 try {
-    List<BucketMetadata> result = apiInstance.listUsingGET(sessionID, owner, kind, contentType, objectName);
+    List<BucketMetadata> result = apiInstance.listUsingGET(sessionID, owner, kind, contentType, objectTag, objectName, bucketName);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling BucketControllerApi#listUsingGET");
@@ -225,7 +227,9 @@ Name | Type | Description  | Notes
  **owner** | **String**| The name of the user who owns the Bucket | [optional]
  **kind** | **String**| The kind(s) of objects that buckets must contain. Multiple kinds can be specified using comma separators | [optional]
  **contentType** | **String**| The Content-Type of objects that buckets must contain | [optional]
+ **objectTag** | **String**| The tag of objects that buckets must contain | [optional]
  **objectName** | **String**| The name of objects that buckets must contain | [optional]
+ **bucketName** | **String**| The bucket name contains the value of this parameter (case insensitive) | [optional]
 
 ### Return type
 

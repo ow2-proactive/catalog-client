@@ -22,12 +22,13 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
+import org.ow2.proactive.catalog.client.model.DequeOfModificationHistoryData;
 import org.ow2.proactive.catalog.client.model.Link;
 
 /**
  * BucketGrantMetadata
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2022-02-23T15:02:04.659+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2023-01-26T17:28:06.013+01:00")
 public class BucketGrantMetadata {
   @JsonProperty("accessType")
   private String accessType = null;
@@ -37,6 +38,9 @@ public class BucketGrantMetadata {
 
   @JsonProperty("bucketName")
   private String bucketName = null;
+
+  @JsonProperty("creationDate")
+  private Long creationDate = null;
 
   @JsonProperty("creator")
   private String creator = null;
@@ -49,6 +53,9 @@ public class BucketGrantMetadata {
 
   @JsonProperty("links")
   private List<Link> links = null;
+
+  @JsonProperty("modificationHistory")
+  private DequeOfModificationHistoryData modificationHistory = null;
 
   @JsonProperty("priority")
   private Integer priority = null;
@@ -105,6 +112,24 @@ public class BucketGrantMetadata {
 
   public void setBucketName(String bucketName) {
     this.bucketName = bucketName;
+  }
+
+  public BucketGrantMetadata creationDate(Long creationDate) {
+    this.creationDate = creationDate;
+    return this;
+  }
+
+   /**
+   * Get creationDate
+   * @return creationDate
+  **/
+  @ApiModelProperty(value = "")
+  public Long getCreationDate() {
+    return creationDate;
+  }
+
+  public void setCreationDate(Long creationDate) {
+    this.creationDate = creationDate;
   }
 
   public BucketGrantMetadata creator(String creator) {
@@ -187,6 +212,24 @@ public class BucketGrantMetadata {
     this.links = links;
   }
 
+  public BucketGrantMetadata modificationHistory(DequeOfModificationHistoryData modificationHistory) {
+    this.modificationHistory = modificationHistory;
+    return this;
+  }
+
+   /**
+   * Get modificationHistory
+   * @return modificationHistory
+  **/
+  @ApiModelProperty(value = "")
+  public DequeOfModificationHistoryData getModificationHistory() {
+    return modificationHistory;
+  }
+
+  public void setModificationHistory(DequeOfModificationHistoryData modificationHistory) {
+    this.modificationHistory = modificationHistory;
+  }
+
   public BucketGrantMetadata priority(Integer priority) {
     this.priority = priority;
     return this;
@@ -218,16 +261,18 @@ public class BucketGrantMetadata {
     return Objects.equals(this.accessType, bucketGrantMetadata.accessType) &&
         Objects.equals(this.bucketId, bucketGrantMetadata.bucketId) &&
         Objects.equals(this.bucketName, bucketGrantMetadata.bucketName) &&
+        Objects.equals(this.creationDate, bucketGrantMetadata.creationDate) &&
         Objects.equals(this.creator, bucketGrantMetadata.creator) &&
         Objects.equals(this.grantee, bucketGrantMetadata.grantee) &&
         Objects.equals(this.granteeType, bucketGrantMetadata.granteeType) &&
         Objects.equals(this.links, bucketGrantMetadata.links) &&
+        Objects.equals(this.modificationHistory, bucketGrantMetadata.modificationHistory) &&
         Objects.equals(this.priority, bucketGrantMetadata.priority);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(accessType, bucketId, bucketName, creator, grantee, granteeType, links, priority);
+    return Objects.hash(accessType, bucketId, bucketName, creationDate, creator, grantee, granteeType, links, modificationHistory, priority);
   }
 
 
@@ -239,10 +284,12 @@ public class BucketGrantMetadata {
     sb.append("    accessType: ").append(toIndentedString(accessType)).append("\n");
     sb.append("    bucketId: ").append(toIndentedString(bucketId)).append("\n");
     sb.append("    bucketName: ").append(toIndentedString(bucketName)).append("\n");
+    sb.append("    creationDate: ").append(toIndentedString(creationDate)).append("\n");
     sb.append("    creator: ").append(toIndentedString(creator)).append("\n");
     sb.append("    grantee: ").append(toIndentedString(grantee)).append("\n");
     sb.append("    granteeType: ").append(toIndentedString(granteeType)).append("\n");
     sb.append("    links: ").append(toIndentedString(links)).append("\n");
+    sb.append("    modificationHistory: ").append(toIndentedString(modificationHistory)).append("\n");
     sb.append("    priority: ").append(toIndentedString(priority)).append("\n");
     sb.append("}");
     return sb.toString();

@@ -22,12 +22,14 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
+import org.ow2.proactive.catalog.client.model.CatalogObjectID;
+import org.ow2.proactive.catalog.client.model.DequeOfModificationHistoryData;
 import org.ow2.proactive.catalog.client.model.Link;
 
 /**
  * CatalogObjectGrantMetadata
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2022-02-23T15:02:04.659+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2023-01-26T17:28:06.013+01:00")
 public class CatalogObjectGrantMetadata {
   @JsonProperty("accessType")
   private String accessType = null;
@@ -39,10 +41,13 @@ public class CatalogObjectGrantMetadata {
   private Long catalogObjectBucketId = null;
 
   @JsonProperty("catalogObjectId")
-  private Long catalogObjectId = null;
+  private CatalogObjectID catalogObjectId = null;
 
   @JsonProperty("catalogObjectName")
   private String catalogObjectName = null;
+
+  @JsonProperty("creationDate")
+  private Long creationDate = null;
 
   @JsonProperty("creator")
   private String creator = null;
@@ -55,6 +60,9 @@ public class CatalogObjectGrantMetadata {
 
   @JsonProperty("links")
   private List<Link> links = null;
+
+  @JsonProperty("modificationHistory")
+  private DequeOfModificationHistoryData modificationHistory = null;
 
   @JsonProperty("priority")
   private Integer priority = null;
@@ -113,7 +121,7 @@ public class CatalogObjectGrantMetadata {
     this.catalogObjectBucketId = catalogObjectBucketId;
   }
 
-  public CatalogObjectGrantMetadata catalogObjectId(Long catalogObjectId) {
+  public CatalogObjectGrantMetadata catalogObjectId(CatalogObjectID catalogObjectId) {
     this.catalogObjectId = catalogObjectId;
     return this;
   }
@@ -123,11 +131,11 @@ public class CatalogObjectGrantMetadata {
    * @return catalogObjectId
   **/
   @ApiModelProperty(value = "")
-  public Long getCatalogObjectId() {
+  public CatalogObjectID getCatalogObjectId() {
     return catalogObjectId;
   }
 
-  public void setCatalogObjectId(Long catalogObjectId) {
+  public void setCatalogObjectId(CatalogObjectID catalogObjectId) {
     this.catalogObjectId = catalogObjectId;
   }
 
@@ -147,6 +155,24 @@ public class CatalogObjectGrantMetadata {
 
   public void setCatalogObjectName(String catalogObjectName) {
     this.catalogObjectName = catalogObjectName;
+  }
+
+  public CatalogObjectGrantMetadata creationDate(Long creationDate) {
+    this.creationDate = creationDate;
+    return this;
+  }
+
+   /**
+   * Get creationDate
+   * @return creationDate
+  **/
+  @ApiModelProperty(value = "")
+  public Long getCreationDate() {
+    return creationDate;
+  }
+
+  public void setCreationDate(Long creationDate) {
+    this.creationDate = creationDate;
   }
 
   public CatalogObjectGrantMetadata creator(String creator) {
@@ -229,6 +255,24 @@ public class CatalogObjectGrantMetadata {
     this.links = links;
   }
 
+  public CatalogObjectGrantMetadata modificationHistory(DequeOfModificationHistoryData modificationHistory) {
+    this.modificationHistory = modificationHistory;
+    return this;
+  }
+
+   /**
+   * Get modificationHistory
+   * @return modificationHistory
+  **/
+  @ApiModelProperty(value = "")
+  public DequeOfModificationHistoryData getModificationHistory() {
+    return modificationHistory;
+  }
+
+  public void setModificationHistory(DequeOfModificationHistoryData modificationHistory) {
+    this.modificationHistory = modificationHistory;
+  }
+
   public CatalogObjectGrantMetadata priority(Integer priority) {
     this.priority = priority;
     return this;
@@ -262,16 +306,18 @@ public class CatalogObjectGrantMetadata {
         Objects.equals(this.catalogObjectBucketId, catalogObjectGrantMetadata.catalogObjectBucketId) &&
         Objects.equals(this.catalogObjectId, catalogObjectGrantMetadata.catalogObjectId) &&
         Objects.equals(this.catalogObjectName, catalogObjectGrantMetadata.catalogObjectName) &&
+        Objects.equals(this.creationDate, catalogObjectGrantMetadata.creationDate) &&
         Objects.equals(this.creator, catalogObjectGrantMetadata.creator) &&
         Objects.equals(this.grantee, catalogObjectGrantMetadata.grantee) &&
         Objects.equals(this.granteeType, catalogObjectGrantMetadata.granteeType) &&
         Objects.equals(this.links, catalogObjectGrantMetadata.links) &&
+        Objects.equals(this.modificationHistory, catalogObjectGrantMetadata.modificationHistory) &&
         Objects.equals(this.priority, catalogObjectGrantMetadata.priority);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(accessType, bucketName, catalogObjectBucketId, catalogObjectId, catalogObjectName, creator, grantee, granteeType, links, priority);
+    return Objects.hash(accessType, bucketName, catalogObjectBucketId, catalogObjectId, catalogObjectName, creationDate, creator, grantee, granteeType, links, modificationHistory, priority);
   }
 
 
@@ -285,10 +331,12 @@ public class CatalogObjectGrantMetadata {
     sb.append("    catalogObjectBucketId: ").append(toIndentedString(catalogObjectBucketId)).append("\n");
     sb.append("    catalogObjectId: ").append(toIndentedString(catalogObjectId)).append("\n");
     sb.append("    catalogObjectName: ").append(toIndentedString(catalogObjectName)).append("\n");
+    sb.append("    creationDate: ").append(toIndentedString(creationDate)).append("\n");
     sb.append("    creator: ").append(toIndentedString(creator)).append("\n");
     sb.append("    grantee: ").append(toIndentedString(grantee)).append("\n");
     sb.append("    granteeType: ").append(toIndentedString(granteeType)).append("\n");
     sb.append("    links: ").append(toIndentedString(links)).append("\n");
+    sb.append("    modificationHistory: ").append(toIndentedString(modificationHistory)).append("\n");
     sb.append("    priority: ").append(toIndentedString(priority)).append("\n");
     sb.append("}");
     return sb.toString();

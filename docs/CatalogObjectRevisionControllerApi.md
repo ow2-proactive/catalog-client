@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 <a name="createUsingPOST2"></a>
 # **createUsingPOST2**
-> CatalogObjectMetadata createUsingPOST2(sessionID, bucketName, name, commitMessage, file, projectName)
+> CatalogObjectMetadata createUsingPOST2(sessionID, bucketName, name, commitMessage, file, projectName, tags)
 
 Creates a new catalog object revision
 
@@ -31,8 +31,9 @@ String name = "name_example"; // String | name
 String commitMessage = "commitMessage_example"; // String | The commit message of the CatalogRawObject Revision
 File file = new File("/path/to/file.txt"); // File | file
 String projectName = "projectName_example"; // String | Project of the object
+String tags = "tags_example"; // String | Tags of the object
 try {
-    CatalogObjectMetadata result = apiInstance.createUsingPOST2(sessionID, bucketName, name, commitMessage, file, projectName);
+    CatalogObjectMetadata result = apiInstance.createUsingPOST2(sessionID, bucketName, name, commitMessage, file, projectName, tags);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling CatalogObjectRevisionControllerApi#createUsingPOST2");
@@ -50,6 +51,7 @@ Name | Type | Description  | Notes
  **commitMessage** | **String**| The commit message of the CatalogRawObject Revision |
  **file** | **File**| file |
  **projectName** | **String**| Project of the object | [optional]
+ **tags** | **String**| Tags of the object | [optional]
 
 ### Return type
 
