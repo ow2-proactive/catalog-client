@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2023-01-26T17:28:06.013+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2023-07-01T22:20:45.340+02:00")
 public class BucketControllerApi {
   private ApiClient apiClient;
 
@@ -51,10 +51,16 @@ public class BucketControllerApi {
   /**
    * Delete the empty buckets
    * 
+   * @param sessionID sessionID (required)
    * @throws ApiException if fails to make API call
    */
-  public void cleanEmptyUsingDELETE() throws ApiException {
+  public void cleanEmptyUsingDELETE(String sessionID) throws ApiException {
     Object localVarPostBody = null;
+    
+    // verify the required parameter 'sessionID' is set
+    if (sessionID == null) {
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling cleanEmptyUsingDELETE");
+    }
     
     // create path and map variables
     String localVarPath = "/buckets";
@@ -66,7 +72,9 @@ public class BucketControllerApi {
     Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
 
-    
+    if (sessionID != null)
+      localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
+
     
     final String[] localVarAccepts = {
       "*/*"

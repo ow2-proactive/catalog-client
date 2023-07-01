@@ -1,6 +1,6 @@
 # CatalogObjectControllerApi
 
-All URIs are relative to *https://localhost:8080/catalog*
+All URIs are relative to *https://trydev.activeeon.com:8443/catalog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -14,7 +14,7 @@ Method | HTTP request | Description
 [**listKindsUsingGET**](CatalogObjectControllerApi.md#listKindsUsingGET) | **GET** /buckets/kinds | Lists all kinds for all objects
 [**listObjectTagsUsingGET**](CatalogObjectControllerApi.md#listObjectTagsUsingGET) | **GET** /buckets/tags | Lists all tags values for all objects stored in the catalog
 [**listUsingGET1**](CatalogObjectControllerApi.md#listUsingGET1) | **GET** /buckets/{bucketName}/resources | Lists catalog objects metadata
-[**updateObjectMetadataUsingPUT**](CatalogObjectControllerApi.md#updateObjectMetadataUsingPUT) | **PUT** /buckets/{bucketName}/resources/{name} | Update a catalog object metadata, like kind, Content-Type and project name
+[**updateObjectMetadataUsingPUT**](CatalogObjectControllerApi.md#updateObjectMetadataUsingPUT) | **PUT** /buckets/{bucketName}/resources/{name} | Update a catalog object metadata, like kind, Content-Type, project name and tags
 
 
 <a name="createUsingPOST1"></a>
@@ -497,7 +497,7 @@ No authorization required
 # **updateObjectMetadataUsingPUT**
 > CatalogObjectMetadata updateObjectMetadataUsingPUT(sessionID, bucketName, name, kind, contentType, projectName, tags)
 
-Update a catalog object metadata, like kind, Content-Type and project name
+Update a catalog object metadata, like kind, Content-Type, project name and tags
 
 ### Example
 ```java
