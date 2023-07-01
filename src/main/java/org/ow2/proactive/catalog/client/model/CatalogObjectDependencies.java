@@ -27,7 +27,7 @@ import org.ow2.proactive.catalog.client.model.DependsOnCatalogObject;
 /**
  * CatalogObjectDependencies
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2023-01-26T17:28:06.013+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2023-07-01T22:20:45.340+02:00")
 public class CatalogObjectDependencies {
   @JsonProperty("called_by")
   private List<String> calledBy = null;

@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2023-01-26T17:28:06.013+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2023-07-01T22:20:45.340+02:00")
 public class CatalogObjectControllerApi {
   private ApiClient apiClient;
 
@@ -567,7 +567,7 @@ public class CatalogObjectControllerApi {
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
   /**
-   * Update a catalog object metadata, like kind, Content-Type and project name
+   * Update a catalog object metadata, like kind, Content-Type, project name and tags
    * 
    * @param sessionID sessionID (required)
    * @param bucketName bucketName (required)

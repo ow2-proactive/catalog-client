@@ -1,6 +1,6 @@
 # BucketControllerApi
 
-All URIs are relative to *https://localhost:8080/catalog*
+All URIs are relative to *https://trydev.activeeon.com:8443/catalog*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 <a name="cleanEmptyUsingDELETE"></a>
 # **cleanEmptyUsingDELETE**
-> cleanEmptyUsingDELETE()
+> cleanEmptyUsingDELETE(sessionID)
 
 Delete the empty buckets
 
@@ -26,8 +26,9 @@ Delete the empty buckets
 
 
 BucketControllerApi apiInstance = new BucketControllerApi();
+String sessionID = "sessionID_example"; // String | sessionID
 try {
-    apiInstance.cleanEmptyUsingDELETE();
+    apiInstance.cleanEmptyUsingDELETE(sessionID);
 } catch (ApiException e) {
     System.err.println("Exception when calling BucketControllerApi#cleanEmptyUsingDELETE");
     e.printStackTrace();
@@ -35,7 +36,10 @@ try {
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **sessionID** | **String**| sessionID |
 
 ### Return type
 
