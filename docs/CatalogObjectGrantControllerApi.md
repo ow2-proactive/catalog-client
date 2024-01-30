@@ -1,58 +1,73 @@
 # CatalogObjectGrantControllerApi
 
-All URIs are relative to *https://trydev.activeeon.com:8443/catalog*
+All URIs are relative to *https://trydev2.activeeon.com:8443/catalog*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**createCatalogObjectGrantForAGroupUsingPOST**](CatalogObjectGrantControllerApi.md#createCatalogObjectGrantForAGroupUsingPOST) | **POST** /buckets/{bucketName}/resources/{catalogObjectName}/grant/group | Create a new group grant for a catalog object
-[**createCatalogObjectGrantForAUserUsingPOST**](CatalogObjectGrantControllerApi.md#createCatalogObjectGrantForAUserUsingPOST) | **POST** /buckets/{bucketName}/resources/{catalogObjectName}/grant/user | Create a new user grant for a catalog object
-[**deleteAllCatalogObjectGrantsUsingDELETE**](CatalogObjectGrantControllerApi.md#deleteAllCatalogObjectGrantsUsingDELETE) | **DELETE** /buckets/{bucketName}/resources/{catalogObjectName}/grant | Delete all grant associated with a catalog object
-[**deleteCatalogObjectGrantForAGroupUsingDELETE**](CatalogObjectGrantControllerApi.md#deleteCatalogObjectGrantForAGroupUsingDELETE) | **DELETE** /buckets/{bucketName}/resources/{catalogObjectName}/grant/group | Delete a user group grant access for a catalog object
-[**deleteCatalogObjectGrantForAUserUsingDELETE**](CatalogObjectGrantControllerApi.md#deleteCatalogObjectGrantForAUserUsingDELETE) | **DELETE** /buckets/{bucketName}/resources/{catalogObjectName}/grant/user | Delete a user grant access for a catalog object
-[**getAllCreatedCatalogObjectGrantsByAdminsUsingGET**](CatalogObjectGrantControllerApi.md#getAllCreatedCatalogObjectGrantsByAdminsUsingGET) | **GET** /buckets/{bucketName}/resources/{catalogObjectName}/grant | Get all grants associated with a catalog object
-[**updateCatalogObjectGrantForAGroupUsingPUT**](CatalogObjectGrantControllerApi.md#updateCatalogObjectGrantForAGroupUsingPUT) | **PUT** /buckets/{bucketName}/resources/{catalogObjectName}/grant/group | Update a user group grant access for a catalog object
-[**updateCatalogObjectGrantForAUserUsingPUT**](CatalogObjectGrantControllerApi.md#updateCatalogObjectGrantForAUserUsingPUT) | **PUT** /buckets/{bucketName}/resources/{catalogObjectName}/grant/user | Update a user grant access for a catalog object
+| Method | HTTP request | Description |
+|------------- | ------------- | -------------|
+| [**createCatalogObjectGrantForAGroup**](CatalogObjectGrantControllerApi.md#createCatalogObjectGrantForAGroup) | **POST** /buckets/{bucketName}/resources/{catalogObjectName}/grant/group | Create a new group grant for a catalog object |
+| [**createCatalogObjectGrantForAUser**](CatalogObjectGrantControllerApi.md#createCatalogObjectGrantForAUser) | **POST** /buckets/{bucketName}/resources/{catalogObjectName}/grant/user | Create a new user grant for a catalog object |
+| [**deleteAllCatalogObjectGrants**](CatalogObjectGrantControllerApi.md#deleteAllCatalogObjectGrants) | **DELETE** /buckets/{bucketName}/resources/{catalogObjectName}/grant | Delete all grant associated with a catalog object |
+| [**deleteCatalogObjectGrantForAGroup**](CatalogObjectGrantControllerApi.md#deleteCatalogObjectGrantForAGroup) | **DELETE** /buckets/{bucketName}/resources/{catalogObjectName}/grant/group | Delete a user group grant access for a catalog object |
+| [**deleteCatalogObjectGrantForAUser**](CatalogObjectGrantControllerApi.md#deleteCatalogObjectGrantForAUser) | **DELETE** /buckets/{bucketName}/resources/{catalogObjectName}/grant/user | Delete a user grant access for a catalog object |
+| [**getAllCreatedCatalogObjectGrantsByAdmins**](CatalogObjectGrantControllerApi.md#getAllCreatedCatalogObjectGrantsByAdmins) | **GET** /buckets/{bucketName}/resources/{catalogObjectName}/grant | Get all grants associated with a catalog object |
+| [**updateCatalogObjectGrantForAGroup**](CatalogObjectGrantControllerApi.md#updateCatalogObjectGrantForAGroup) | **PUT** /buckets/{bucketName}/resources/{catalogObjectName}/grant/group | Update a user group grant access for a catalog object |
+| [**updateCatalogObjectGrantForAUser**](CatalogObjectGrantControllerApi.md#updateCatalogObjectGrantForAUser) | **PUT** /buckets/{bucketName}/resources/{catalogObjectName}/grant/user | Update a user grant access for a catalog object |
 
 
-<a name="createCatalogObjectGrantForAGroupUsingPOST"></a>
-# **createCatalogObjectGrantForAGroupUsingPOST**
-> CatalogObjectGrantMetadata createCatalogObjectGrantForAGroupUsingPOST(sessionID, bucketName, catalogObjectName, accessType, priority, userGroup)
+
+## createCatalogObjectGrantForAGroup
+
+> CatalogObjectGrantMetadata createCatalogObjectGrantForAGroup(sessionID, bucketName, catalogObjectName, accessType, priority, userGroup)
 
 Create a new group grant for a catalog object
 
 ### Example
+
 ```java
 // Import classes:
-//import org.ow2.proactive.catalog.client.ApiException;
-//import org.ow2.proactive.catalog.client.api.CatalogObjectGrantControllerApi;
+import org.ow2.proactive.catalog.client.ApiClient;
+import org.ow2.proactive.catalog.client.ApiException;
+import org.ow2.proactive.catalog.client.Configuration;
+import org.ow2.proactive.catalog.client.model.*;
+import org.ow2.proactive.catalog.client.api.CatalogObjectGrantControllerApi;
 
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://trydev2.activeeon.com:8443/catalog");
 
-CatalogObjectGrantControllerApi apiInstance = new CatalogObjectGrantControllerApi();
-String sessionID = "sessionID_example"; // String | The session id used to access ProActive REST server.
-String bucketName = "bucketName_example"; // String | The name of the bucket where the catalog object is stored.
-String catalogObjectName = "catalogObjectName_example"; // String | The name of the object in the bucket, which is the subject of the grant.
-String accessType = "accessType_example"; // String | The type of the access grant. It can be either noAccess, read, write or admin.
-Integer priority = 5; // Integer | The new priority of the access grant. It can be a value from 1 (lowest) to 10 (highest), with 5 as default. Priorities are used to compute the final access rights of a user belonging to multiple groups. Group grants with the same priority will resolve with the default accessType order (admin > write > read > noAccess). Finally, please note that a user grant has always more priority than a group grant.
-String userGroup = "userGroup_example"; // String | The name of the group of users that will benefit of the access grant.
-try {
-    CatalogObjectGrantMetadata result = apiInstance.createCatalogObjectGrantForAGroupUsingPOST(sessionID, bucketName, catalogObjectName, accessType, priority, userGroup);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling CatalogObjectGrantControllerApi#createCatalogObjectGrantForAGroupUsingPOST");
-    e.printStackTrace();
+        CatalogObjectGrantControllerApi apiInstance = new CatalogObjectGrantControllerApi(defaultClient);
+        String sessionID = "sessionID_example"; // String | The session id used to access ProActive REST server.
+        String bucketName = "bucketName_example"; // String | The name of the bucket where the catalog object is stored.
+        String catalogObjectName = "catalogObjectName_example"; // String | The name of the object in the bucket, which is the subject of the grant.
+        String accessType = "noAccess"; // String | The type of the access grant.<br />It can be either noAccess, read, write or admin.
+        Integer priority = 5; // Integer | The new priority of the access grant.<br />It can be a value from 1 (lowest) to 10 (highest), with 5 as default.<br />Priorities are used to compute the final access rights of a user belonging to multiple groups.<br />Group grants with the same priority will resolve with the default accessType order (admin > write > read > noAccess).<br />Finally, please note that a user grant has always more priority than a group grant.
+        String userGroup = ""; // String | The name of the group of users that will benefit of the access grant.
+        try {
+            CatalogObjectGrantMetadata result = apiInstance.createCatalogObjectGrantForAGroup(sessionID, bucketName, catalogObjectName, accessType, priority, userGroup);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CatalogObjectGrantControllerApi#createCatalogObjectGrantForAGroup");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
+    }
 }
 ```
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **sessionID** | **String**| The session id used to access ProActive REST server. |
- **bucketName** | **String**| The name of the bucket where the catalog object is stored. |
- **catalogObjectName** | **String**| The name of the object in the bucket, which is the subject of the grant. |
- **accessType** | **String**| The type of the access grant. It can be either noAccess, read, write or admin. |
- **priority** | **Integer**| The new priority of the access grant. It can be a value from 1 (lowest) to 10 (highest), with 5 as default. Priorities are used to compute the final access rights of a user belonging to multiple groups. Group grants with the same priority will resolve with the default accessType order (admin &gt; write &gt; read &gt; noAccess). Finally, please note that a user grant has always more priority than a group grant. | [default to 5]
- **userGroup** | **String**| The name of the group of users that will benefit of the access grant. |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **sessionID** | **String**| The session id used to access ProActive REST server. | |
+| **bucketName** | **String**| The name of the bucket where the catalog object is stored. | |
+| **catalogObjectName** | **String**| The name of the object in the bucket, which is the subject of the grant. | |
+| **accessType** | **String**| The type of the access grant.&lt;br /&gt;It can be either noAccess, read, write or admin. | [enum: noAccess, read, write, admin] |
+| **priority** | **Integer**| The new priority of the access grant.&lt;br /&gt;It can be a value from 1 (lowest) to 10 (highest), with 5 as default.&lt;br /&gt;Priorities are used to compute the final access rights of a user belonging to multiple groups.&lt;br /&gt;Group grants with the same priority will resolve with the default accessType order (admin &gt; write &gt; read &gt; noAccess).&lt;br /&gt;Finally, please note that a user grant has always more priority than a group grant. | [default to 5] |
+| **userGroup** | **String**| The name of the group of users that will benefit of the access grant. | [default to ] |
 
 ### Return type
 
@@ -64,46 +79,68 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: */*
+- **Content-Type**: Not defined
+- **Accept**: */*
 
-<a name="createCatalogObjectGrantForAUserUsingPOST"></a>
-# **createCatalogObjectGrantForAUserUsingPOST**
-> CatalogObjectGrantMetadata createCatalogObjectGrantForAUserUsingPOST(sessionID, bucketName, catalogObjectName, accessType, username)
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **401** | User not authenticated |  -  |
+| **403** | Permission denied |  -  |
+| **201** | Created |  -  |
+
+
+## createCatalogObjectGrantForAUser
+
+> CatalogObjectGrantMetadata createCatalogObjectGrantForAUser(sessionID, bucketName, catalogObjectName, accessType, username)
 
 Create a new user grant for a catalog object
 
 ### Example
+
 ```java
 // Import classes:
-//import org.ow2.proactive.catalog.client.ApiException;
-//import org.ow2.proactive.catalog.client.api.CatalogObjectGrantControllerApi;
+import org.ow2.proactive.catalog.client.ApiClient;
+import org.ow2.proactive.catalog.client.ApiException;
+import org.ow2.proactive.catalog.client.Configuration;
+import org.ow2.proactive.catalog.client.model.*;
+import org.ow2.proactive.catalog.client.api.CatalogObjectGrantControllerApi;
 
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://trydev2.activeeon.com:8443/catalog");
 
-CatalogObjectGrantControllerApi apiInstance = new CatalogObjectGrantControllerApi();
-String sessionID = "sessionID_example"; // String | The session id used to access ProActive REST server.
-String bucketName = "bucketName_example"; // String | The name of the bucket where the catalog object is stored.
-String catalogObjectName = "catalogObjectName_example"; // String | The name of the object in the bucket, which is the subject of the grant.
-String accessType = "accessType_example"; // String | The type of the access grant. It can be either noAccess, read, write or admin.
-String username = "username_example"; // String | The name of the user that will benefit of the access grant.
-try {
-    CatalogObjectGrantMetadata result = apiInstance.createCatalogObjectGrantForAUserUsingPOST(sessionID, bucketName, catalogObjectName, accessType, username);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling CatalogObjectGrantControllerApi#createCatalogObjectGrantForAUserUsingPOST");
-    e.printStackTrace();
+        CatalogObjectGrantControllerApi apiInstance = new CatalogObjectGrantControllerApi(defaultClient);
+        String sessionID = "sessionID_example"; // String | The session id used to access ProActive REST server.
+        String bucketName = "bucketName_example"; // String | The name of the bucket where the catalog object is stored.
+        String catalogObjectName = "catalogObjectName_example"; // String | The name of the object in the bucket, which is the subject of the grant.
+        String accessType = "noAccess"; // String | The type of the access grant. It can be either noAccess, read, write or admin.
+        String username = ""; // String | The name of the user that will benefit of the access grant.
+        try {
+            CatalogObjectGrantMetadata result = apiInstance.createCatalogObjectGrantForAUser(sessionID, bucketName, catalogObjectName, accessType, username);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CatalogObjectGrantControllerApi#createCatalogObjectGrantForAUser");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
+    }
 }
 ```
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **sessionID** | **String**| The session id used to access ProActive REST server. |
- **bucketName** | **String**| The name of the bucket where the catalog object is stored. |
- **catalogObjectName** | **String**| The name of the object in the bucket, which is the subject of the grant. |
- **accessType** | **String**| The type of the access grant. It can be either noAccess, read, write or admin. |
- **username** | **String**| The name of the user that will benefit of the access grant. |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **sessionID** | **String**| The session id used to access ProActive REST server. | |
+| **bucketName** | **String**| The name of the bucket where the catalog object is stored. | |
+| **catalogObjectName** | **String**| The name of the object in the bucket, which is the subject of the grant. | |
+| **accessType** | **String**| The type of the access grant. It can be either noAccess, read, write or admin. | [enum: noAccess, read, write, admin] |
+| **username** | **String**| The name of the user that will benefit of the access grant. | [default to ] |
 
 ### Return type
 
@@ -115,42 +152,64 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: */*
+- **Content-Type**: Not defined
+- **Accept**: */*
 
-<a name="deleteAllCatalogObjectGrantsUsingDELETE"></a>
-# **deleteAllCatalogObjectGrantsUsingDELETE**
-> List&lt;CatalogObjectGrantMetadata&gt; deleteAllCatalogObjectGrantsUsingDELETE(sessionID, bucketName, catalogObjectName)
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **401** | User not authenticated |  -  |
+| **403** | Permission denied |  -  |
+| **201** | Created |  -  |
+
+
+## deleteAllCatalogObjectGrants
+
+> List&lt;CatalogObjectGrantMetadata&gt; deleteAllCatalogObjectGrants(sessionID, bucketName, catalogObjectName)
 
 Delete all grant associated with a catalog object
 
 ### Example
+
 ```java
 // Import classes:
-//import org.ow2.proactive.catalog.client.ApiException;
-//import org.ow2.proactive.catalog.client.api.CatalogObjectGrantControllerApi;
+import org.ow2.proactive.catalog.client.ApiClient;
+import org.ow2.proactive.catalog.client.ApiException;
+import org.ow2.proactive.catalog.client.Configuration;
+import org.ow2.proactive.catalog.client.model.*;
+import org.ow2.proactive.catalog.client.api.CatalogObjectGrantControllerApi;
 
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://trydev2.activeeon.com:8443/catalog");
 
-CatalogObjectGrantControllerApi apiInstance = new CatalogObjectGrantControllerApi();
-String sessionID = "sessionID_example"; // String | The session id used to access ProActive REST server.
-String bucketName = "bucketName_example"; // String | The name of the bucket where the catalog objects are stored.
-String catalogObjectName = "catalogObjectName_example"; // String | The name of the object in the bucket, which is the subject of the grant.
-try {
-    List<CatalogObjectGrantMetadata> result = apiInstance.deleteAllCatalogObjectGrantsUsingDELETE(sessionID, bucketName, catalogObjectName);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling CatalogObjectGrantControllerApi#deleteAllCatalogObjectGrantsUsingDELETE");
-    e.printStackTrace();
+        CatalogObjectGrantControllerApi apiInstance = new CatalogObjectGrantControllerApi(defaultClient);
+        String sessionID = "sessionID_example"; // String | The session id used to access ProActive REST server.
+        String bucketName = "bucketName_example"; // String | The name of the bucket where the catalog objects are stored.
+        String catalogObjectName = "catalogObjectName_example"; // String | The name of the object in the bucket, which is the subject of the grant.
+        try {
+            List<CatalogObjectGrantMetadata> result = apiInstance.deleteAllCatalogObjectGrants(sessionID, bucketName, catalogObjectName);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CatalogObjectGrantControllerApi#deleteAllCatalogObjectGrants");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
+    }
 }
 ```
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **sessionID** | **String**| The session id used to access ProActive REST server. |
- **bucketName** | **String**| The name of the bucket where the catalog objects are stored. |
- **catalogObjectName** | **String**| The name of the object in the bucket, which is the subject of the grant. |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **sessionID** | **String**| The session id used to access ProActive REST server. | |
+| **bucketName** | **String**| The name of the bucket where the catalog objects are stored. | |
+| **catalogObjectName** | **String**| The name of the object in the bucket, which is the subject of the grant. | |
 
 ### Return type
 
@@ -162,44 +221,66 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: */*
+- **Content-Type**: Not defined
+- **Accept**: */*
 
-<a name="deleteCatalogObjectGrantForAGroupUsingDELETE"></a>
-# **deleteCatalogObjectGrantForAGroupUsingDELETE**
-> CatalogObjectGrantMetadata deleteCatalogObjectGrantForAGroupUsingDELETE(sessionID, bucketName, catalogObjectName, userGroup)
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **401** | User not authenticated |  -  |
+| **403** | Permission denied |  -  |
+| **200** | OK |  -  |
+
+
+## deleteCatalogObjectGrantForAGroup
+
+> CatalogObjectGrantMetadata deleteCatalogObjectGrantForAGroup(sessionID, bucketName, catalogObjectName, userGroup)
 
 Delete a user group grant access for a catalog object
 
 ### Example
+
 ```java
 // Import classes:
-//import org.ow2.proactive.catalog.client.ApiException;
-//import org.ow2.proactive.catalog.client.api.CatalogObjectGrantControllerApi;
+import org.ow2.proactive.catalog.client.ApiClient;
+import org.ow2.proactive.catalog.client.ApiException;
+import org.ow2.proactive.catalog.client.Configuration;
+import org.ow2.proactive.catalog.client.model.*;
+import org.ow2.proactive.catalog.client.api.CatalogObjectGrantControllerApi;
 
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://trydev2.activeeon.com:8443/catalog");
 
-CatalogObjectGrantControllerApi apiInstance = new CatalogObjectGrantControllerApi();
-String sessionID = "sessionID_example"; // String | The session id used to access ProActive REST server.
-String bucketName = "bucketName_example"; // String | The name of the bucket where the catalog object is stored.
-String catalogObjectName = "catalogObjectName_example"; // String | The name of the object in the bucket, which is the subject of the grant.
-String userGroup = "userGroup_example"; // String | The name of the group of users that are benefiting of the access grant.
-try {
-    CatalogObjectGrantMetadata result = apiInstance.deleteCatalogObjectGrantForAGroupUsingDELETE(sessionID, bucketName, catalogObjectName, userGroup);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling CatalogObjectGrantControllerApi#deleteCatalogObjectGrantForAGroupUsingDELETE");
-    e.printStackTrace();
+        CatalogObjectGrantControllerApi apiInstance = new CatalogObjectGrantControllerApi(defaultClient);
+        String sessionID = "sessionID_example"; // String | The session id used to access ProActive REST server.
+        String bucketName = "bucketName_example"; // String | The name of the bucket where the catalog object is stored.
+        String catalogObjectName = "catalogObjectName_example"; // String | The name of the object in the bucket, which is the subject of the grant.
+        String userGroup = ""; // String | The name of the group of users that are benefiting of the access grant.
+        try {
+            CatalogObjectGrantMetadata result = apiInstance.deleteCatalogObjectGrantForAGroup(sessionID, bucketName, catalogObjectName, userGroup);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CatalogObjectGrantControllerApi#deleteCatalogObjectGrantForAGroup");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
+    }
 }
 ```
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **sessionID** | **String**| The session id used to access ProActive REST server. |
- **bucketName** | **String**| The name of the bucket where the catalog object is stored. |
- **catalogObjectName** | **String**| The name of the object in the bucket, which is the subject of the grant. |
- **userGroup** | **String**| The name of the group of users that are benefiting of the access grant. |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **sessionID** | **String**| The session id used to access ProActive REST server. | |
+| **bucketName** | **String**| The name of the bucket where the catalog object is stored. | |
+| **catalogObjectName** | **String**| The name of the object in the bucket, which is the subject of the grant. | |
+| **userGroup** | **String**| The name of the group of users that are benefiting of the access grant. | [default to ] |
 
 ### Return type
 
@@ -211,44 +292,66 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: */*
+- **Content-Type**: Not defined
+- **Accept**: */*
 
-<a name="deleteCatalogObjectGrantForAUserUsingDELETE"></a>
-# **deleteCatalogObjectGrantForAUserUsingDELETE**
-> CatalogObjectGrantMetadata deleteCatalogObjectGrantForAUserUsingDELETE(sessionID, bucketName, catalogObjectName, username)
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **401** | User not authenticated |  -  |
+| **403** | Permission denied |  -  |
+| **200** | OK |  -  |
+
+
+## deleteCatalogObjectGrantForAUser
+
+> CatalogObjectGrantMetadata deleteCatalogObjectGrantForAUser(sessionID, bucketName, catalogObjectName, username)
 
 Delete a user grant access for a catalog object
 
 ### Example
+
 ```java
 // Import classes:
-//import org.ow2.proactive.catalog.client.ApiException;
-//import org.ow2.proactive.catalog.client.api.CatalogObjectGrantControllerApi;
+import org.ow2.proactive.catalog.client.ApiClient;
+import org.ow2.proactive.catalog.client.ApiException;
+import org.ow2.proactive.catalog.client.Configuration;
+import org.ow2.proactive.catalog.client.model.*;
+import org.ow2.proactive.catalog.client.api.CatalogObjectGrantControllerApi;
 
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://trydev2.activeeon.com:8443/catalog");
 
-CatalogObjectGrantControllerApi apiInstance = new CatalogObjectGrantControllerApi();
-String sessionID = "sessionID_example"; // String | The session id used to access ProActive REST server.
-String bucketName = "bucketName_example"; // String | The name of the bucket where the catalog object is stored.
-String catalogObjectName = "catalogObjectName_example"; // String | The name of the object in the bucket, which is the subject of the grant.
-String username = "username_example"; // String | The name of the user that is benefiting of the access grant.
-try {
-    CatalogObjectGrantMetadata result = apiInstance.deleteCatalogObjectGrantForAUserUsingDELETE(sessionID, bucketName, catalogObjectName, username);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling CatalogObjectGrantControllerApi#deleteCatalogObjectGrantForAUserUsingDELETE");
-    e.printStackTrace();
+        CatalogObjectGrantControllerApi apiInstance = new CatalogObjectGrantControllerApi(defaultClient);
+        String sessionID = "sessionID_example"; // String | The session id used to access ProActive REST server.
+        String bucketName = "bucketName_example"; // String | The name of the bucket where the catalog object is stored.
+        String catalogObjectName = "catalogObjectName_example"; // String | The name of the object in the bucket, which is the subject of the grant.
+        String username = ""; // String | The name of the user that is benefiting of the access grant.
+        try {
+            CatalogObjectGrantMetadata result = apiInstance.deleteCatalogObjectGrantForAUser(sessionID, bucketName, catalogObjectName, username);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CatalogObjectGrantControllerApi#deleteCatalogObjectGrantForAUser");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
+    }
 }
 ```
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **sessionID** | **String**| The session id used to access ProActive REST server. |
- **bucketName** | **String**| The name of the bucket where the catalog object is stored. |
- **catalogObjectName** | **String**| The name of the object in the bucket, which is the subject of the grant. |
- **username** | **String**| The name of the user that is benefiting of the access grant. |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **sessionID** | **String**| The session id used to access ProActive REST server. | |
+| **bucketName** | **String**| The name of the bucket where the catalog object is stored. | |
+| **catalogObjectName** | **String**| The name of the object in the bucket, which is the subject of the grant. | |
+| **username** | **String**| The name of the user that is benefiting of the access grant. | [default to ] |
 
 ### Return type
 
@@ -260,42 +363,64 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: */*
+- **Content-Type**: Not defined
+- **Accept**: */*
 
-<a name="getAllCreatedCatalogObjectGrantsByAdminsUsingGET"></a>
-# **getAllCreatedCatalogObjectGrantsByAdminsUsingGET**
-> List&lt;CatalogObjectGrantMetadata&gt; getAllCreatedCatalogObjectGrantsByAdminsUsingGET(sessionID, bucketName, catalogObjectName)
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **401** | User not authenticated |  -  |
+| **403** | Permission denied |  -  |
+| **200** | OK |  -  |
+
+
+## getAllCreatedCatalogObjectGrantsByAdmins
+
+> List&lt;CatalogObjectGrantMetadata&gt; getAllCreatedCatalogObjectGrantsByAdmins(sessionID, bucketName, catalogObjectName)
 
 Get all grants associated with a catalog object
 
 ### Example
+
 ```java
 // Import classes:
-//import org.ow2.proactive.catalog.client.ApiException;
-//import org.ow2.proactive.catalog.client.api.CatalogObjectGrantControllerApi;
+import org.ow2.proactive.catalog.client.ApiClient;
+import org.ow2.proactive.catalog.client.ApiException;
+import org.ow2.proactive.catalog.client.Configuration;
+import org.ow2.proactive.catalog.client.model.*;
+import org.ow2.proactive.catalog.client.api.CatalogObjectGrantControllerApi;
 
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://trydev2.activeeon.com:8443/catalog");
 
-CatalogObjectGrantControllerApi apiInstance = new CatalogObjectGrantControllerApi();
-String sessionID = "sessionID_example"; // String | The session id used to access ProActive REST server.
-String bucketName = "bucketName_example"; // String | The name of the bucket where the catalog objects are stored.
-String catalogObjectName = "catalogObjectName_example"; // String | The name of the object in the bucket, which is the subject of the grant.
-try {
-    List<CatalogObjectGrantMetadata> result = apiInstance.getAllCreatedCatalogObjectGrantsByAdminsUsingGET(sessionID, bucketName, catalogObjectName);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling CatalogObjectGrantControllerApi#getAllCreatedCatalogObjectGrantsByAdminsUsingGET");
-    e.printStackTrace();
+        CatalogObjectGrantControllerApi apiInstance = new CatalogObjectGrantControllerApi(defaultClient);
+        String sessionID = "sessionID_example"; // String | The session id used to access ProActive REST server.
+        String bucketName = "bucketName_example"; // String | The name of the bucket where the catalog objects are stored.
+        String catalogObjectName = "catalogObjectName_example"; // String | The name of the object in the bucket, which is the subject of the grant.
+        try {
+            List<CatalogObjectGrantMetadata> result = apiInstance.getAllCreatedCatalogObjectGrantsByAdmins(sessionID, bucketName, catalogObjectName);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CatalogObjectGrantControllerApi#getAllCreatedCatalogObjectGrantsByAdmins");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
+    }
 }
 ```
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **sessionID** | **String**| The session id used to access ProActive REST server. |
- **bucketName** | **String**| The name of the bucket where the catalog objects are stored. |
- **catalogObjectName** | **String**| The name of the object in the bucket, which is the subject of the grant. |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **sessionID** | **String**| The session id used to access ProActive REST server. | |
+| **bucketName** | **String**| The name of the bucket where the catalog objects are stored. | |
+| **catalogObjectName** | **String**| The name of the object in the bucket, which is the subject of the grant. | |
 
 ### Return type
 
@@ -307,48 +432,70 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: */*
+- **Content-Type**: Not defined
+- **Accept**: */*
 
-<a name="updateCatalogObjectGrantForAGroupUsingPUT"></a>
-# **updateCatalogObjectGrantForAGroupUsingPUT**
-> CatalogObjectGrantMetadata updateCatalogObjectGrantForAGroupUsingPUT(sessionID, bucketName, catalogObjectName, accessType, priority, userGroup)
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **401** | User not authenticated |  -  |
+| **403** | Permission denied |  -  |
+| **200** | OK |  -  |
+
+
+## updateCatalogObjectGrantForAGroup
+
+> CatalogObjectGrantMetadata updateCatalogObjectGrantForAGroup(sessionID, bucketName, catalogObjectName, accessType, priority, userGroup)
 
 Update a user group grant access for a catalog object
 
 ### Example
+
 ```java
 // Import classes:
-//import org.ow2.proactive.catalog.client.ApiException;
-//import org.ow2.proactive.catalog.client.api.CatalogObjectGrantControllerApi;
+import org.ow2.proactive.catalog.client.ApiClient;
+import org.ow2.proactive.catalog.client.ApiException;
+import org.ow2.proactive.catalog.client.Configuration;
+import org.ow2.proactive.catalog.client.model.*;
+import org.ow2.proactive.catalog.client.api.CatalogObjectGrantControllerApi;
 
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://trydev2.activeeon.com:8443/catalog");
 
-CatalogObjectGrantControllerApi apiInstance = new CatalogObjectGrantControllerApi();
-String sessionID = "sessionID_example"; // String | The session id used to access ProActive REST server.
-String bucketName = "bucketName_example"; // String | The name of the bucket where the catalog object is stored.
-String catalogObjectName = "catalogObjectName_example"; // String | The name of the object in the bucket, which is the subject of the grant.
-String accessType = "accessType_example"; // String | The new type of the access grant. It can be either noAccess, read, write or admin.
-Integer priority = 56; // Integer | The new priority of the access grant. It can be a value from 1 (lowest) to 10 (highest), with 5 as default. Priorities are used to compute the final access rights of a user belonging to multiple groups. Group grants with the same priority will resolve with the default accessType order (admin > write > read > noAccess). Finally, please note that a user grant has always more priority than a group grant.
-String userGroup = "userGroup_example"; // String | The name of the group of users that are benefiting of the access grant.
-try {
-    CatalogObjectGrantMetadata result = apiInstance.updateCatalogObjectGrantForAGroupUsingPUT(sessionID, bucketName, catalogObjectName, accessType, priority, userGroup);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling CatalogObjectGrantControllerApi#updateCatalogObjectGrantForAGroupUsingPUT");
-    e.printStackTrace();
+        CatalogObjectGrantControllerApi apiInstance = new CatalogObjectGrantControllerApi(defaultClient);
+        String sessionID = "sessionID_example"; // String | The session id used to access ProActive REST server.
+        String bucketName = "bucketName_example"; // String | The name of the bucket where the catalog object is stored.
+        String catalogObjectName = "catalogObjectName_example"; // String | The name of the object in the bucket, which is the subject of the grant.
+        String accessType = "noAccess"; // String | The new type of the access grant.<br />It can be either noAccess, read, write or admin.
+        Integer priority = 5; // Integer | The new priority of the access grant. It can be a value from 1 (lowest) to 10 (highest), with 5 as default.<br />Priorities are used to compute the final access rights of a user belonging to multiple groups.<br />Group grants with the same priority will resolve with the default accessType order (admin > write > read > noAccess).<br />Finally, please note that a user grant has always more priority than a group grant.
+        String userGroup = "userGroup_example"; // String | The name of the group of users that are benefiting of the access grant.
+        try {
+            CatalogObjectGrantMetadata result = apiInstance.updateCatalogObjectGrantForAGroup(sessionID, bucketName, catalogObjectName, accessType, priority, userGroup);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CatalogObjectGrantControllerApi#updateCatalogObjectGrantForAGroup");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
+    }
 }
 ```
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **sessionID** | **String**| The session id used to access ProActive REST server. |
- **bucketName** | **String**| The name of the bucket where the catalog object is stored. |
- **catalogObjectName** | **String**| The name of the object in the bucket, which is the subject of the grant. |
- **accessType** | **String**| The new type of the access grant. It can be either noAccess, read, write or admin. |
- **priority** | **Integer**| The new priority of the access grant. It can be a value from 1 (lowest) to 10 (highest), with 5 as default. Priorities are used to compute the final access rights of a user belonging to multiple groups. Group grants with the same priority will resolve with the default accessType order (admin &gt; write &gt; read &gt; noAccess). Finally, please note that a user grant has always more priority than a group grant. |
- **userGroup** | **String**| The name of the group of users that are benefiting of the access grant. |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **sessionID** | **String**| The session id used to access ProActive REST server. | |
+| **bucketName** | **String**| The name of the bucket where the catalog object is stored. | |
+| **catalogObjectName** | **String**| The name of the object in the bucket, which is the subject of the grant. | |
+| **accessType** | **String**| The new type of the access grant.&lt;br /&gt;It can be either noAccess, read, write or admin. | [enum: noAccess, read, write, admin] |
+| **priority** | **Integer**| The new priority of the access grant. It can be a value from 1 (lowest) to 10 (highest), with 5 as default.&lt;br /&gt;Priorities are used to compute the final access rights of a user belonging to multiple groups.&lt;br /&gt;Group grants with the same priority will resolve with the default accessType order (admin &gt; write &gt; read &gt; noAccess).&lt;br /&gt;Finally, please note that a user grant has always more priority than a group grant. | [default to 5] |
+| **userGroup** | **String**| The name of the group of users that are benefiting of the access grant. | |
 
 ### Return type
 
@@ -360,46 +507,68 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: */*
+- **Content-Type**: Not defined
+- **Accept**: */*
 
-<a name="updateCatalogObjectGrantForAUserUsingPUT"></a>
-# **updateCatalogObjectGrantForAUserUsingPUT**
-> CatalogObjectGrantMetadata updateCatalogObjectGrantForAUserUsingPUT(sessionID, bucketName, catalogObjectName, accessType, username)
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **401** | User not authenticated |  -  |
+| **403** | Permission denied |  -  |
+| **200** | OK |  -  |
+
+
+## updateCatalogObjectGrantForAUser
+
+> CatalogObjectGrantMetadata updateCatalogObjectGrantForAUser(sessionID, bucketName, catalogObjectName, accessType, username)
 
 Update a user grant access for a catalog object
 
 ### Example
+
 ```java
 // Import classes:
-//import org.ow2.proactive.catalog.client.ApiException;
-//import org.ow2.proactive.catalog.client.api.CatalogObjectGrantControllerApi;
+import org.ow2.proactive.catalog.client.ApiClient;
+import org.ow2.proactive.catalog.client.ApiException;
+import org.ow2.proactive.catalog.client.Configuration;
+import org.ow2.proactive.catalog.client.model.*;
+import org.ow2.proactive.catalog.client.api.CatalogObjectGrantControllerApi;
 
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://trydev2.activeeon.com:8443/catalog");
 
-CatalogObjectGrantControllerApi apiInstance = new CatalogObjectGrantControllerApi();
-String sessionID = "sessionID_example"; // String | The session id used to access ProActive REST server.
-String bucketName = "bucketName_example"; // String | The name of the bucket where the catalog object is stored.
-String catalogObjectName = "catalogObjectName_example"; // String | The name of the object in the bucket, which is the subject of the grant.
-String accessType = "accessType_example"; // String | The new type of the access grant. It can be either noAccess, read, write or admin.
-String username = "username_example"; // String | The name of the user that is benefiting from the access grant.
-try {
-    CatalogObjectGrantMetadata result = apiInstance.updateCatalogObjectGrantForAUserUsingPUT(sessionID, bucketName, catalogObjectName, accessType, username);
-    System.out.println(result);
-} catch (ApiException e) {
-    System.err.println("Exception when calling CatalogObjectGrantControllerApi#updateCatalogObjectGrantForAUserUsingPUT");
-    e.printStackTrace();
+        CatalogObjectGrantControllerApi apiInstance = new CatalogObjectGrantControllerApi(defaultClient);
+        String sessionID = "sessionID_example"; // String | The session id used to access ProActive REST server.
+        String bucketName = "bucketName_example"; // String | The name of the bucket where the catalog object is stored.
+        String catalogObjectName = "catalogObjectName_example"; // String | The name of the object in the bucket, which is the subject of the grant.
+        String accessType = "noAccess"; // String | The new type of the access grant.<br />It can be either noAccess, read, write or admin.
+        String username = ""; // String | The name of the user that is benefiting from the access grant.
+        try {
+            CatalogObjectGrantMetadata result = apiInstance.updateCatalogObjectGrantForAUser(sessionID, bucketName, catalogObjectName, accessType, username);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CatalogObjectGrantControllerApi#updateCatalogObjectGrantForAUser");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
+    }
 }
 ```
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **sessionID** | **String**| The session id used to access ProActive REST server. |
- **bucketName** | **String**| The name of the bucket where the catalog object is stored. |
- **catalogObjectName** | **String**| The name of the object in the bucket, which is the subject of the grant. |
- **accessType** | **String**| The new type of the access grant. It can be either noAccess, read, write or admin. |
- **username** | **String**| The name of the user that is benefiting from the access grant. |
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **sessionID** | **String**| The session id used to access ProActive REST server. | |
+| **bucketName** | **String**| The name of the bucket where the catalog object is stored. | |
+| **catalogObjectName** | **String**| The name of the object in the bucket, which is the subject of the grant. | |
+| **accessType** | **String**| The new type of the access grant.&lt;br /&gt;It can be either noAccess, read, write or admin. | [enum: noAccess, read, write, admin] |
+| **username** | **String**| The name of the user that is benefiting from the access grant. | [default to ] |
 
 ### Return type
 
@@ -411,6 +580,13 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: */*
+- **Content-Type**: Not defined
+- **Accept**: */*
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **401** | User not authenticated |  -  |
+| **403** | Permission denied |  -  |
+| **200** | OK |  -  |
 

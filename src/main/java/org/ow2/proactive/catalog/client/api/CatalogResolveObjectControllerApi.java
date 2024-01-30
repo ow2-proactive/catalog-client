@@ -96,7 +96,7 @@ public class CatalogResolveObjectControllerApi {
     }
 
     private String getCatalogObjectAsString(String bucketName, String objectName, String sessionId) {
-        return catalogObjectControllerApi.getRawUsingGET(bucketName, objectName, sessionId);
+        return catalogObjectControllerApi.getRaw1(bucketName, objectName, sessionId);
     }
 
     /**

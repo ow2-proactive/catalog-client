@@ -1,14 +1,17 @@
 
+
 # ModificationHistoryData
 
+
 ## Properties
-Name | Type | Description | Notes
------------- | ------------- | ------------- | -------------
-**changes** | **String** |  |  [optional]
-**modificationDate** | **Long** |  |  [optional]
-**newValues** | **String** |  |  [optional]
-**oldValues** | **String** |  |  [optional]
-**username** | **String** |  |  [optional]
+
+| Name | Type | Description | Notes |
+|------------ | ------------- | ------------- | -------------|
+|**modificationDate** | **Long** |  |  [optional] |
+|**username** | **String** |  |  [optional] |
+|**oldValues** | **String** |  |  [optional] |
+|**newValues** | **String** |  |  [optional] |
+|**changes** | **String** |  |  [optional] |
 
 
 

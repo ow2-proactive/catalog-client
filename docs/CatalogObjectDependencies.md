@@ -1,11 +1,14 @@
 
+
 # CatalogObjectDependencies
 
+
 ## Properties
-Name | Type | Description | Notes
------------- | ------------- | ------------- | -------------
-**calledBy** | **List&lt;String&gt;** |  |  [optional]
-**dependsOn** | [**List&lt;DependsOnCatalogObject&gt;**](DependsOnCatalogObject.md) |  |  [optional]
+
+| Name | Type | Description | Notes |
+|------------ | ------------- | ------------- | -------------|
+|**dependsOn** | [**List&lt;DependsOnCatalogObject&gt;**](DependsOnCatalogObject.md) |  |  [optional] |
+|**calledBy** | **List&lt;String&gt;** |  |  [optional] |
 
 
 
