@@ -81,10 +81,10 @@ dependencies {
     compile "com.google.guava:guava"
     compile "com.jayway.restassured:rest-assured"
     compile "javax.ws.rs:javax.ws.rs-api"
-    compile "org.glassfish.jersey.core:jersey-client:2.27"
-    compile 'org.glassfish.jersey.media:jersey-media-json-jackson:2.27'
-    compile 'org.glassfish.jersey.media:jersey-media-multipart:2.27'
-    compile 'org.glassfish.jersey.inject:jersey-hk2:2.27'
+    compile "org.glassfish.jersey.core:jersey-client:2.41"
+    compile 'org.glassfish.jersey.media:jersey-media-json-jackson:2.41'
+    compile 'org.glassfish.jersey.media:jersey-media-multipart:2.41'
+    compile 'org.glassfish.jersey.inject:jersey-hk2:2.41'
     compile 'org.openapitools:jackson-databind-nullable:0.2.6'
 
     testCompile "com.google.truth:truth"

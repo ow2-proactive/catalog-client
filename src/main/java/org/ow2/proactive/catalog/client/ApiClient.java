@@ -1,5 +1,6 @@
 package org.ow2.proactive.catalog.client;
 
+import javax.net.ssl.*;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -14,19 +15,17 @@ import javax.ws.rs.core.Response.Status;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.client.HttpUrlConnectorProvider;
+import org.glassfish.jersey.client.JerseyClientBuilder;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.MultiPart;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 import java.net.URI;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
+import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -35,8 +34,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import org.glassfish.jersey.logging.LoggingFeature;
-import java.util.AbstractMap.SimpleEntry;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Collection;
 import java.util.Collections;
@@ -44,19 +41,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import java.time.OffsetDateTime;
 
 import java.net.URLEncoder;
-
-import java.io.File;
-import java.io.UnsupportedEncodingException;
 
 import java.text.DateFormat;
 import java.util.regex.Matcher;
@@ -1109,9 +1100,10 @@ public class ApiClient extends JavaTimeFormatter {
     // recreate the client config to pickup changes
     clientConfig = getDefaultClientConfig();
 
-    ClientBuilder clientBuilder = ClientBuilder.newBuilder();
-    clientBuilder = clientBuilder.withConfig(clientConfig);
-    customizeClientBuilder(clientBuilder);
+    JerseyClientBuilder clientBuilder = new JerseyClientBuilder();
+    clientBuilder.withConfig(clientConfig);
+    clientBuilder.hostnameVerifier(getHostnameVerifier());
+    clientBuilder.sslContext(getSslContext());
     return clientBuilder.build();
   }
 
@@ -1142,23 +1134,41 @@ public class ApiClient extends JavaTimeFormatter {
   }
 
   /**
-   * Customize the client builder.
-   *
-   * This method can be overridden to customize the API client. For example, this can be used to:
-   * 1. Set the hostname verifier to be used by the client to verify the endpoint's hostname
-   *    against its identification information.
-   * 2. Set the client-side key store.
-   * 3. Set the SSL context that will be used when creating secured transport connections to
-   *    server endpoints from web targets created by the client instance that is using this SSL context.
-   * 4. Set the client-side trust store.
-   *
-   * To completely disable certificate validation (at your own risk), you can
-   * override this method and invoke disableCertificateValidation(clientBuilder).
-   *
-   * @param clientBuilder a {@link javax.ws.rs.client.ClientBuilder} object.
-   */
-  protected void customizeClientBuilder(ClientBuilder clientBuilder) {
-    // No-op extension point
+   The methods SSLContextn HostnameVerifier and X509TrustManager were added manually to handle HTTPS. Those methods are used in the method rebuildHttpclient where we added the line:
+   conf.getProperties().put(HTTPSProperties.PROPERTY_HTTPS_PROPERTIES, new HTTPSProperties(getHostnameVerifier(),getSslContext()));
+   **/
+  private SSLContext getSslContext(){
+    try{
+      SSLContext ctx = SSLContext.getInstance("SSL");
+      ctx.init(null,new TrustManager[]{getTrustManager()},new SecureRandom());
+      return ctx;
+    }catch (NoSuchAlgorithmException | KeyManagementException e){
+      throw new RuntimeException("Exception thown when initializing SSL");
+    }
+  }
+
+  private HostnameVerifier getHostnameVerifier(){
+    return  new HostnameVerifier() {
+      @Override
+      public boolean verify(String s, SSLSession sslSession) {
+        return true;
+      }
+    };
+  }
+
+  private X509TrustManager getTrustManager(){
+    return new X509TrustManager() {
+      @Override
+      public void checkClientTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {}
+
+      @Override
+      public void checkServerTrusted(X509Certificate[] x509Certificates, String s) throws CertificateException {}
+
+      @Override
+      public X509Certificate[] getAcceptedIssuers() {
+        return null;
+      }
+    };
   }
 
   /**

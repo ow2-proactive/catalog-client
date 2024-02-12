@@ -15,7 +15,7 @@
 |**bucketName** | **String** |  |  [optional] |
 |**projectName** | **String** |  |  [optional] |
 |**tags** | **String** |  |  [optional] |
-|**commitTime** | **OffsetDateTime** |  |  [optional] |
+|**commitTime** | **LocalDateTime** |  |  [optional] |
 |**contentType** | **String** |  |  [optional] |
 |**commitMessage** | **String** |  |  [optional] |
 |**username** | **String** |  |  [optional] |

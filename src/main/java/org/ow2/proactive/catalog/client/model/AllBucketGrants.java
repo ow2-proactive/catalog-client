@@ -37,7 +37,7 @@ import org.ow2.proactive.catalog.client.JSON;
   AllBucketGrants.JSON_PROPERTY_BUCKET_GRANTS,
   AllBucketGrants.JSON_PROPERTY_OBJECT_GRANTS
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-01-26T11:53:55.670648-05:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-02-12T10:49:33.729424-05:00[America/New_York]")
 public class AllBucketGrants {
   public static final String JSON_PROPERTY_BUCKET_GRANTS = "bucketGrants";
   private List<BucketGrantMetadata> bucketGrants;

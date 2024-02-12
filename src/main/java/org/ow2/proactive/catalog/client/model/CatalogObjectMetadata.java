@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -54,7 +54,7 @@ import org.ow2.proactive.catalog.client.JSON;
   CatalogObjectMetadata.JSON_PROPERTY_VARIABLES_ORDER,
   CatalogObjectMetadata.JSON_PROPERTY_RIGHTS
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-01-26T11:53:55.670648-05:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-02-12T10:49:33.729424-05:00[America/New_York]")
 public class CatalogObjectMetadata {
   public static final String JSON_PROPERTY_NAME = "name";
   private String name;
@@ -81,7 +81,7 @@ public class CatalogObjectMetadata {
   private String tags;
 
   public static final String JSON_PROPERTY_COMMIT_TIME = "commit_time";
-  private OffsetDateTime commitTime;
+  private LocalDateTime commitTime;
 
   public static final String JSON_PROPERTY_CONTENT_TYPE = "content_type";
   private String contentType;
@@ -312,7 +312,7 @@ public class CatalogObjectMetadata {
   }
 
 
-  public CatalogObjectMetadata commitTime(OffsetDateTime commitTime) {
+  public CatalogObjectMetadata commitTime(LocalDateTime commitTime) {
     this.commitTime = commitTime;
     return this;
   }
@@ -325,14 +325,14 @@ public class CatalogObjectMetadata {
   @JsonProperty(JSON_PROPERTY_COMMIT_TIME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
 
-  public OffsetDateTime getCommitTime() {
+  public LocalDateTime getCommitTime() {
     return commitTime;
   }
 
 
   @JsonProperty(JSON_PROPERTY_COMMIT_TIME)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  public void setCommitTime(OffsetDateTime commitTime) {
+  public void setCommitTime(LocalDateTime commitTime) {
     this.commitTime = commitTime;
   }
 

@@ -45,7 +45,7 @@ import org.ow2.proactive.catalog.client.JSON;
   BucketGrantMetadata.JSON_PROPERTY_BUCKET_ID,
   BucketGrantMetadata.JSON_PROPERTY_LINKS
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-01-26T11:53:55.670648-05:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-02-12T10:49:33.729424-05:00[America/New_York]")
 public class BucketGrantMetadata {
   public static final String JSON_PROPERTY_GRANTEE_TYPE = "granteeType";
   private String granteeType;

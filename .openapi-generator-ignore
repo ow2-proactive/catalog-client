@@ -27,6 +27,8 @@
 src/main/java/resources/**
 
 # ApiClient contains hand written code to allow certificate with https
+# as well as custom code to build the jersey HTTP Client on line 1100 (Usage of JerseyClientBuilder instead of resteasy's ClientBuidler).
+# Otherwise by default a RESTEasy Client is built
 src/main/java/org/ow2/proactive/catalog/client/ApiClient.java
 
 src/test/**

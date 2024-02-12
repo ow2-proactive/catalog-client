@@ -1,5 +1,5 @@
 {
-  "dateLibrary": "java8",
+  "dateLibrary": "java8-localdatetime",
   "useRuntimeException": true,
   "gradleProperties": "version=13.1.0-SNAPSHOT",
   "apiPackage": "org.ow2.proactive.catalog.client.api ",

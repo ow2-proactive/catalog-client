@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import org.openapitools.jackson.nullable.JsonNullableModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.ow2.proactive.catalog.client.model.*;
 
 import java.text.DateFormat;
 import java.util.HashMap;
@@ -15,7 +14,7 @@ import java.util.Set;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.ext.ContextResolver;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-01-26T11:53:55.670648-05:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-02-12T10:49:33.729424-05:00[America/New_York]")
 public class JSON implements ContextResolver<ObjectMapper> {
   private ObjectMapper mapper;
 
