@@ -82,6 +82,7 @@ dependencies {
     compile "com.jayway.restassured:rest-assured"
     compile "javax.ws.rs:javax.ws.rs-api"
     compile "org.glassfish.jersey.core:jersey-client:2.41"
+    compile "org.glassfish.jersey.core:jersey-common:2.41"
     compile 'org.glassfish.jersey.media:jersey-media-json-jackson:2.41'
     compile 'org.glassfish.jersey.media:jersey-media-multipart:2.41'
     compile 'org.glassfish.jersey.inject:jersey-hk2:2.41'
