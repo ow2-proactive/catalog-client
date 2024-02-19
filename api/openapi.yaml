@@ -1,0 +1,3944 @@
+openapi: 3.0.1
+info:
+  description: |-
+    The purpose of the catalog is to store ProActive objects.
+
+    A catalog is subdivided into buckets.
+
+     Each bucket manages zero, one or more
+    versioned ProActive objects.
+  license:
+    name: GNU Affero General Public License v3.0
+    url: https://github.com/ow2-proactive/catalog/blob/master/LICENSE.txt
+  title: CatalogObjectEntity Catalog API
+  version: 1.0"
+servers:
+- description: Generated server url
+  url: https://trydev2.activeeon.com:8443/catalog
+paths:
+  /graphql:
+    post:
+      operationId: executeOperation
+      parameters:
+      - explode: false
+        in: header
+        name: sessionid
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              additionalProperties:
+                type: object
+              type: object
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                additionalProperties:
+                  type: object
+                type: object
+          description: OK
+      tags:
+      - graphql-controller
+      x-content-type: application/json
+      x-accepts: application/json
+  /buckets:
+    delete:
+      operationId: cleanEmpty
+      parameters:
+      - description: sessionID
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "401":
+          description: User not authenticated
+        "403":
+          description: Permission denied
+        "200":
+          description: OK
+      summary: Delete the empty buckets
+      tags:
+      - bucket-controller
+      x-accepts: application/json
+    get:
+      operationId: list
+      parameters:
+      - description: sessionID
+        explode: false
+        in: header
+        name: sessionID
+        required: false
+        schema:
+          type: string
+        style: simple
+      - description: The name of the user who owns the Bucket
+        explode: true
+        in: query
+        name: owner
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The kind(s) of objects that buckets must contain.<br />Multiple
+          kinds can be specified using comma separators
+        explode: true
+        in: query
+        name: kind
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The Content-Type of objects that buckets must contain
+        explode: true
+        in: query
+        name: contentType
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The tag of objects that buckets must contain
+        explode: true
+        in: query
+        name: objectTag
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "The buckets must contain objects which have the given job-planner\
+          \ association status.<br />Can be ALL, PLANNED, DEACTIVATED, FAILED or UNPLANNED.<br\
+          \ />ALL will filter objects which have an association with any status.<br\
+          \ />UNPLANNED will filter objects without any association."
+        explode: true
+        in: query
+        name: associationStatus
+        required: false
+        schema:
+          enum:
+          - ALL
+          - PLANNED
+          - DEACTIVATED
+          - FAILED
+          - UNPLANNED
+          type: string
+        style: form
+      - description: The name of objects that buckets must contain
+        explode: true
+        in: query
+        name: objectName
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The bucket name contains the value of this parameter (case insensitive)
+        explode: true
+        in: query
+        name: bucketName
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Include only objects whose project name contains the given string.
+        explode: true
+        in: query
+        name: projectName
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Include only objects whose last commit belong to the given user.
+        explode: true
+        in: query
+        name: lastCommitBy
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Include only objects whose last commit time is greater than the
+          given EPOCH time.
+        explode: true
+        in: query
+        name: lastCommitTimeGreater
+        required: false
+        schema:
+          default: 0
+          format: int64
+          type: integer
+        style: form
+      - description: Include only objects whose last commit time is less than the
+          given EPOCH time.
+        explode: true
+        in: query
+        name: lastCommitTimeLessThan
+        required: false
+        schema:
+          default: 0
+          format: int64
+          type: integer
+        style: form
+      - description: "If true, buckets without objects matching the filters will be\
+          \ returned with objectCount=0. Default is false"
+        explode: true
+        in: query
+        name: allBuckets
+        required: false
+        schema:
+          default: "false"
+          type: string
+        style: form
+      responses:
+        "401":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/BucketMetadata'
+                type: array
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/BucketMetadata'
+                type: array
+          description: Permission denied
+        "200":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/BucketMetadata'
+                type: array
+          description: OK
+      summary: Lists the buckets
+      tags:
+      - bucket-controller
+      x-accepts: '*/*'
+    post:
+      operationId: create
+      parameters:
+      - description: sessionID
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "The unique name of the Bucket.<br />The name of bucket can be\
+          \ between 3 and 63 characters long, and can contain only lower-case characters,\
+          \ numbers, and dashes.<br />A bucket's name must start with a lowercase\
+          \ letter and cannot terminate with a dash"
+        explode: true
+        in: query
+        name: name
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: form
+      - description: The name of the user that will own the Bucket. Defaults to GROUP:public-objects
+        explode: true
+        in: query
+        name: owner
+        required: false
+        schema:
+          default: GROUP:public-objects
+          type: string
+        style: form
+      responses:
+        "401":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketMetadata'
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketMetadata'
+          description: Permission denied
+        "201":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketMetadata'
+          description: Created
+      summary: Creates a new bucket
+      tags:
+      - bucket-controller
+      x-accepts: '*/*'
+  /buckets/{bucketName}:
+    delete:
+      description: "Note: it is forbidden to delete a non-empty bucket. You need to\
+        \ delete manually all workflows in the bucket before."
+      operationId: delete
+      parameters:
+      - description: sessionID
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The name of the existing Bucket
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      responses:
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketMetadata'
+          description: Bucket not found
+        "401":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketMetadata'
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketMetadata'
+          description: Permission denied
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketMetadata'
+          description: OK
+      summary: Delete an empty bucket
+      tags:
+      - bucket-controller
+      x-accepts: '*/*'
+    get:
+      operationId: getMetadata
+      parameters:
+      - description: sessionID
+        explode: false
+        in: header
+        name: sessionID
+        required: false
+        schema:
+          type: string
+        style: simple
+      - description: The name of the existing Bucket
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      responses:
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketMetadata'
+          description: Bucket not found
+        "401":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketMetadata'
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketMetadata'
+          description: Permission denied
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketMetadata'
+          description: OK
+      summary: Gets a bucket's metadata by ID
+      tags:
+      - bucket-controller
+      x-accepts: '*/*'
+    put:
+      operationId: updateBucketOwner
+      parameters:
+      - description: sessionID
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The name of the existing Bucket
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      - description: The new name of the user that will own the Bucket
+        explode: true
+        in: query
+        name: owner
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "401":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketMetadata'
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketMetadata'
+          description: Permission denied
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketMetadata'
+          description: OK
+      summary: Update bucket owner
+      tags:
+      - bucket-controller
+      x-accepts: '*/*'
+  /buckets/{bucketName}/resources:
+    get:
+      description: "Note: Returns catalog objects metadata associated to the latest\
+        \ revision."
+      operationId: list_1
+      parameters:
+      - description: sessionID
+        explode: false
+        in: header
+        name: sessionID
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Filter according to kind(s).<br/>Multiple kinds can be specified
+          using comma separators
+        explode: true
+        in: query
+        name: kind
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Filter according to Content-Type.
+        explode: true
+        in: query
+        name: contentType
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Filter according to Object Name.
+        explode: true
+        in: query
+        name: objectName
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Filter according to Object Tag.
+        explode: true
+        in: query
+        name: objectTag
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Filter according to Job-Planner association status.<br/>If enabled,\
+          \ only objects for which a job-planner association exists with the provided\
+          \ status will be returned.<br/>Parameter can be ALL, PLANNED, DEACTIVATED,\
+          \ FAILED or UNPLANNED.<br/>ALL will filter objects which have an association\
+          \ with any status.<br/>UNPLANNED will filter objects without any association."
+        explode: true
+        in: query
+        name: associationStatus
+        required: false
+        schema:
+          enum:
+          - ALL
+          - PLANNED
+          - DEACTIVATED
+          - FAILED
+          - UNPLANNED
+          type: string
+        style: form
+      - description: Include only objects whose project name contains the given string.
+        explode: true
+        in: query
+        name: projectName
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Include only objects whose last commit belong to the given user.
+        explode: true
+        in: query
+        name: lastCommitBy
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Include only objects whose last commit time is greater than the
+          given EPOCH time.
+        explode: true
+        in: query
+        name: lastCommitTimeGreater
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: Include only objects whose last commit time is less than the
+          given EPOCH time.
+        explode: true
+        in: query
+        name: lastCommitTimeLessThan
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: Give a list of name separated by comma to get them in an archive
+        explode: true
+        in: query
+        name: listObjectNamesForArchive
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      - description: Page number
+        explode: true
+        in: query
+        name: pageNo
+        required: false
+        schema:
+          default: 0
+          format: int32
+          type: integer
+        style: form
+      - description: Page size
+        explode: true
+        in: query
+        name: pageSize
+        required: false
+        schema:
+          default: 2147483647
+          format: int32
+          type: integer
+        style: form
+      responses:
+        "404":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/CatalogObjectMetadata'
+                type: array
+          description: Bucket not found
+        "206":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/CatalogObjectMetadata'
+                type: array
+          description: Missing object
+        "401":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/CatalogObjectMetadata'
+                type: array
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/CatalogObjectMetadata'
+                type: array
+          description: Permission denied
+      summary: Lists catalog objects metadata
+      tags:
+      - catalog-object-controller
+      x-accepts: '*/*'
+    post:
+      operationId: create_1
+      parameters:
+      - description: sessionID
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The name of the existing Bucket
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      - description: Name of the object or empty when a ZIP archive is uploaded.<br/>All
+          objects inside an archive will be stored inside the catalog.
+        explode: true
+        in: query
+        name: name
+        required: false
+        schema:
+          pattern: "^[^\\s\\/,]+(\\s+[^\\s\\/,]+)*$"
+          type: string
+        style: form
+      - description: Project of the object
+        explode: true
+        in: query
+        name: projectName
+        required: false
+        schema:
+          default: ""
+          type: string
+        style: form
+      - description: List of comma separated tags of the object
+        explode: true
+        in: query
+        name: tags
+        required: false
+        schema:
+          pattern: "^([a-zA-Z][\\s0-9a-zA-Z-_.\\/]+[,]*)*(?<!,)$"
+          type: string
+        style: form
+      - description: Kind of the new object
+        explode: true
+        in: query
+        name: kind
+        required: true
+        schema:
+          pattern: "^([a-zA-Z0-9][a-zA-Z0-9_\\. ;=\\+\\-]{0,61}[a-zA-Z0-9]\\/?)+$"
+          type: string
+        style: form
+      - description: Commit message
+        explode: true
+        in: query
+        name: commitMessage
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: The Content-Type of CatalogRawObject - MIME type
+        explode: true
+        in: query
+        name: objectContentType
+        required: true
+        schema:
+          pattern: "^([a-zA-Z0-9][a-zA-Z0-9_\\. ;=\\+\\-]{0,61}[a-zA-Z0-9]\\/?)+$"
+          type: string
+        style: form
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/create_1_request'
+      responses:
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadataList'
+          description: Bucket not found
+        "422":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadataList'
+          description: Invalid file content supplied
+        "201":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadataList'
+          description: Created
+      summary: Creates a new catalog object
+      tags:
+      - catalog-object-controller
+      x-content-type: multipart/form-data
+      x-accepts: '*/*'
+  /buckets/{bucketName}/resources/{name}:
+    delete:
+      description: "Note: delete the entire catalog object as well as its revisions.\
+        \ Returns the deleted CatalogObject's metadata."
+      operationId: delete_1
+      parameters:
+      - description: sessionID
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The name of the existing Bucket
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      - description: The name of the Object to delete
+        explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          pattern: "^[^\\s\\/,]+(\\s+[^\\s\\/,]+)*$"
+          type: string
+        style: simple
+      responses:
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadata'
+          description: Bucket or object not found
+        "401":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadata'
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadata'
+          description: Permission denied
+      summary: Delete a catalog object
+      tags:
+      - catalog-object-controller
+      x-accepts: '*/*'
+    get:
+      description: "Note: returns metadata associated to the latest revision of the\
+        \ catalog object."
+      operationId: get
+      parameters:
+      - description: sessionID
+        explode: false
+        in: header
+        name: sessionID
+        required: false
+        schema:
+          type: string
+        style: simple
+      - description: The name of the existing Bucket
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      - description: The name of the existing Object
+        explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          pattern: "^[^\\s\\/,]+(\\s+[^\\s\\/,]+)*$"
+          type: string
+        style: simple
+      - description: Check job planner association status
+        explode: true
+        in: query
+        name: checkAssociationStatus
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      responses:
+        "401":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadata'
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadata'
+          description: Permission denied
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadata'
+          description: Bucket or catalog object not found
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadata'
+          description: OK
+      summary: Gets a catalog object's metadata by IDs
+      tags:
+      - catalog-object-controller
+      x-accepts: '*/*'
+    put:
+      operationId: updateObjectMetadata
+      parameters:
+      - description: sessionID
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The name of the existing Bucket
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      - description: The name of the existing Object
+        explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          pattern: "^[^\\s\\/,]+(\\s+[^\\s\\/,]+)*$"
+          type: string
+        style: simple
+      - description: The new kind of an object
+        explode: true
+        in: query
+        name: kind
+        required: false
+        schema:
+          pattern: "^([a-zA-Z0-9][a-zA-Z0-9_\\. ;=\\+\\-]{0,61}[a-zA-Z0-9]\\/?)+$"
+          type: string
+        style: form
+      - description: The new Content-Type of an object - MIME type
+        explode: true
+        in: query
+        name: contentType
+        required: false
+        schema:
+          pattern: "^([a-zA-Z0-9][a-zA-Z0-9_\\. ;=\\+\\-]{0,61}[a-zA-Z0-9]\\/?)+$"
+          type: string
+        style: form
+      - description: The new project name of an object
+        explode: true
+        in: query
+        name: projectName
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: List of comma separated tags of the object
+        explode: true
+        in: query
+        name: tags
+        required: false
+        schema:
+          pattern: "^([a-zA-Z][\\s0-9a-zA-Z-_.\\/]+[,]*)*(?<!,)$"
+          type: string
+        style: form
+      responses:
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadata'
+          description: "Bucket, object or revision not found"
+        "401":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadata'
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadata'
+          description: Permission denied
+        "400":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadata'
+          description: "Wrong specified parameters: at least one should be present"
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadata'
+          description: OK
+      summary: "Update a catalog object metadata, like kind, Content-Type, project\
+        \ name and tags"
+      tags:
+      - catalog-object-controller
+      x-accepts: '*/*'
+  /buckets/{bucketName}/resources/{name}/revisions:
+    get:
+      operationId: list_2
+      parameters:
+      - description: sessionID
+        explode: false
+        in: header
+        name: sessionID
+        required: false
+        schema:
+          type: string
+        style: simple
+      - description: The name of the existing Bucket
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      - description: The name of the existing Object
+        explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          pattern: "^[^\\s\\/,]+(\\s+[^\\s\\/,]+)*$"
+          type: string
+        style: simple
+      responses:
+        "401":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/CatalogObjectMetadata'
+                type: array
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/CatalogObjectMetadata'
+                type: array
+          description: Permission denied
+        "404":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/CatalogObjectMetadata'
+                type: array
+          description: Bucket or catalog object not found
+        "200":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/CatalogObjectMetadata'
+                type: array
+          description: OK
+      summary: Lists a catalog object revisions
+      tags:
+      - catalog-object-revision-controller
+      x-accepts: '*/*'
+    post:
+      operationId: create_2
+      parameters:
+      - description: sessionID
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The name of the existing Bucket
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      - description: The name of the existing Object
+        explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          pattern: "^[^\\s\\/,]+(\\s+[^\\s\\/,]+)*$"
+          type: string
+        style: simple
+      - description: The commit message of the CatalogRawObject Revision
+        explode: true
+        in: query
+        name: commitMessage
+        required: true
+        schema:
+          type: string
+        style: form
+      - description: Project of the object
+        explode: true
+        in: query
+        name: projectName
+        required: false
+        schema:
+          default: ""
+          type: string
+        style: form
+      - description: Tags of the object
+        explode: true
+        in: query
+        name: tags
+        required: false
+        schema:
+          default: ""
+          type: string
+        style: form
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/create_2_request'
+      responses:
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadata'
+          description: Bucket not found
+        "401":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadata'
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadata'
+          description: Permission denied
+        "422":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadata'
+          description: Invalid catalog object JSON content supplied
+        "201":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadata'
+          description: Created
+      summary: Creates a new catalog object revision
+      tags:
+      - catalog-object-revision-controller
+      x-content-type: multipart/form-data
+      x-accepts: '*/*'
+  /buckets/{bucketName}/resources/{name}/revisions/{commitTimeRaw}:
+    get:
+      operationId: get_1
+      parameters:
+      - description: sessionID
+        explode: false
+        in: header
+        name: sessionID
+        required: false
+        schema:
+          type: string
+        style: simple
+      - description: The name of the existing Bucket
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      - description: The name of the existing Object
+        explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          pattern: "^[^\\s\\/,]+(\\s+[^\\s\\/,]+)*$"
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: commitTimeRaw
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadata'
+          description: "Bucket, catalog object or catalog object revision not found"
+        "401":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadata'
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadata'
+          description: Permission denied
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadata'
+          description: OK
+      summary: Gets a specific revision
+      tags:
+      - catalog-object-revision-controller
+      x-accepts: '*/*'
+    put:
+      operationId: restore
+      parameters:
+      - description: sessionID
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The name of the existing Bucket
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      - description: The name of the existing Object
+        explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          pattern: "^[^\\s\\/,]+(\\s+[^\\s\\/,]+)*$"
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: commitTimeRaw
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadata'
+          description: "Bucket, object or revision not found"
+        "401":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadata'
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadata'
+          description: Permission denied
+        "422":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadata'
+          description: Invalid catalog object JSON content supplied
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadata'
+          description: OK
+      summary: Restore a catalog object revision
+      tags:
+      - catalog-object-revision-controller
+      x-accepts: '*/*'
+  /buckets/{bucketName}/resources/{name}/revisions/{commitTimeRaw}/raw:
+    get:
+      operationId: getRaw
+      parameters:
+      - description: sessionID
+        explode: false
+        in: header
+        name: sessionID
+        required: false
+        schema:
+          type: string
+        style: simple
+      - description: The name of the existing Bucket
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      - description: The name of the existing Object
+        explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          pattern: "^[^\\s\\/,]+(\\s+[^\\s\\/,]+)*$"
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: commitTimeRaw
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "404":
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: "Bucket, catalog object or catalog object revision not found"
+        "200":
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: Ok
+        "401":
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: Permission denied
+      summary: Gets the raw content of a specific revision
+      tags:
+      - catalog-object-revision-controller
+      x-accepts: '*/*'
+  /buckets/{bucketName}/resources/{name}/raw:
+    get:
+      operationId: getRaw_1
+      parameters:
+      - description: sessionID
+        explode: false
+        in: header
+        name: sessionID
+        required: false
+        schema:
+          type: string
+        style: simple
+      - description: The name of the existing Bucket
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      - description: The name of the existing Object
+        explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          pattern: "^[^\\s\\/,]+(\\s+[^\\s\\/,]+)*$"
+          type: string
+        style: simple
+      responses:
+        "404":
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: "Bucket, catalog object or catalog object revision not found"
+        "200":
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: Ok
+        "401":
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                type: string
+          description: Permission denied
+      summary: Gets the raw content of the last revision of a catalog object
+      tags:
+      - catalog-object-controller
+      x-accepts: '*/*'
+  /buckets/{bucketName}/resources/{name}/dependencies:
+    get:
+      operationId: getDependencies
+      parameters:
+      - description: sessionID
+        explode: false
+        in: header
+        name: sessionID
+        required: false
+        schema:
+          type: string
+        style: simple
+      - description: The name of the existing Bucket
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      - description: The name of the existing Object
+        explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          pattern: "^[^\\s\\/,]+(\\s+[^\\s\\/,]+)*$"
+          type: string
+        style: simple
+      responses:
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CatalogObjectDependencies'
+          description: "Bucket, catalog object or catalog object revision not found"
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CatalogObjectDependencies'
+          description: Ok
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CatalogObjectDependencies'
+          description: User not authenticated
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CatalogObjectDependencies'
+          description: Permission denied
+      summary: Gets dependencies (dependsOn and calledBy) of a catalog object
+      tags:
+      - catalog-object-controller
+      x-accepts: application/json
+  /buckets/{bucketName}/resources/{catalogObjectName}/grant:
+    delete:
+      operationId: deleteAllCatalogObjectGrants
+      parameters:
+      - description: The session id used to access ProActive REST server.
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The name of the bucket where the catalog objects are stored.
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      - description: "The name of the object in the bucket, which is the subject of\
+          \ the grant."
+        explode: false
+        in: path
+        name: catalogObjectName
+        required: true
+        schema:
+          pattern: "^[^\\s\\/,]+(\\s+[^\\s\\/,]+)*$"
+          type: string
+        style: simple
+      responses:
+        "401":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/CatalogObjectGrantMetadata'
+                type: array
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/CatalogObjectGrantMetadata'
+                type: array
+          description: Permission denied
+        "200":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/CatalogObjectGrantMetadata'
+                type: array
+          description: OK
+      summary: Delete all grant associated with a catalog object
+      tags:
+      - catalog-object-grant-controller
+      x-accepts: '*/*'
+    get:
+      operationId: getAllCreatedCatalogObjectGrantsByAdmins
+      parameters:
+      - description: The session id used to access ProActive REST server.
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The name of the bucket where the catalog objects are stored.
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      - description: "The name of the object in the bucket, which is the subject of\
+          \ the grant."
+        explode: false
+        in: path
+        name: catalogObjectName
+        required: true
+        schema:
+          pattern: "^[^\\s\\/,]+(\\s+[^\\s\\/,]+)*$"
+          type: string
+        style: simple
+      responses:
+        "401":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/CatalogObjectGrantMetadata'
+                type: array
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/CatalogObjectGrantMetadata'
+                type: array
+          description: Permission denied
+        "200":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/CatalogObjectGrantMetadata'
+                type: array
+          description: OK
+      summary: Get all grants associated with a catalog object
+      tags:
+      - catalog-object-grant-controller
+      x-accepts: '*/*'
+  /buckets/{bucketName}/resources/{catalogObjectName}/grant/user:
+    delete:
+      operationId: deleteCatalogObjectGrantForAUser
+      parameters:
+      - description: The session id used to access ProActive REST server.
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The name of the bucket where the catalog object is stored.
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      - description: "The name of the object in the bucket, which is the subject of\
+          \ the grant."
+        explode: false
+        in: path
+        name: catalogObjectName
+        required: true
+        schema:
+          pattern: "^[^\\s\\/,]+(\\s+[^\\s\\/,]+)*$"
+          type: string
+        style: simple
+      - description: The name of the user that is benefiting of the access grant.
+        explode: true
+        in: query
+        name: username
+        required: true
+        schema:
+          default: ""
+          type: string
+        style: form
+      responses:
+        "401":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectGrantMetadata'
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectGrantMetadata'
+          description: Permission denied
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectGrantMetadata'
+          description: OK
+      summary: Delete a user grant access for a catalog object
+      tags:
+      - catalog-object-grant-controller
+      x-accepts: '*/*'
+    post:
+      operationId: createCatalogObjectGrantForAUser
+      parameters:
+      - description: The session id used to access ProActive REST server.
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The name of the bucket where the catalog object is stored.
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      - description: "The name of the object in the bucket, which is the subject of\
+          \ the grant."
+        explode: false
+        in: path
+        name: catalogObjectName
+        required: true
+        schema:
+          pattern: "^[^\\s\\/,]+(\\s+[^\\s\\/,]+)*$"
+          type: string
+        style: simple
+      - description: "The type of the access grant. It can be either noAccess, read,\
+          \ write or admin."
+        explode: true
+        in: query
+        name: accessType
+        required: true
+        schema:
+          enum:
+          - noAccess
+          - read
+          - write
+          - admin
+          type: string
+        style: form
+      - description: The name of the user that will benefit of the access grant.
+        explode: true
+        in: query
+        name: username
+        required: true
+        schema:
+          default: ""
+          type: string
+        style: form
+      responses:
+        "401":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectGrantMetadata'
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectGrantMetadata'
+          description: Permission denied
+        "201":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectGrantMetadata'
+          description: Created
+      summary: Create a new user grant for a catalog object
+      tags:
+      - catalog-object-grant-controller
+      x-accepts: '*/*'
+    put:
+      operationId: updateCatalogObjectGrantForAUser
+      parameters:
+      - description: The session id used to access ProActive REST server.
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The name of the bucket where the catalog object is stored.
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      - description: "The name of the object in the bucket, which is the subject of\
+          \ the grant."
+        explode: false
+        in: path
+        name: catalogObjectName
+        required: true
+        schema:
+          pattern: "^[^\\s\\/,]+(\\s+[^\\s\\/,]+)*$"
+          type: string
+        style: simple
+      - description: "The new type of the access grant.<br />It can be either noAccess,\
+          \ read, write or admin."
+        explode: true
+        in: query
+        name: accessType
+        required: true
+        schema:
+          enum:
+          - noAccess
+          - read
+          - write
+          - admin
+          type: string
+        style: form
+      - description: The name of the user that is benefiting from the access grant.
+        explode: true
+        in: query
+        name: username
+        required: true
+        schema:
+          default: ""
+          type: string
+        style: form
+      responses:
+        "401":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectGrantMetadata'
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectGrantMetadata'
+          description: Permission denied
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectGrantMetadata'
+          description: OK
+      summary: Update a user grant access for a catalog object
+      tags:
+      - catalog-object-grant-controller
+      x-accepts: '*/*'
+  /buckets/{bucketName}/resources/{catalogObjectName}/grant/group:
+    delete:
+      operationId: deleteCatalogObjectGrantForAGroup
+      parameters:
+      - description: The session id used to access ProActive REST server.
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The name of the bucket where the catalog object is stored.
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      - description: "The name of the object in the bucket, which is the subject of\
+          \ the grant."
+        explode: false
+        in: path
+        name: catalogObjectName
+        required: true
+        schema:
+          pattern: "^[^\\s\\/,]+(\\s+[^\\s\\/,]+)*$"
+          type: string
+        style: simple
+      - description: The name of the group of users that are benefiting of the access
+          grant.
+        explode: true
+        in: query
+        name: userGroup
+        required: true
+        schema:
+          default: ""
+          type: string
+        style: form
+      responses:
+        "401":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectGrantMetadata'
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectGrantMetadata'
+          description: Permission denied
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectGrantMetadata'
+          description: OK
+      summary: Delete a user group grant access for a catalog object
+      tags:
+      - catalog-object-grant-controller
+      x-accepts: '*/*'
+    post:
+      operationId: createCatalogObjectGrantForAGroup
+      parameters:
+      - description: The session id used to access ProActive REST server.
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The name of the bucket where the catalog object is stored.
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      - description: "The name of the object in the bucket, which is the subject of\
+          \ the grant."
+        explode: false
+        in: path
+        name: catalogObjectName
+        required: true
+        schema:
+          pattern: "^[^\\s\\/,]+(\\s+[^\\s\\/,]+)*$"
+          type: string
+        style: simple
+      - description: "The type of the access grant.<br />It can be either noAccess,\
+          \ read, write or admin."
+        explode: true
+        in: query
+        name: accessType
+        required: true
+        schema:
+          enum:
+          - noAccess
+          - read
+          - write
+          - admin
+          type: string
+        style: form
+      - description: "The new priority of the access grant.<br />It can be a value\
+          \ from 1 (lowest) to 10 (highest), with 5 as default.<br />Priorities are\
+          \ used to compute the final access rights of a user belonging to multiple\
+          \ groups.<br />Group grants with the same priority will resolve with the\
+          \ default accessType order (admin > write > read > noAccess).<br />Finally,\
+          \ please note that a user grant has always more priority than a group grant."
+        explode: true
+        in: query
+        name: priority
+        required: true
+        schema:
+          default: 5
+          maximum: 10
+          minimum: 1
+          type: integer
+        style: form
+      - description: The name of the group of users that will benefit of the access
+          grant.
+        explode: true
+        in: query
+        name: userGroup
+        required: true
+        schema:
+          default: ""
+          type: string
+        style: form
+      responses:
+        "401":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectGrantMetadata'
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectGrantMetadata'
+          description: Permission denied
+        "201":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectGrantMetadata'
+          description: Created
+      summary: Create a new group grant for a catalog object
+      tags:
+      - catalog-object-grant-controller
+      x-accepts: '*/*'
+    put:
+      operationId: updateCatalogObjectGrantForAGroup
+      parameters:
+      - description: The session id used to access ProActive REST server.
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The name of the bucket where the catalog object is stored.
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      - description: "The name of the object in the bucket, which is the subject of\
+          \ the grant."
+        explode: false
+        in: path
+        name: catalogObjectName
+        required: true
+        schema:
+          pattern: "^[^\\s\\/,]+(\\s+[^\\s\\/,]+)*$"
+          type: string
+        style: simple
+      - description: "The new type of the access grant.<br />It can be either noAccess,\
+          \ read, write or admin."
+        explode: true
+        in: query
+        name: accessType
+        required: true
+        schema:
+          enum:
+          - noAccess
+          - read
+          - write
+          - admin
+          type: string
+        style: form
+      - description: "The new priority of the access grant. It can be a value from\
+          \ 1 (lowest) to 10 (highest), with 5 as default.<br />Priorities are used\
+          \ to compute the final access rights of a user belonging to multiple groups.<br\
+          \ />Group grants with the same priority will resolve with the default accessType\
+          \ order (admin > write > read > noAccess).<br />Finally, please note that\
+          \ a user grant has always more priority than a group grant."
+        explode: true
+        in: query
+        name: priority
+        required: true
+        schema:
+          default: 5
+          maximum: 10
+          minimum: 1
+          type: integer
+        style: form
+      - description: The name of the group of users that are benefiting of the access
+          grant.
+        explode: true
+        in: query
+        name: userGroup
+        required: true
+        schema:
+          type: string
+        style: form
+      responses:
+        "401":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectGrantMetadata'
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectGrantMetadata'
+          description: Permission denied
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectGrantMetadata'
+          description: OK
+      summary: Update a user group grant access for a catalog object
+      tags:
+      - catalog-object-grant-controller
+      x-accepts: '*/*'
+  /buckets/{bucketName}/resources/import:
+    post:
+      description: "Can either import objects from a plain zip archive, in which case\
+        \ the objects kind, project name and tags must be specified. Alternatively,\
+        \ a ProActive Catalog package can be imported, the various information will\
+        \ be obtained from the METADATA json file present in the package."
+      operationId: importCatalogObjects
+      parameters:
+      - description: sessionID
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The name of the existing Bucket
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      - description: Plain zip instead of a Proactive package
+        explode: true
+        in: query
+        name: isPlainZip
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      - description: "Commit message. If empty, the message will either be empty for\
+          \ a plain zip or the commit message recorded inside the ProActive Catalog\
+          \ package."
+        explode: true
+        in: query
+        name: commitMessage
+        required: false
+        schema:
+          default: ""
+          type: string
+        style: form
+      - description: Kind of the new object (only used when importing a plain zip)
+        explode: true
+        in: query
+        name: kind
+        required: false
+        schema:
+          pattern: "^([a-zA-Z0-9][a-zA-Z0-9_\\. ;=\\+\\-]{0,61}[a-zA-Z0-9]\\/?)+$"
+          type: string
+        style: form
+      - description: "Project of the package objects (Optional). If used with a ProActive\
+          \ Catalog package, will override all objects project names."
+        explode: true
+        in: query
+        name: projectName
+        required: false
+        schema:
+          default: ""
+          type: string
+        style: form
+      - description: "List of comma separated tags of the objects (Optional). If used\
+          \ with a ProActive Catalog package, will override all objects tags."
+        explode: true
+        in: query
+        name: tags
+        required: false
+        schema:
+          pattern: "^([a-zA-Z][\\s0-9a-zA-Z-_.\\/]+[,]*)*(?<!,)$"
+          type: string
+        style: form
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/importCatalogObjects_request'
+      responses:
+        "404":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadataList'
+          description: Bucket not found
+        "422":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadataList'
+          description: Invalid file content supplied
+        "201":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CatalogObjectMetadataList'
+          description: Created
+      summary: "Import an archive, either a plain zip or a ProActive Catalog package"
+      tags:
+      - catalog-object-controller
+      x-content-type: multipart/form-data
+      x-accepts: '*/*'
+  /buckets/{bucketName}/resources/export:
+    post:
+      description: "Can either export catalog objects as a plain zip or as a ProActive\
+        \ Package containing the exported files along with a METADATA json file describing\
+        \ the exported objects. <br/> Note: Returns catalog objects metadata associated\
+        \ to the latest revision."
+      operationId: exportCatalogObjects
+      parameters:
+      - description: sessionID
+        explode: false
+        in: header
+        name: sessionID
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Plain zip instead of a Proactive package
+        explode: true
+        in: query
+        name: isPlainZip
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                type: string
+              type: array
+        description: "An optional json list of catalog object names to export. If\
+          \ not provided, the bucket will be exported fully."
+      responses:
+        "206":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/CatalogObjectMetadata'
+                type: array
+          description: Missing object
+        "401":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/CatalogObjectMetadata'
+                type: array
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/CatalogObjectMetadata'
+                type: array
+          description: Permission denied
+        "404":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/CatalogObjectMetadata'
+                type: array
+          description: Bucket not found or no object was found
+      summary: Export catalog objects as a plain zip archive or a ProActive Catalog
+        Package
+      tags:
+      - catalog-object-controller
+      x-content-type: application/json
+      x-accepts: '*/*'
+  /buckets/{bucketName}/grant:
+    delete:
+      operationId: deleteAllBucketGrantsAssignedToABucket
+      parameters:
+      - description: The session id used to access ProActive REST server.
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The name of the bucket where the catalog objects are stored.
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      responses:
+        "401":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/BucketGrantMetadata'
+                type: array
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/BucketGrantMetadata'
+                type: array
+          description: Permission denied
+        "200":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/BucketGrantMetadata'
+                type: array
+          description: OK
+      summary: Delete all grants assigned to a bucket
+      tags:
+      - bucket-grant-controller
+      x-accepts: '*/*'
+    get:
+      operationId: getAllGrantsForABucket
+      parameters:
+      - description: The session id used to access ProActive REST server.
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The name of the bucket where the catalog objects are stored.
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      responses:
+        "401":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/BucketGrantMetadata'
+                type: array
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/BucketGrantMetadata'
+                type: array
+          description: Permission denied
+        "200":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/BucketGrantMetadata'
+                type: array
+          description: OK
+      summary: Get all grants associated with a bucket
+      tags:
+      - bucket-grant-controller
+      x-accepts: '*/*'
+  /buckets/{bucketName}/grant/user:
+    delete:
+      operationId: deleteBucketGrantForAUser
+      parameters:
+      - description: The session id used to access ProActive REST server.
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The name of the bucket where the catalog objects are stored.
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      - description: The name of the user that is benefiting from the access grant.
+        explode: true
+        in: query
+        name: username
+        required: true
+        schema:
+          default: ""
+          type: string
+        style: form
+      responses:
+        "401":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketGrantMetadata'
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketGrantMetadata'
+          description: Permission denied
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketGrantMetadata'
+          description: OK
+      summary: Delete a user grant access for a bucket
+      tags:
+      - bucket-grant-controller
+      x-accepts: '*/*'
+    post:
+      operationId: createBucketGrantForAUser
+      parameters:
+      - description: The the session id used to access ProActive REST server
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The name of the bucket where the catalog objects are stored.
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      - description: "The type of the access grant.<br />It can be either noAccess,\
+          \ read, write or admin."
+        explode: true
+        in: query
+        name: accessType
+        required: true
+        schema:
+          enum:
+          - noAccess
+          - read
+          - write
+          - admin
+          type: string
+        style: form
+      - description: The name of the user that will benefit of the access grant.
+        explode: true
+        in: query
+        name: username
+        required: true
+        schema:
+          default: ""
+          type: string
+        style: form
+      responses:
+        "401":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketGrantMetadata'
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketGrantMetadata'
+          description: Permission denied
+        "201":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketGrantMetadata'
+          description: Created
+      summary: Create a new user grant access for a bucket
+      tags:
+      - bucket-grant-controller
+      x-accepts: '*/*'
+    put:
+      operationId: updateBucketGrantForAUser
+      parameters:
+      - description: The session id used to access ProActive REST server.
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The name of the bucket where the catalog objects are stored.
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      - description: The name of the user that is benefiting from the access grant.
+        explode: true
+        in: query
+        name: username
+        required: true
+        schema:
+          default: ""
+          type: string
+        style: form
+      - description: "The new type of the access grant. It can be either noAccess,\
+          \ read, write or admin."
+        explode: true
+        in: query
+        name: accessType
+        required: true
+        schema:
+          enum:
+          - noAccess
+          - read
+          - write
+          - admin
+          type: string
+        style: form
+      responses:
+        "401":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketGrantMetadata'
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketGrantMetadata'
+          description: Permission denied
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketGrantMetadata'
+          description: OK
+      summary: Update the access type of an existing user bucket grant
+      tags:
+      - bucket-grant-controller
+      x-accepts: '*/*'
+  /buckets/{bucketName}/grant/group:
+    delete:
+      operationId: deleteBucketGrantForAGroup
+      parameters:
+      - description: The session id used to access ProActive REST server.
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The name of the bucket where the catalog objects are stored.
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      - description: The name of the group of users that are benefiting from the access
+          grant.
+        explode: true
+        in: query
+        name: userGroup
+        required: true
+        schema:
+          default: ""
+          type: string
+        style: form
+      responses:
+        "401":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketGrantMetadata'
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketGrantMetadata'
+          description: Permission denied
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketGrantMetadata'
+          description: OK
+      summary: Delete a group grant access for a bucket
+      tags:
+      - bucket-grant-controller
+      x-accepts: '*/*'
+    post:
+      operationId: createBucketGrantForAGroup
+      parameters:
+      - description: The session id used to access ProActive REST server
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The name of the bucket where the catalog objects are stored.
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      - description: "The type of the access grant.<br />It can be either noAccess,\
+          \ read, write or admin."
+        explode: true
+        in: query
+        name: accessType
+        required: true
+        schema:
+          enum:
+          - noAccess
+          - read
+          - write
+          - admin
+          type: string
+        style: form
+      - description: |-
+          The new priority of the access grant.<br />It can be a value from 1 (lowest) to 10 (highest), with 5 as default.
+          Priorities are used to compute the final access rights of a user belonging to multiple groups.<br />Group grants with the same priority will resolve with the default accessType order (admin > write > read > noAccess).<br />Finally, please note that a user grant has always more priority than a group grant.
+        explode: true
+        in: query
+        name: priority
+        required: true
+        schema:
+          default: 5
+          maximum: 10
+          minimum: 1
+          type: integer
+        style: form
+      - description: The name of the group of users that will benefit of the access
+          grant.
+        explode: true
+        in: query
+        name: userGroup
+        required: true
+        schema:
+          default: ""
+          type: string
+        style: form
+      responses:
+        "401":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketGrantMetadata'
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketGrantMetadata'
+          description: Permission denied
+        "201":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketGrantMetadata'
+          description: Created
+      summary: Create a new user group grant access for a bucket
+      tags:
+      - bucket-grant-controller
+      x-accepts: '*/*'
+    put:
+      operationId: updateBucketGrantForAGroup
+      parameters:
+      - description: The session id used to access ProActive REST server.
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The name of the bucket where the catalog objects are stored.
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      - description: The name of the group of users that are benefiting from the access
+          grant.
+        explode: true
+        in: query
+        name: userGroup
+        required: true
+        schema:
+          default: ""
+          type: string
+        style: form
+      - description: "The new type of the access grant. It can be either noAccess,\
+          \ read, write or admin."
+        explode: true
+        in: query
+        name: accessType
+        required: true
+        schema:
+          enum:
+          - noAccess
+          - read
+          - write
+          - admin
+          type: string
+        style: form
+      - description: "The new priority of the access grant.<br />It can be a value\
+          \ from 1 (lowest) to 10 (highest), with 5 as default.Priorities are used\
+          \ to compute the final access rights of a user belonging to multiple groups.<br\
+          \ />Group grants with the same priority will resolve with the default accessType\
+          \ order (admin > write > read > noAccess).<br />Finally, please note that\
+          \ a user grant has always more priority than a group grant."
+        explode: true
+        in: query
+        name: priority
+        required: true
+        schema:
+          default: 5
+          maximum: 10
+          minimum: 1
+          type: integer
+        style: form
+      responses:
+        "401":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketGrantMetadata'
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketGrantMetadata'
+          description: Permission denied
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/BucketGrantMetadata'
+          description: OK
+      summary: Update the access type of an existing group bucket grant
+      tags:
+      - bucket-grant-controller
+      x-accepts: '*/*'
+  /buckets/{bucketName}/grant/all:
+    delete:
+      operationId: deleteAllGrantsForABucketAndItsObjects
+      parameters:
+      - description: The session id used to access ProActive REST server.
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The name of the bucket where the catalog objects are stored.
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      responses:
+        "401":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AllBucketGrants'
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AllBucketGrants'
+          description: Permission denied
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AllBucketGrants'
+          description: OK
+      summary: Delete all grants associated with a bucket and all objects contained
+        in this bucket
+      tags:
+      - bucket-grant-controller
+      x-accepts: '*/*'
+    get:
+      operationId: getAllGrantsForABucketAndItsObjects
+      parameters:
+      - description: The session id used to access ProActive REST server.
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The name of the bucket where the catalog objects are stored.
+        explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          pattern: "[a-z][a-z0-9-]{1,61}[a-z0-9]"
+          type: string
+        style: simple
+      responses:
+        "401":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AllBucketGrants'
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AllBucketGrants'
+          description: Permission denied
+        "200":
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AllBucketGrants'
+          description: OK
+      summary: Get all grants associated with a bucket and all objects contained in
+        this bucket
+      tags:
+      - bucket-grant-controller
+      x-accepts: '*/*'
+  /buckets/tags:
+    get:
+      operationId: listObjectTags
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  type: string
+                type: array
+                uniqueItems: true
+          description: OK
+      summary: Lists all tags values for all objects stored in the catalog
+      tags:
+      - catalog-object-controller
+      x-accepts: application/json
+  /buckets/report:
+    get:
+      operationId: getReport
+      parameters:
+      - description: sessionID
+        explode: false
+        in: header
+        name: sessionID
+        required: false
+        schema:
+          type: string
+        style: simple
+      - description: The name of the user who owns the Bucket
+        explode: true
+        in: query
+        name: owner
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The kind of objects that buckets must contain
+        explode: true
+        in: query
+        name: kind
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The Content-Type of objects that buckets must contain
+        explode: true
+        in: query
+        name: contentType
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "403":
+          content:
+            application/json: {}
+          description: Permission denied
+        "200":
+          content:
+            application/pdf:
+              schema:
+                format: byte
+                type: string
+          description: OK
+        "401":
+          content:
+            application/json: {}
+          description: User not authenticated
+      summary: Get list of catalog objects in a PDF report file
+      tags:
+      - catalog-object-report-controller
+      x-accepts: application/json
+  /buckets/report/selected/{bucketName}:
+    post:
+      operationId: getReportForSelectedObjects
+      parameters:
+      - description: sessionID
+        explode: false
+        in: header
+        name: sessionID
+        required: false
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Filter according to kind.
+        explode: true
+        in: query
+        name: kind
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Filter according to Content-Type.
+        explode: true
+        in: query
+        name: contentType
+        required: false
+        schema:
+          type: string
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: Give a list of name separated by comma to get them in the
+                report
+              items:
+                type: string
+              type: array
+      responses:
+        "403":
+          content:
+            application/json: {}
+          description: Permission denied
+        "200":
+          content:
+            application/pdf:
+              schema:
+                format: byte
+                type: string
+          description: OK
+        "404":
+          content:
+            application/json: {}
+          description: Bucket not found
+        "401":
+          content:
+            application/json: {}
+          description: User not authenticated
+      summary: Get list of selected catalog objects in a PDF report file
+      tags:
+      - catalog-object-report-controller
+      x-content-type: application/json
+      x-accepts: application/json
+  /buckets/references:
+    get:
+      operationId: listCatalogObjectNameReference
+      parameters:
+      - description: sessionID
+        explode: false
+        in: header
+        name: sessionID
+        required: false
+        schema:
+          type: string
+        style: simple
+      - description: Filter according to kind
+        explode: true
+        in: query
+        name: kind
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Filter according to Content-Type
+        explode: true
+        in: query
+        name: contentType
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "401":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CatalogObjectNameReference'
+                type: array
+          description: User not authenticated
+        "403":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CatalogObjectNameReference'
+                type: array
+          description: Permission denied
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CatalogObjectNameReference'
+                type: array
+          description: OK
+      summary: Lists catalog object name references by kind and Content-Type
+      tags:
+      - catalog-object-controller
+      x-accepts: application/json
+  /buckets/kinds:
+    get:
+      operationId: listKinds
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  type: string
+                type: array
+                uniqueItems: true
+          description: OK
+      summary: Lists all kinds for all objects
+      tags:
+      - catalog-object-controller
+      x-accepts: application/json
+  /buckets/content-types:
+    get:
+      operationId: listContentTypes
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  type: string
+                type: array
+                uniqueItems: true
+          description: OK
+      summary: Lists all Content-Types for all objects
+      tags:
+      - catalog-object-controller
+      x-accepts: application/json
+  /buckets/call-graph:
+    get:
+      operationId: getCallGraph
+      parameters:
+      - description: sessionID
+        explode: false
+        in: header
+        name: sessionID
+        required: false
+        schema:
+          type: string
+        style: simple
+      - description: The name of the user who owns the Bucket
+        explode: true
+        in: query
+        name: owner
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The kind of objects that buckets must contain
+        explode: true
+        in: query
+        name: kind
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The Content-Type of objects that buckets must contain
+        explode: true
+        in: query
+        name: contentType
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "403":
+          content:
+            application/json: {}
+          description: Permission denied
+        "200":
+          content:
+            application/pdf:
+              schema:
+                format: byte
+                type: string
+          description: OK
+        "401":
+          content:
+            application/json: {}
+          description: User not authenticated
+      summary: Get the call graph of all catalog objects in a PDF report
+      tags:
+      - catalog-object-call-graph-controller
+      x-accepts: application/json
+  /buckets/call-graph/selected/{bucketName}:
+    get:
+      operationId: getCallGraphForSelectedObjects
+      parameters:
+      - description: sessionID
+        explode: false
+        in: header
+        name: sessionID
+        required: false
+        schema:
+          type: string
+        style: simple
+      - description: The name of the user who owns the Bucket
+        explode: true
+        in: query
+        name: owner
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: false
+        in: path
+        name: bucketName
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Filter according to kind.
+        explode: true
+        in: query
+        name: kind
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Filter according to Content-Type.
+        explode: true
+        in: query
+        name: contentType
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Give a list of name separated by comma to get them in the report
+        explode: true
+        in: query
+        name: name
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
+      responses:
+        "403":
+          content:
+            application/json: {}
+          description: Permission denied
+        "200":
+          content:
+            application/pdf:
+              schema:
+                format: byte
+                type: string
+          description: OK
+        "404":
+          content:
+            application/json: {}
+          description: Bucket not found
+        "401":
+          content:
+            application/json: {}
+          description: User not authenticated
+      summary: Get the call graph of selected catalog objects in a bucket
+      tags:
+      - catalog-object-call-graph-controller
+      x-accepts: application/json
+components:
+  schemas:
+    BucketMetadata:
+      example:
+        owner: owner
+        objectCount: 0
+        rights: rights
+        name: name
+        links:
+        - hreflang: hreflang
+          rel: rel
+          href: href
+          media: media
+          title: title
+          type: type
+          deprecation: deprecation
+        - hreflang: hreflang
+          rel: rel
+          href: href
+          media: media
+          title: title
+          type: type
+          deprecation: deprecation
+      properties:
+        owner:
+          type: string
+        name:
+          type: string
+        objectCount:
+          format: int32
+          type: integer
+        rights:
+          type: string
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          type: array
+          xml:
+            name: link
+            namespace: http://www.w3.org/2005/Atom
+      type: object
+    Link:
+      example:
+        hreflang: hreflang
+        rel: rel
+        href: href
+        media: media
+        title: title
+        type: type
+        deprecation: deprecation
+      properties:
+        rel:
+          type: string
+          xml:
+            attribute: true
+        href:
+          type: string
+          xml:
+            attribute: true
+        hreflang:
+          type: string
+          xml:
+            attribute: true
+        media:
+          type: string
+          xml:
+            attribute: true
+        title:
+          type: string
+          xml:
+            attribute: true
+        type:
+          type: string
+          xml:
+            attribute: true
+        deprecation:
+          type: string
+          xml:
+            attribute: true
+      type: object
+    CatalogObjectMetadata:
+      example:
+        commit_time_raw: commit_time_raw
+        extension: extension
+        kind: kind
+        bucket_name: bucket_name
+        commit_time: 2000-01-23T04:56:07.000+00:00
+        commit_message: commit_message
+        project_name: project_name
+        tags: tags
+        variables_order:
+          key:
+            key:
+              hidden: true
+              advanced: true
+              name: name
+              description: description
+              model: model
+              value: value
+              group: group
+        content_type: content_type
+        object_key_values:
+        - label: label
+          value: value
+          key: key
+        - label: label
+          value: value
+          key: key
+        rights: rights
+        name: name
+        links:
+        - hreflang: hreflang
+          rel: rel
+          href: href
+          media: media
+          title: title
+          type: type
+          deprecation: deprecation
+        - hreflang: hreflang
+          rel: rel
+          href: href
+          media: media
+          title: title
+          type: type
+          deprecation: deprecation
+        username: username
+      properties:
+        name:
+          type: string
+        extension:
+          type: string
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          type: array
+          xml:
+            name: link
+            namespace: http://www.w3.org/2005/Atom
+        commit_time_raw:
+          type: string
+        kind:
+          type: string
+        bucket_name:
+          type: string
+        project_name:
+          type: string
+        tags:
+          type: string
+        commit_time:
+          format: date-time
+          type: string
+        content_type:
+          type: string
+        commit_message:
+          type: string
+        username:
+          type: string
+        object_key_values:
+          items:
+            $ref: '#/components/schemas/Metadata'
+          type: array
+        variables_order:
+          additionalProperties:
+            additionalProperties:
+              $ref: '#/components/schemas/JobVariable'
+            type: object
+          type: object
+        rights:
+          type: string
+      type: object
+    CatalogObjectMetadataList:
+      example:
+        object:
+        - commit_time_raw: commit_time_raw
+          extension: extension
+          kind: kind
+          bucket_name: bucket_name
+          commit_time: 2000-01-23T04:56:07.000+00:00
+          commit_message: commit_message
+          project_name: project_name
+          tags: tags
+          variables_order:
+            key:
+              key:
+                hidden: true
+                advanced: true
+                name: name
+                description: description
+                model: model
+                value: value
+                group: group
+          content_type: content_type
+          object_key_values:
+          - label: label
+            value: value
+            key: key
+          - label: label
+            value: value
+            key: key
+          rights: rights
+          name: name
+          links:
+          - hreflang: hreflang
+            rel: rel
+            href: href
+            media: media
+            title: title
+            type: type
+            deprecation: deprecation
+          - hreflang: hreflang
+            rel: rel
+            href: href
+            media: media
+            title: title
+            type: type
+            deprecation: deprecation
+          username: username
+        - commit_time_raw: commit_time_raw
+          extension: extension
+          kind: kind
+          bucket_name: bucket_name
+          commit_time: 2000-01-23T04:56:07.000+00:00
+          commit_message: commit_message
+          project_name: project_name
+          tags: tags
+          variables_order:
+            key:
+              key:
+                hidden: true
+                advanced: true
+                name: name
+                description: description
+                model: model
+                value: value
+                group: group
+          content_type: content_type
+          object_key_values:
+          - label: label
+            value: value
+            key: key
+          - label: label
+            value: value
+            key: key
+          rights: rights
+          name: name
+          links:
+          - hreflang: hreflang
+            rel: rel
+            href: href
+            media: media
+            title: title
+            type: type
+            deprecation: deprecation
+          - hreflang: hreflang
+            rel: rel
+            href: href
+            media: media
+            title: title
+            type: type
+            deprecation: deprecation
+          username: username
+      properties:
+        object:
+          items:
+            $ref: '#/components/schemas/CatalogObjectMetadata'
+          type: array
+      type: object
+    JobVariable:
+      example:
+        hidden: true
+        advanced: true
+        name: name
+        description: description
+        model: model
+        value: value
+        group: group
+      properties:
+        name:
+          type: string
+          xml:
+            attribute: true
+        value:
+          type: string
+          xml:
+            attribute: true
+        model:
+          type: string
+          xml:
+            attribute: true
+        description:
+          type: string
+          xml:
+            attribute: true
+        group:
+          type: string
+          xml:
+            attribute: true
+        advanced:
+          type: boolean
+          xml:
+            attribute: true
+        hidden:
+          type: boolean
+          xml:
+            attribute: true
+      type: object
+    Metadata:
+      example:
+        label: label
+        value: value
+        key: key
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+        label:
+          type: string
+      type: object
+    CatalogObjectDependencies:
+      example:
+        depends_on:
+        - kind: kind
+          bucket_and_object_name: bucket_and_object_name
+          revision_commit_time: revision_commit_time
+          is_in_catalog: true
+        - kind: kind
+          bucket_and_object_name: bucket_and_object_name
+          revision_commit_time: revision_commit_time
+          is_in_catalog: true
+        called_by:
+        - called_by
+        - called_by
+      properties:
+        depends_on:
+          items:
+            $ref: '#/components/schemas/DependsOnCatalogObject'
+          type: array
+        called_by:
+          items:
+            type: string
+          type: array
+      type: object
+    DependsOnCatalogObject:
+      example:
+        kind: kind
+        bucket_and_object_name: bucket_and_object_name
+        revision_commit_time: revision_commit_time
+        is_in_catalog: true
+      properties:
+        bucket_and_object_name:
+          type: string
+        kind:
+          type: string
+        revision_commit_time:
+          type: string
+        is_in_catalog:
+          type: boolean
+      type: object
+    CatalogObjectGrantMetadata:
+      example:
+        accessType: accessType
+        bucketName: bucketName
+        catalogObjectName: catalogObjectName
+        creator: creator
+        catalogObjectBucketId: 5
+        grantee: grantee
+        modificationHistory:
+        - modificationDate: 1
+          changes: changes
+          newValues: newValues
+          oldValues: oldValues
+          username: username
+        - modificationDate: 1
+          changes: changes
+          newValues: newValues
+          oldValues: oldValues
+          username: username
+        links:
+        - hreflang: hreflang
+          rel: rel
+          href: href
+          media: media
+          title: title
+          type: type
+          deprecation: deprecation
+        - hreflang: hreflang
+          rel: rel
+          href: href
+          media: media
+          title: title
+          type: type
+          deprecation: deprecation
+        priority: 0
+        creationDate: 6
+        granteeType: granteeType
+        catalogObjectId:
+          catalogObjectName: catalogObjectName
+          bucketId: 5
+          links:
+          - hreflang: hreflang
+            rel: rel
+            href: href
+            media: media
+            title: title
+            type: type
+            deprecation: deprecation
+          - hreflang: hreflang
+            rel: rel
+            href: href
+            media: media
+            title: title
+            type: type
+            deprecation: deprecation
+      properties:
+        granteeType:
+          type: string
+        grantee:
+          type: string
+        accessType:
+          type: string
+        priority:
+          format: int32
+          type: integer
+        bucketName:
+          type: string
+        creator:
+          type: string
+        creationDate:
+          format: int64
+          type: integer
+        modificationHistory:
+          items:
+            $ref: '#/components/schemas/ModificationHistoryData'
+          type: array
+        catalogObjectId:
+          $ref: '#/components/schemas/CatalogObjectID'
+        catalogObjectName:
+          type: string
+        catalogObjectBucketId:
+          format: int64
+          type: integer
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          type: array
+          xml:
+            name: link
+            namespace: http://www.w3.org/2005/Atom
+      type: object
+    CatalogObjectID:
+      example:
+        catalogObjectName: catalogObjectName
+        bucketId: 5
+        links:
+        - hreflang: hreflang
+          rel: rel
+          href: href
+          media: media
+          title: title
+          type: type
+          deprecation: deprecation
+        - hreflang: hreflang
+          rel: rel
+          href: href
+          media: media
+          title: title
+          type: type
+          deprecation: deprecation
+      properties:
+        bucketId:
+          format: int64
+          type: integer
+        catalogObjectName:
+          type: string
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          type: array
+          xml:
+            name: link
+            namespace: http://www.w3.org/2005/Atom
+      type: object
+    ModificationHistoryData:
+      example:
+        modificationDate: 1
+        changes: changes
+        newValues: newValues
+        oldValues: oldValues
+        username: username
+      properties:
+        modificationDate:
+          format: int64
+          type: integer
+        username:
+          type: string
+        oldValues:
+          type: string
+        newValues:
+          type: string
+        changes:
+          type: string
+      type: object
+    BucketGrantMetadata:
+      example:
+        accessType: accessType
+        bucketName: bucketName
+        creator: creator
+        grantee: grantee
+        modificationHistory:
+        - modificationDate: 1
+          changes: changes
+          newValues: newValues
+          oldValues: oldValues
+          username: username
+        - modificationDate: 1
+          changes: changes
+          newValues: newValues
+          oldValues: oldValues
+          username: username
+        bucketId: 1
+        links:
+        - hreflang: hreflang
+          rel: rel
+          href: href
+          media: media
+          title: title
+          type: type
+          deprecation: deprecation
+        - hreflang: hreflang
+          rel: rel
+          href: href
+          media: media
+          title: title
+          type: type
+          deprecation: deprecation
+        priority: 0
+        creationDate: 6
+        granteeType: granteeType
+      properties:
+        granteeType:
+          type: string
+        grantee:
+          type: string
+        accessType:
+          type: string
+        priority:
+          format: int32
+          type: integer
+        bucketName:
+          type: string
+        creator:
+          type: string
+        creationDate:
+          format: int64
+          type: integer
+        modificationHistory:
+          items:
+            $ref: '#/components/schemas/ModificationHistoryData'
+          type: array
+        bucketId:
+          format: int64
+          type: integer
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          type: array
+          xml:
+            name: link
+            namespace: http://www.w3.org/2005/Atom
+      type: object
+    AllBucketGrants:
+      example:
+        objectGrants:
+        - accessType: accessType
+          bucketName: bucketName
+          catalogObjectName: catalogObjectName
+          creator: creator
+          catalogObjectBucketId: 5
+          grantee: grantee
+          modificationHistory:
+          - modificationDate: 1
+            changes: changes
+            newValues: newValues
+            oldValues: oldValues
+            username: username
+          - modificationDate: 1
+            changes: changes
+            newValues: newValues
+            oldValues: oldValues
+            username: username
+          links:
+          - hreflang: hreflang
+            rel: rel
+            href: href
+            media: media
+            title: title
+            type: type
+            deprecation: deprecation
+          - hreflang: hreflang
+            rel: rel
+            href: href
+            media: media
+            title: title
+            type: type
+            deprecation: deprecation
+          priority: 0
+          creationDate: 6
+          granteeType: granteeType
+          catalogObjectId:
+            catalogObjectName: catalogObjectName
+            bucketId: 5
+            links:
+            - hreflang: hreflang
+              rel: rel
+              href: href
+              media: media
+              title: title
+              type: type
+              deprecation: deprecation
+            - hreflang: hreflang
+              rel: rel
+              href: href
+              media: media
+              title: title
+              type: type
+              deprecation: deprecation
+        - accessType: accessType
+          bucketName: bucketName
+          catalogObjectName: catalogObjectName
+          creator: creator
+          catalogObjectBucketId: 5
+          grantee: grantee
+          modificationHistory:
+          - modificationDate: 1
+            changes: changes
+            newValues: newValues
+            oldValues: oldValues
+            username: username
+          - modificationDate: 1
+            changes: changes
+            newValues: newValues
+            oldValues: oldValues
+            username: username
+          links:
+          - hreflang: hreflang
+            rel: rel
+            href: href
+            media: media
+            title: title
+            type: type
+            deprecation: deprecation
+          - hreflang: hreflang
+            rel: rel
+            href: href
+            media: media
+            title: title
+            type: type
+            deprecation: deprecation
+          priority: 0
+          creationDate: 6
+          granteeType: granteeType
+          catalogObjectId:
+            catalogObjectName: catalogObjectName
+            bucketId: 5
+            links:
+            - hreflang: hreflang
+              rel: rel
+              href: href
+              media: media
+              title: title
+              type: type
+              deprecation: deprecation
+            - hreflang: hreflang
+              rel: rel
+              href: href
+              media: media
+              title: title
+              type: type
+              deprecation: deprecation
+        bucketGrants:
+        - accessType: accessType
+          bucketName: bucketName
+          creator: creator
+          grantee: grantee
+          modificationHistory:
+          - modificationDate: 1
+            changes: changes
+            newValues: newValues
+            oldValues: oldValues
+            username: username
+          - modificationDate: 1
+            changes: changes
+            newValues: newValues
+            oldValues: oldValues
+            username: username
+          bucketId: 1
+          links:
+          - hreflang: hreflang
+            rel: rel
+            href: href
+            media: media
+            title: title
+            type: type
+            deprecation: deprecation
+          - hreflang: hreflang
+            rel: rel
+            href: href
+            media: media
+            title: title
+            type: type
+            deprecation: deprecation
+          priority: 0
+          creationDate: 6
+          granteeType: granteeType
+        - accessType: accessType
+          bucketName: bucketName
+          creator: creator
+          grantee: grantee
+          modificationHistory:
+          - modificationDate: 1
+            changes: changes
+            newValues: newValues
+            oldValues: oldValues
+            username: username
+          - modificationDate: 1
+            changes: changes
+            newValues: newValues
+            oldValues: oldValues
+            username: username
+          bucketId: 1
+          links:
+          - hreflang: hreflang
+            rel: rel
+            href: href
+            media: media
+            title: title
+            type: type
+            deprecation: deprecation
+          - hreflang: hreflang
+            rel: rel
+            href: href
+            media: media
+            title: title
+            type: type
+            deprecation: deprecation
+          priority: 0
+          creationDate: 6
+          granteeType: granteeType
+      properties:
+        bucketGrants:
+          items:
+            $ref: '#/components/schemas/BucketGrantMetadata'
+          type: array
+        objectGrants:
+          items:
+            $ref: '#/components/schemas/CatalogObjectGrantMetadata'
+          type: array
+      type: object
+    CatalogObjectNameReference:
+      example:
+        bucket_name: bucket_name
+        name: name
+        project_name: project_name
+      properties:
+        bucket_name:
+          type: string
+        project_name:
+          type: string
+        name:
+          type: string
+      type: object
+    create_1_request:
+      properties:
+        file:
+          description: The content of CatalogRawObject
+          format: binary
+          type: string
+      required:
+      - file
+      type: object
+    create_2_request:
+      properties:
+        file:
+          format: binary
+          type: string
+      required:
+      - file
+      type: object
+    importCatalogObjects_request:
+      properties:
+        file:
+          description: The ProActive package zip file
+          format: binary
+          type: string
+      required:
+      - file
+      type: object
+

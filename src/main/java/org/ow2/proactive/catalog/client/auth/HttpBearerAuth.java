@@ -16,40 +16,47 @@ package org.ow2.proactive.catalog.client.auth;
 import org.ow2.proactive.catalog.client.Pair;
 import org.ow2.proactive.catalog.client.ApiException;
 
-import java.util.Base64;
-import java.nio.charset.StandardCharsets;
-
 import java.net.URI;
 import java.util.Map;
 import java.util.List;
 
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-02-12T10:49:33.729424-05:00[America/New_York]")
-public class HttpBasicAuth implements Authentication {
-  private String username;
-  private String password;
+public class HttpBearerAuth implements Authentication {
+  private final String scheme;
+  private String bearerToken;
 
-  public String getUsername() {
-    return username;
+  public HttpBearerAuth(String scheme) {
+    this.scheme = scheme;
   }
 
-  public void setUsername(String username) {
-    this.username = username;
+  /**
+   * Gets the token, which together with the scheme, will be sent as the value of the Authorization header.
+   *
+   * @return The bearer token
+   */
+  public String getBearerToken() {
+    return bearerToken;
   }
 
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
+  /**
+   * Sets the token, which together with the scheme, will be sent as the value of the Authorization header.
+   *
+   * @param bearerToken The bearer token to send in the Authorization header
+   */
+  public void setBearerToken(String bearerToken) {
+    this.bearerToken = bearerToken;
   }
 
   @Override
   public void applyToParams(List<Pair> queryParams, Map<String, String> headerParams, Map<String, String> cookieParams, String payload, String method, URI uri) throws ApiException {
-    if (username == null && password == null) {
+    if(bearerToken == null) {
       return;
     }
-    String str = (username == null ? "" : username) + ":" + (password == null ? "" : password);
-    headerParams.put("Authorization", "Basic " + Base64.getEncoder().encodeToString(str.getBytes(StandardCharsets.UTF_8)));
+
+    headerParams.put("Authorization", (scheme != null ? upperCaseBearer(scheme) + " " : "") + bearerToken);
+  }
+
+  private static String upperCaseBearer(String scheme) {
+    return ("bearer".equalsIgnoreCase(scheme)) ? "Bearer" : scheme;
   }
 }

@@ -1,14 +1,17 @@
 
+
 # BucketMetadata
 
+
 ## Properties
-Name | Type | Description | Notes
------------- | ------------- | ------------- | -------------
-**links** | [**List&lt;Link&gt;**](Link.md) |  |  [optional]
-**name** | **String** |  |  [optional]
-**objectCount** | **Integer** |  |  [optional]
-**owner** | **String** |  |  [optional]
-**rights** | **String** |  |  [optional]
+
+| Name | Type | Description | Notes |
+|------------ | ------------- | ------------- | -------------|
+|**owner** | **String** |  |  [optional] |
+|**name** | **String** |  |  [optional] |
+|**objectCount** | **Integer** |  |  [optional] |
+|**rights** | **String** |  |  [optional] |
+|**links** | [**List&lt;Link&gt;**](Link.md) |  |  [optional] |
 
 
 

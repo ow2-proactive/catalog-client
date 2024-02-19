@@ -1,0 +1,8 @@
+{
+  "dateLibrary": "java8-localdatetime",
+  "useRuntimeException": true,
+  "gradleProperties": "version=13.1.0-SNAPSHOT",
+  "apiPackage": "org.ow2.proactive.catalog.client.api ",
+  "modelPackage": "org.ow2.proactive.catalog.client.model",
+  "library": "jersey2"
+}

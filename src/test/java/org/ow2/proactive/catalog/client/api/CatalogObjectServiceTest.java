@@ -116,7 +116,7 @@ public class CatalogObjectServiceTest {
     public void testGetRequestWithAResourceWithOneReplacement() throws IOException {
 
         when(remoteObjectService.getStringOnUrl(REMOTE_URL, SESSION_ID)).thenReturn(REMOTE_VALUE);
-        when(catalogObjectControllerApi.getRawUsingGET(BUCKET_NAME,
+        when(catalogObjectControllerApi.getRaw1(BUCKET_NAME,
                                                        OBJECT_NAME,
                                                        SESSION_ID)).thenReturn(getWorkflowString("workflows/workflowWithPAGetFromURL.xml"));
         String replacedWorkflow = catalogResolveObjectControllerApi.getResolvedCatalogObject(BUCKET_NAME,
@@ -126,7 +126,7 @@ public class CatalogObjectServiceTest {
         assertThat(replacedWorkflow).isEqualTo(getWorkflowString("workflows/workflowWithPAGetFromURLReplaced.xml"));
 
         verify(remoteObjectService, times(1)).getStringOnUrl(REMOTE_URL, SESSION_ID);
-        verify(catalogObjectControllerApi, times(1)).getRawUsingGET(BUCKET_NAME, OBJECT_NAME, SESSION_ID);
+        verify(catalogObjectControllerApi, times(1)).getRaw1(BUCKET_NAME, OBJECT_NAME, SESSION_ID);
     }
 
     @Test
@@ -134,7 +134,7 @@ public class CatalogObjectServiceTest {
 
         when(remoteObjectService.getStringOnUrl(REMOTE_URL, SESSION_ID)).thenReturn(REMOTE_VALUE);
         when(remoteObjectService.getStringOnUrl(REMOTE_URL2, SESSION_ID)).thenReturn(REMOTE_VALUE2);
-        when(catalogObjectControllerApi.getRawUsingGET(BUCKET_NAME,
+        when(catalogObjectControllerApi.getRaw1(BUCKET_NAME,
                                                        OBJECT_NAME,
                                                        SESSION_ID)).thenReturn(getWorkflowString("workflows/workflowWithSeveralPAGetFromURL.xml"));
         String replacedWorkflow = catalogResolveObjectControllerApi.getResolvedCatalogObject(BUCKET_NAME,
@@ -145,7 +145,7 @@ public class CatalogObjectServiceTest {
 
         verify(remoteObjectService, times(2)).getStringOnUrl(REMOTE_URL, SESSION_ID);
         verify(remoteObjectService, times(1)).getStringOnUrl(REMOTE_URL2, SESSION_ID);
-        verify(catalogObjectControllerApi, times(1)).getRawUsingGET(BUCKET_NAME, OBJECT_NAME, SESSION_ID);
+        verify(catalogObjectControllerApi, times(1)).getRaw1(BUCKET_NAME, OBJECT_NAME, SESSION_ID);
     }
 
     private String getWorkflowString(String path) throws IOException {
