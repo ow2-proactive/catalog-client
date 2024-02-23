@@ -25,28 +25,18 @@
  */
 package org.ow2.proactive.catalog.client.service;
 
-import static com.jayway.restassured.RestAssured.given;
 
-import com.jayway.restassured.response.Response;
+import org.ow2.proactive.catalog.client.ApiClient;
+import org.ow2.proactive.catalog.client.Configuration;
 
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Response;
 
 /**
  * This class enables to send request to remote server
  */
 public class RemoteObjectService {
-
-    /**
-     * Send a GET request on url with a sessionId returning a returnClass object
-     * @param url is the url where the get request will be sent
-     * @param sessionId is the value to connect to the catalog
-     * @param returnClass is the class type of the response
-     * @return a returnClass object created from the server response
-     */
-    public <T> T getObjectOnUrl(String url, String sessionId, Class<T> returnClass) {
-        Response response = given().headers("sessionID", sessionId).when().get(url).then().extract().response();
-        checkResponse(response);
-        return response.as(returnClass);
-    }
 
     /**
      * Send a GET request on url with a sessionId returning a String object
@@ -55,14 +45,19 @@ public class RemoteObjectService {
      * @return a returnClass object created from the server response
      */
     public String getStringOnUrl(String url, String sessionId) {
-        Response response = given().headers("sessionID", sessionId).when().get(url).then().extract().response();
+        ApiClient apiClient = Configuration.getDefaultApiClient();
+        WebTarget target = apiClient.getHttpClient().target(url);
+        Invocation.Builder invocationBuilder = target.request();
+        invocationBuilder.header("sessionID", sessionId);
+        Invocation invocation = invocationBuilder.buildGet();
+        Response response = invocation.invoke();
         checkResponse(response);
-        return response.asString();
+        return response.readEntity(String.class);
     }
 
     private void checkResponse(Response response) {
-        if (!(200 <= response.getStatusCode() && response.getStatusCode() <= 300)) {
-            throw new RequestException(response.getStatusCode() + " " + response.getStatusLine());
+        if (!(200 <= response.getStatus() && response.getStatus() <= 300)) {
+            throw new RequestException(response.getStatus() + " " + response.getStatusInfo().getReasonPhrase());
         }
     }
 
