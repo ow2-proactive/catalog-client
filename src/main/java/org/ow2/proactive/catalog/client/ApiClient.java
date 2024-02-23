@@ -1067,7 +1067,7 @@ public class ApiClient extends JavaTimeFormatter {
     }
   }
 
-  private Response sendRequest(String method, Invocation.Builder invocationBuilder, Entity<?> entity) {
+  public Response sendRequest(String method, Invocation.Builder invocationBuilder, Entity<?> entity) {
     Response response;
     if ("POST".equals(method)) {
       response = invocationBuilder.post(entity);

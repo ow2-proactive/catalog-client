@@ -26,9 +26,13 @@
 #src/main/java/org/ow2/proactive/catalog/client/api/CatalogResolveObjectControllerApi.java
 src/main/java/resources/**
 
+# Contains custom code to manually send http request
+src/main/java/org/ow2/proactive/catalog/client/service/RemoteObjectService.java
+
 # ApiClient contains hand written code to allow certificate with https
 # as well as custom code to build the jersey HTTP Client on line 1100 (Usage of JerseyClientBuilder instead of resteasy's ClientBuidler).
 # Otherwise by default a RESTEasy Client is built
+# sendRequest() is modified to be public to be used in RemoteObjectService.java
 src/main/java/org/ow2/proactive/catalog/client/ApiClient.java
 
 src/test/**
