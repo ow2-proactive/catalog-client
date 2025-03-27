@@ -4,16 +4,16 @@ All URIs are relative to *https://trydev2.activeeon.com:8443/catalog*
 
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
-| [**getReport**](CatalogObjectReportControllerApi.md#getReport) | **GET** /buckets/report | Get list of catalog objects in a PDF report file |
-| [**getReportForSelectedObjects**](CatalogObjectReportControllerApi.md#getReportForSelectedObjects) | **POST** /buckets/report/selected/{bucketName} | Get list of selected catalog objects in a PDF report file |
+| [**getReport**](CatalogObjectReportControllerApi.md#getReport) | **GET** /buckets/report | Get a ZIP file containing the PDF reports for each catalog objects matching the provided filters |
+| [**getReportForSelectedObjects**](CatalogObjectReportControllerApi.md#getReportForSelectedObjects) | **POST** /buckets/report/selected/{bucketName} | Get a PDF report file for the selected catalog items |
 
 
 
 ## getReport
 
-> byte[] getReport(sessionID, owner, kind, contentType)
+> byte[] getReport(sessionID, owner, kind, contentType, projectName, objectName, bucketName, tag, lastCommitBy, committedAtLeastOnceBy, lastCommitTimeLessThan, lastCommitTimeGreater)
 
-Get list of catalog objects in a PDF report file
+Get a ZIP file containing the PDF reports for each catalog objects matching the provided filters
 
 ### Example
 
@@ -35,8 +35,16 @@ public class Example {
         String owner = "owner_example"; // String | The name of the user who owns the Bucket
         String kind = "kind_example"; // String | The kind of objects that buckets must contain
         String contentType = "contentType_example"; // String | The Content-Type of objects that buckets must contain
+        String projectName = "projectName_example"; // String | The project name of objects containing this name
+        String objectName = "objectName_example"; // String | The object name of objects containing this name
+        String bucketName = "bucketName_example"; // String | The bucket name of catalog objects
+        String tag = "tag_example"; // String | The tag of catalog objects
+        String lastCommitBy = "lastCommitBy_example"; // String | The user who last committed the catalog object
+        String committedAtLeastOnceBy = "committedAtLeastOnceBy_example"; // String | The user who committed at least once in the catalog object
+        Long lastCommitTimeLessThan = 56L; // Long | The maximum time the object was last committed
+        Long lastCommitTimeGreater = 56L; // Long | The minimum time the object was last committed
         try {
-            byte[] result = apiInstance.getReport(sessionID, owner, kind, contentType);
+            byte[] result = apiInstance.getReport(sessionID, owner, kind, contentType, projectName, objectName, bucketName, tag, lastCommitBy, committedAtLeastOnceBy, lastCommitTimeLessThan, lastCommitTimeGreater);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling CatalogObjectReportControllerApi#getReport");
@@ -58,6 +66,14 @@ public class Example {
 | **owner** | **String**| The name of the user who owns the Bucket | [optional] |
 | **kind** | **String**| The kind of objects that buckets must contain | [optional] |
 | **contentType** | **String**| The Content-Type of objects that buckets must contain | [optional] |
+| **projectName** | **String**| The project name of objects containing this name | [optional] |
+| **objectName** | **String**| The object name of objects containing this name | [optional] |
+| **bucketName** | **String**| The bucket name of catalog objects | [optional] |
+| **tag** | **String**| The tag of catalog objects | [optional] |
+| **lastCommitBy** | **String**| The user who last committed the catalog object | [optional] |
+| **committedAtLeastOnceBy** | **String**| The user who committed at least once in the catalog object | [optional] |
+| **lastCommitTimeLessThan** | **Long**| The maximum time the object was last committed | [optional] |
+| **lastCommitTimeGreater** | **Long**| The minimum time the object was last committed | [optional] |
 
 ### Return type
 
@@ -75,16 +91,16 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **401** | User not authenticated |  -  |
 | **403** | Permission denied |  -  |
 | **200** | OK |  -  |
-| **401** | User not authenticated |  -  |
 
 
 ## getReportForSelectedObjects
 
 > byte[] getReportForSelectedObjects(bucketName, sessionID, kind, contentType, requestBody)
 
-Get list of selected catalog objects in a PDF report file
+Get a PDF report file for the selected catalog items
 
 ### Example
 
@@ -148,8 +164,8 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **401** | User not authenticated |  -  |
 | **403** | Permission denied |  -  |
 | **200** | OK |  -  |
 | **404** | Bucket not found |  -  |
-| **401** | User not authenticated |  -  |
 

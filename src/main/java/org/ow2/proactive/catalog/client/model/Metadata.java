@@ -34,7 +34,7 @@ import org.ow2.proactive.catalog.client.JSON;
   Metadata.JSON_PROPERTY_VALUE,
   Metadata.JSON_PROPERTY_LABEL
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-02-12T10:49:33.729424-05:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-03-27T12:13:03.112691600+01:00[Europe/Berlin]")
 public class Metadata {
   public static final String JSON_PROPERTY_KEY = "key";
   private String key;

@@ -17,6 +17,7 @@ All URIs are relative to *https://trydev2.activeeon.com:8443/catalog*
 | [**listKinds**](CatalogObjectControllerApi.md#listKinds) | **GET** /buckets/kinds | Lists all kinds for all objects |
 | [**listObjectTags**](CatalogObjectControllerApi.md#listObjectTags) | **GET** /buckets/tags | Lists all tags values for all objects stored in the catalog |
 | [**updateObjectMetadata**](CatalogObjectControllerApi.md#updateObjectMetadata) | **PUT** /buckets/{bucketName}/resources/{name} | Update a catalog object metadata, like kind, Content-Type, project name and tags |
+| [**updateObjectMetadataMulti**](CatalogObjectControllerApi.md#updateObjectMetadataMulti) | **PUT** /buckets/resources/metadata | Updates metadata, like kind, Content-Type, project name and tags for multiple objects |
 
 
 
@@ -544,7 +545,7 @@ No authorization required
 
 ## list1
 
-> List&lt;CatalogObjectMetadata&gt; list1(bucketName, sessionID, kind, contentType, objectName, objectTag, associationStatus, projectName, lastCommitBy, lastCommitTimeGreater, lastCommitTimeLessThan, listObjectNamesForArchive, pageNo, pageSize)
+> List&lt;CatalogObjectMetadata&gt; list1(bucketName, sessionID, kind, contentType, objectName, objectTag, associationStatus, projectName, lastCommitBy, committedAtLeastOnceBy, lastCommitTimeGreater, lastCommitTimeLessThan, listObjectNamesForArchive, pageNo, pageSize)
 
 Lists catalog objects metadata
 
@@ -575,13 +576,14 @@ public class Example {
         String associationStatus = "ALL"; // String | Filter according to Job-Planner association status.<br/>If enabled, only objects for which a job-planner association exists with the provided status will be returned.<br/>Parameter can be ALL, PLANNED, DEACTIVATED, FAILED or UNPLANNED.<br/>ALL will filter objects which have an association with any status.<br/>UNPLANNED will filter objects without any association.
         String projectName = "projectName_example"; // String | Include only objects whose project name contains the given string.
         String lastCommitBy = "lastCommitBy_example"; // String | Include only objects whose last commit belong to the given user.
+        String committedAtLeastOnceBy = "committedAtLeastOnceBy_example"; // String | Include only objects that have been committed at least once by the given user.
         Long lastCommitTimeGreater = 56L; // Long | Include only objects whose last commit time is greater than the given EPOCH time.
         Long lastCommitTimeLessThan = 56L; // Long | Include only objects whose last commit time is less than the given EPOCH time.
         List<String> listObjectNamesForArchive = Arrays.asList(); // List<String> | Give a list of name separated by comma to get them in an archive
         Integer pageNo = 0; // Integer | Page number
         Integer pageSize = 2147483647; // Integer | Page size
         try {
-            List<CatalogObjectMetadata> result = apiInstance.list1(bucketName, sessionID, kind, contentType, objectName, objectTag, associationStatus, projectName, lastCommitBy, lastCommitTimeGreater, lastCommitTimeLessThan, listObjectNamesForArchive, pageNo, pageSize);
+            List<CatalogObjectMetadata> result = apiInstance.list1(bucketName, sessionID, kind, contentType, objectName, objectTag, associationStatus, projectName, lastCommitBy, committedAtLeastOnceBy, lastCommitTimeGreater, lastCommitTimeLessThan, listObjectNamesForArchive, pageNo, pageSize);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling CatalogObjectControllerApi#list1");
@@ -608,6 +610,7 @@ public class Example {
 | **associationStatus** | **String**| Filter according to Job-Planner association status.&lt;br/&gt;If enabled, only objects for which a job-planner association exists with the provided status will be returned.&lt;br/&gt;Parameter can be ALL, PLANNED, DEACTIVATED, FAILED or UNPLANNED.&lt;br/&gt;ALL will filter objects which have an association with any status.&lt;br/&gt;UNPLANNED will filter objects without any association. | [optional] [enum: ALL, PLANNED, DEACTIVATED, FAILED, UNPLANNED] |
 | **projectName** | **String**| Include only objects whose project name contains the given string. | [optional] |
 | **lastCommitBy** | **String**| Include only objects whose last commit belong to the given user. | [optional] |
+| **committedAtLeastOnceBy** | **String**| Include only objects that have been committed at least once by the given user. | [optional] |
 | **lastCommitTimeGreater** | **Long**| Include only objects whose last commit time is greater than the given EPOCH time. | [optional] |
 | **lastCommitTimeLessThan** | **Long**| Include only objects whose last commit time is less than the given EPOCH time. | [optional] |
 | **listObjectNamesForArchive** | **List&lt;String&gt;**| Give a list of name separated by comma to get them in an archive | [optional] |
@@ -633,7 +636,6 @@ No authorization required
 | **404** | Bucket not found |  -  |
 | **206** | Missing object |  -  |
 | **401** | User not authenticated |  -  |
-| **403** | Permission denied |  -  |
 
 
 ## listCatalogObjectNameReference
@@ -949,6 +951,83 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
+- **Accept**: */*
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **404** | Bucket, object or revision not found |  -  |
+| **401** | User not authenticated |  -  |
+| **403** | Permission denied |  -  |
+| **400** | Wrong specified parameters: at least one should be present |  -  |
+| **200** | OK |  -  |
+
+
+## updateObjectMetadataMulti
+
+> List&lt;CatalogObjectMetadata&gt; updateObjectMetadataMulti(sessionID, requestBody, kind, contentType, projectName, tags)
+
+Updates metadata, like kind, Content-Type, project name and tags for multiple objects
+
+### Example
+
+```java
+// Import classes:
+import org.ow2.proactive.catalog.client.ApiClient;
+import org.ow2.proactive.catalog.client.ApiException;
+import org.ow2.proactive.catalog.client.Configuration;
+import org.ow2.proactive.catalog.client.model.*;
+import org.ow2.proactive.catalog.client.api.CatalogObjectControllerApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://trydev2.activeeon.com:8443/catalog");
+
+        CatalogObjectControllerApi apiInstance = new CatalogObjectControllerApi(defaultClient);
+        String sessionID = "sessionID_example"; // String | sessionID
+        List<String> requestBody = Arrays.asList(); // List<String> | 
+        String kind = "kind_example"; // String | The new kind of an object
+        String contentType = "contentType_example"; // String | The new Content-Type of an object - MIME type
+        String projectName = "projectName_example"; // String | The new project name of an object
+        String tags = "tags_example"; // String | List of comma separated tags of the object
+        try {
+            List<CatalogObjectMetadata> result = apiInstance.updateObjectMetadataMulti(sessionID, requestBody, kind, contentType, projectName, tags);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling CatalogObjectControllerApi#updateObjectMetadataMulti");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **sessionID** | **String**| sessionID | |
+| **requestBody** | **List&lt;String&gt;**|  | |
+| **kind** | **String**| The new kind of an object | [optional] |
+| **contentType** | **String**| The new Content-Type of an object - MIME type | [optional] |
+| **projectName** | **String**| The new project name of an object | [optional] |
+| **tags** | **String**| List of comma separated tags of the object | [optional] |
+
+### Return type
+
+[**List&lt;CatalogObjectMetadata&gt;**](CatalogObjectMetadata.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
 - **Accept**: */*
 
 ### HTTP response details
