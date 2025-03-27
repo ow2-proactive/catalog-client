@@ -35,7 +35,7 @@ import org.ow2.proactive.catalog.client.JSON;
 @JsonPropertyOrder({
   CatalogObjectMetadataList.JSON_PROPERTY_OBJECT
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-02-12T10:49:33.729424-05:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-03-27T12:13:03.112691600+01:00[Europe/Berlin]")
 public class CatalogObjectMetadataList {
   public static final String JSON_PROPERTY_OBJECT = "object";
   private List<CatalogObjectMetadata> _object;

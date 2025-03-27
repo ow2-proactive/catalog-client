@@ -90,6 +90,14 @@ paths:
         schema:
           type: string
         style: form
+      - description: The name of the tenant that has access to the Bucket
+        explode: true
+        in: query
+        name: tenant
+        required: false
+        schema:
+          type: string
+        style: form
       - description: The kind(s) of objects that buckets must contain.<br />Multiple
           kinds can be specified using comma separators
         explode: true
@@ -160,6 +168,15 @@ paths:
         explode: true
         in: query
         name: lastCommitBy
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Include only objects have been committed at least once by the
+          given user.
+        explode: true
+        in: query
+        name: committedAtLeastOnceBy
         required: false
         schema:
           type: string
@@ -520,6 +537,15 @@ paths:
         schema:
           type: string
         style: form
+      - description: Include only objects that have been committed at least once by
+          the given user.
+        explode: true
+        in: query
+        name: committedAtLeastOnceBy
+        required: false
+        schema:
+          type: string
+        style: form
       - description: Include only objects whose last commit time is greater than the
           given EPOCH time.
         explode: true
@@ -595,14 +621,6 @@ paths:
                   $ref: '#/components/schemas/CatalogObjectMetadata'
                 type: array
           description: User not authenticated
-        "403":
-          content:
-            '*/*':
-              schema:
-                items:
-                  $ref: '#/components/schemas/CatalogObjectMetadata'
-                type: array
-          description: Permission denied
       summary: Lists catalog objects metadata
       tags:
       - catalog-object-controller
@@ -2794,6 +2812,109 @@ paths:
       tags:
       - catalog-object-controller
       x-accepts: application/json
+  /buckets/resources/metadata:
+    put:
+      operationId: updateObjectMetadataMulti
+      parameters:
+      - description: sessionID
+        explode: false
+        in: header
+        name: sessionID
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The new kind of an object
+        explode: true
+        in: query
+        name: kind
+        required: false
+        schema:
+          pattern: "^([a-zA-Z0-9][a-zA-Z0-9_\\. ;=\\+\\-]{0,61}[a-zA-Z0-9]\\/?)+$"
+          type: string
+        style: form
+      - description: The new Content-Type of an object - MIME type
+        explode: true
+        in: query
+        name: contentType
+        required: false
+        schema:
+          pattern: "^([a-zA-Z0-9][a-zA-Z0-9_\\. ;=\\+\\-]{0,61}[a-zA-Z0-9]\\/?)+$"
+          type: string
+        style: form
+      - description: The new project name of an object
+        explode: true
+        in: query
+        name: projectName
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: List of comma separated tags of the object
+        explode: true
+        in: query
+        name: tags
+        required: false
+        schema:
+          pattern: "^([a-zA-Z][\\s0-9a-zA-Z-_.\\/]+[,]*)*(?<!,)$"
+          type: string
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: List of catalog objects to update with syntax "bucketName/objectName"
+              items:
+                type: string
+              type: array
+        required: true
+      responses:
+        "404":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/CatalogObjectMetadata'
+                type: array
+          description: "Bucket, object or revision not found"
+        "401":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/CatalogObjectMetadata'
+                type: array
+          description: User not authenticated
+        "403":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/CatalogObjectMetadata'
+                type: array
+          description: Permission denied
+        "400":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/CatalogObjectMetadata'
+                type: array
+          description: "Wrong specified parameters: at least one should be present"
+        "200":
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/CatalogObjectMetadata'
+                type: array
+          description: OK
+      summary: "Updates metadata, like kind, Content-Type, project name and tags for\
+        \ multiple objects"
+      tags:
+      - catalog-object-controller
+      x-content-type: application/json
+      x-accepts: '*/*'
   /buckets/report:
     get:
       operationId: getReport
@@ -2830,7 +2951,77 @@ paths:
         schema:
           type: string
         style: form
+      - description: The project name of objects containing this name
+        explode: true
+        in: query
+        name: projectName
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The object name of objects containing this name
+        explode: true
+        in: query
+        name: objectName
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The bucket name of catalog objects
+        explode: true
+        in: query
+        name: bucketName
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The tag of catalog objects
+        explode: true
+        in: query
+        name: tag
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The user who last committed the catalog object
+        explode: true
+        in: query
+        name: lastCommitBy
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The user who committed at least once in the catalog object
+        explode: true
+        in: query
+        name: committedAtLeastOnceBy
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The maximum time the object was last committed
+        explode: true
+        in: query
+        name: lastCommitTimeLessThan
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: The minimum time the object was last committed
+        explode: true
+        in: query
+        name: lastCommitTimeGreater
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
       responses:
+        "401":
+          content:
+            application/json: {}
+          description: User not authenticated
         "403":
           content:
             application/json: {}
@@ -2842,11 +3033,8 @@ paths:
                 format: byte
                 type: string
           description: OK
-        "401":
-          content:
-            application/json: {}
-          description: User not authenticated
-      summary: Get list of catalog objects in a PDF report file
+      summary: Get a ZIP file containing the PDF reports for each catalog objects
+        matching the provided filters
       tags:
       - catalog-object-report-controller
       x-accepts: application/json
@@ -2895,6 +3083,10 @@ paths:
                 type: string
               type: array
       responses:
+        "401":
+          content:
+            application/json: {}
+          description: User not authenticated
         "403":
           content:
             application/json: {}
@@ -2910,11 +3102,7 @@ paths:
           content:
             application/json: {}
           description: Bucket not found
-        "401":
-          content:
-            application/json: {}
-          description: User not authenticated
-      summary: Get list of selected catalog objects in a PDF report file
+      summary: Get a PDF report file for the selected catalog items
       tags:
       - catalog-object-report-controller
       x-content-type: application/json
@@ -3046,7 +3234,77 @@ paths:
         schema:
           type: string
         style: form
+      - description: The project name of objects containing this name
+        explode: true
+        in: query
+        name: projectName
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The object name of objects containing this name
+        explode: true
+        in: query
+        name: objectName
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The bucket name of catalog objects
+        explode: true
+        in: query
+        name: bucketName
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The tag of catalog objects
+        explode: true
+        in: query
+        name: tag
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The user who last committed the catalog object
+        explode: true
+        in: query
+        name: lastCommitBy
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The user committed at least once in the catalog object
+        explode: true
+        in: query
+        name: committedAtLeastOnceBy
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: The maximum time the object was last committed
+        explode: true
+        in: query
+        name: lastCommitTimeLessThan
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: The minimum time the object was last committed
+        explode: true
+        in: query
+        name: lastCommitTimeGreater
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
       responses:
+        "401":
+          content:
+            application/json: {}
+          description: User not authenticated
         "403":
           content:
             application/json: {}
@@ -3058,11 +3316,8 @@ paths:
                 format: byte
                 type: string
           description: OK
-        "401":
-          content:
-            application/json: {}
-          description: User not authenticated
-      summary: Get the call graph of all catalog objects in a PDF report
+      summary: Get a ZIP file containing a call graph report for each catalog objects
+        matching the provided filters
       tags:
       - catalog-object-call-graph-controller
       x-accepts: application/json
@@ -3120,6 +3375,10 @@ paths:
           type: array
         style: form
       responses:
+        "401":
+          content:
+            application/json: {}
+          description: User not authenticated
         "403":
           content:
             application/json: {}
@@ -3135,10 +3394,6 @@ paths:
           content:
             application/json: {}
           description: Bucket not found
-        "401":
-          content:
-            application/json: {}
-          description: User not authenticated
       summary: Get the call graph of selected catalog objects in a bucket
       tags:
       - catalog-object-call-graph-controller
@@ -3166,6 +3421,7 @@ components:
           title: title
           type: type
           deprecation: deprecation
+        tenant: tenant
       properties:
         owner:
           type: string
@@ -3175,6 +3431,8 @@ components:
           format: int32
           type: integer
         rights:
+          type: string
+        tenant:
           type: string
         links:
           items:

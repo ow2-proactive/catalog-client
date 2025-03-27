@@ -21,7 +21,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-02-12T10:49:33.729424-05:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-03-27T12:13:03.112691600+01:00[Europe/Berlin]")
 public class CatalogObjectControllerApi {
   private ApiClient apiClient;
 
@@ -579,6 +579,7 @@ public class CatalogObjectControllerApi {
    * @param associationStatus Filter according to Job-Planner association status.&lt;br/&gt;If enabled, only objects for which a job-planner association exists with the provided status will be returned.&lt;br/&gt;Parameter can be ALL, PLANNED, DEACTIVATED, FAILED or UNPLANNED.&lt;br/&gt;ALL will filter objects which have an association with any status.&lt;br/&gt;UNPLANNED will filter objects without any association. (optional)
    * @param projectName Include only objects whose project name contains the given string. (optional)
    * @param lastCommitBy Include only objects whose last commit belong to the given user. (optional)
+   * @param committedAtLeastOnceBy Include only objects that have been committed at least once by the given user. (optional)
    * @param lastCommitTimeGreater Include only objects whose last commit time is greater than the given EPOCH time. (optional)
    * @param lastCommitTimeLessThan Include only objects whose last commit time is less than the given EPOCH time. (optional)
    * @param listObjectNamesForArchive Give a list of name separated by comma to get them in an archive (optional)
@@ -592,11 +593,10 @@ public class CatalogObjectControllerApi {
        <tr><td> 404 </td><td> Bucket not found </td><td>  -  </td></tr>
        <tr><td> 206 </td><td> Missing object </td><td>  -  </td></tr>
        <tr><td> 401 </td><td> User not authenticated </td><td>  -  </td></tr>
-       <tr><td> 403 </td><td> Permission denied </td><td>  -  </td></tr>
      </table>
    */
-  public List<CatalogObjectMetadata> list1(String bucketName, String sessionID, String kind, String contentType, String objectName, String objectTag, String associationStatus, String projectName, String lastCommitBy, Long lastCommitTimeGreater, Long lastCommitTimeLessThan, List<String> listObjectNamesForArchive, Integer pageNo, Integer pageSize) throws ApiException {
-    return list1WithHttpInfo(bucketName, sessionID, kind, contentType, objectName, objectTag, associationStatus, projectName, lastCommitBy, lastCommitTimeGreater, lastCommitTimeLessThan, listObjectNamesForArchive, pageNo, pageSize).getData();
+  public List<CatalogObjectMetadata> list1(String bucketName, String sessionID, String kind, String contentType, String objectName, String objectTag, String associationStatus, String projectName, String lastCommitBy, String committedAtLeastOnceBy, Long lastCommitTimeGreater, Long lastCommitTimeLessThan, List<String> listObjectNamesForArchive, Integer pageNo, Integer pageSize) throws ApiException {
+    return list1WithHttpInfo(bucketName, sessionID, kind, contentType, objectName, objectTag, associationStatus, projectName, lastCommitBy, committedAtLeastOnceBy, lastCommitTimeGreater, lastCommitTimeLessThan, listObjectNamesForArchive, pageNo, pageSize).getData();
   }
 
   /**
@@ -611,6 +611,7 @@ public class CatalogObjectControllerApi {
    * @param associationStatus Filter according to Job-Planner association status.&lt;br/&gt;If enabled, only objects for which a job-planner association exists with the provided status will be returned.&lt;br/&gt;Parameter can be ALL, PLANNED, DEACTIVATED, FAILED or UNPLANNED.&lt;br/&gt;ALL will filter objects which have an association with any status.&lt;br/&gt;UNPLANNED will filter objects without any association. (optional)
    * @param projectName Include only objects whose project name contains the given string. (optional)
    * @param lastCommitBy Include only objects whose last commit belong to the given user. (optional)
+   * @param committedAtLeastOnceBy Include only objects that have been committed at least once by the given user. (optional)
    * @param lastCommitTimeGreater Include only objects whose last commit time is greater than the given EPOCH time. (optional)
    * @param lastCommitTimeLessThan Include only objects whose last commit time is less than the given EPOCH time. (optional)
    * @param listObjectNamesForArchive Give a list of name separated by comma to get them in an archive (optional)
@@ -624,10 +625,9 @@ public class CatalogObjectControllerApi {
        <tr><td> 404 </td><td> Bucket not found </td><td>  -  </td></tr>
        <tr><td> 206 </td><td> Missing object </td><td>  -  </td></tr>
        <tr><td> 401 </td><td> User not authenticated </td><td>  -  </td></tr>
-       <tr><td> 403 </td><td> Permission denied </td><td>  -  </td></tr>
      </table>
    */
-  public ApiResponse<List<CatalogObjectMetadata>> list1WithHttpInfo(String bucketName, String sessionID, String kind, String contentType, String objectName, String objectTag, String associationStatus, String projectName, String lastCommitBy, Long lastCommitTimeGreater, Long lastCommitTimeLessThan, List<String> listObjectNamesForArchive, Integer pageNo, Integer pageSize) throws ApiException {
+  public ApiResponse<List<CatalogObjectMetadata>> list1WithHttpInfo(String bucketName, String sessionID, String kind, String contentType, String objectName, String objectTag, String associationStatus, String projectName, String lastCommitBy, String committedAtLeastOnceBy, Long lastCommitTimeGreater, Long lastCommitTimeLessThan, List<String> listObjectNamesForArchive, Integer pageNo, Integer pageSize) throws ApiException {
     // Check required parameters
     if (bucketName == null) {
       throw new ApiException(400, "Missing the required parameter 'bucketName' when calling list1");
@@ -647,6 +647,7 @@ public class CatalogObjectControllerApi {
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "associationStatus", associationStatus));
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "projectName", projectName));
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "lastCommitBy", lastCommitBy));
+    localVarQueryParams.addAll(apiClient.parameterToPairs("", "committedAtLeastOnceBy", committedAtLeastOnceBy));
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "lastCommitTimeGreater", lastCommitTimeGreater));
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "lastCommitTimeLessThan", lastCommitTimeLessThan));
     localVarQueryParams.addAll(apiClient.parameterToPairs("multi", "listObjectNamesForArchive", listObjectNamesForArchive));
@@ -905,6 +906,80 @@ public class CatalogObjectControllerApi {
     String localVarContentType = apiClient.selectHeaderContentType();
     GenericType<CatalogObjectMetadata> localVarReturnType = new GenericType<CatalogObjectMetadata>() {};
     return apiClient.invokeAPI("CatalogObjectControllerApi.updateObjectMetadata", localVarPath, "PUT", localVarQueryParams, null,
+                               localVarHeaderParams, new LinkedHashMap<>(), new LinkedHashMap<>(), localVarAccept, localVarContentType,
+                               null, localVarReturnType, false);
+  }
+  /**
+   * Updates metadata, like kind, Content-Type, project name and tags for multiple objects
+   * 
+   * @param sessionID sessionID (required)
+   * @param requestBody  (required)
+   * @param kind The new kind of an object (optional)
+   * @param contentType The new Content-Type of an object - MIME type (optional)
+   * @param projectName The new project name of an object (optional)
+   * @param tags List of comma separated tags of the object (optional)
+   * @return List&lt;CatalogObjectMetadata&gt;
+   * @throws ApiException if fails to make API call
+   * @http.response.details
+     <table summary="Response Details" border="1">
+       <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+       <tr><td> 404 </td><td> Bucket, object or revision not found </td><td>  -  </td></tr>
+       <tr><td> 401 </td><td> User not authenticated </td><td>  -  </td></tr>
+       <tr><td> 403 </td><td> Permission denied </td><td>  -  </td></tr>
+       <tr><td> 400 </td><td> Wrong specified parameters: at least one should be present </td><td>  -  </td></tr>
+       <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+   */
+  public List<CatalogObjectMetadata> updateObjectMetadataMulti(String sessionID, List<String> requestBody, String kind, String contentType, String projectName, String tags) throws ApiException {
+    return updateObjectMetadataMultiWithHttpInfo(sessionID, requestBody, kind, contentType, projectName, tags).getData();
+  }
+
+  /**
+   * Updates metadata, like kind, Content-Type, project name and tags for multiple objects
+   * 
+   * @param sessionID sessionID (required)
+   * @param requestBody  (required)
+   * @param kind The new kind of an object (optional)
+   * @param contentType The new Content-Type of an object - MIME type (optional)
+   * @param projectName The new project name of an object (optional)
+   * @param tags List of comma separated tags of the object (optional)
+   * @return ApiResponse&lt;List&lt;CatalogObjectMetadata&gt;&gt;
+   * @throws ApiException if fails to make API call
+   * @http.response.details
+     <table summary="Response Details" border="1">
+       <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+       <tr><td> 404 </td><td> Bucket, object or revision not found </td><td>  -  </td></tr>
+       <tr><td> 401 </td><td> User not authenticated </td><td>  -  </td></tr>
+       <tr><td> 403 </td><td> Permission denied </td><td>  -  </td></tr>
+       <tr><td> 400 </td><td> Wrong specified parameters: at least one should be present </td><td>  -  </td></tr>
+       <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
+     </table>
+   */
+  public ApiResponse<List<CatalogObjectMetadata>> updateObjectMetadataMultiWithHttpInfo(String sessionID, List<String> requestBody, String kind, String contentType, String projectName, String tags) throws ApiException {
+    // Check required parameters
+    if (sessionID == null) {
+      throw new ApiException(400, "Missing the required parameter 'sessionID' when calling updateObjectMetadataMulti");
+    }
+    if (requestBody == null) {
+      throw new ApiException(400, "Missing the required parameter 'requestBody' when calling updateObjectMetadataMulti");
+    }
+
+    // Query parameters
+    List<Pair> localVarQueryParams = new ArrayList<>(
+            apiClient.parameterToPairs("", "kind", kind)
+    );
+    localVarQueryParams.addAll(apiClient.parameterToPairs("", "contentType", contentType));
+    localVarQueryParams.addAll(apiClient.parameterToPairs("", "projectName", projectName));
+    localVarQueryParams.addAll(apiClient.parameterToPairs("", "tags", tags));
+
+    // Header parameters
+    Map<String, String> localVarHeaderParams = new LinkedHashMap<>();
+    localVarHeaderParams.put("sessionID", apiClient.parameterToString(sessionID));
+
+    String localVarAccept = apiClient.selectHeaderAccept("*/*");
+    String localVarContentType = apiClient.selectHeaderContentType("application/json");
+    GenericType<List<CatalogObjectMetadata>> localVarReturnType = new GenericType<List<CatalogObjectMetadata>>() {};
+    return apiClient.invokeAPI("CatalogObjectControllerApi.updateObjectMetadataMulti", "/buckets/resources/metadata", "PUT", localVarQueryParams, requestBody,
                                localVarHeaderParams, new LinkedHashMap<>(), new LinkedHashMap<>(), localVarAccept, localVarContentType,
                                null, localVarReturnType, false);
   }

@@ -4,7 +4,7 @@ CatalogObjectEntity Catalog API
 
 - API version: 1.0\&quot;
 
-- Build date: 2024-02-12T10:49:33.729424-05:00[America/New_York]
+- Build date: 2025-03-27T12:13:03.112691600+01:00[Europe/Berlin]
 
 The purpose of the catalog is to store ProActive objects.
 
@@ -125,6 +125,7 @@ public class BucketControllerApiExample {
         BucketControllerApi apiInstance = new BucketControllerApi(defaultClient);
         String sessionID = "sessionID_example"; // String | sessionID
         String owner = "owner_example"; // String | The name of the user who owns the Bucket
+        String tenant = "tenant_example"; // String | The name of the tenant that has access to the Bucket
         String kind = "kind_example"; // String | The kind(s) of objects that buckets must contain.<br />Multiple kinds can be specified using comma separators
         String contentType = "contentType_example"; // String | The Content-Type of objects that buckets must contain
         String objectTag = "objectTag_example"; // String | The tag of objects that buckets must contain
@@ -133,11 +134,12 @@ public class BucketControllerApiExample {
         String bucketName = "bucketName_example"; // String | The bucket name contains the value of this parameter (case insensitive)
         String projectName = "projectName_example"; // String | Include only objects whose project name contains the given string.
         String lastCommitBy = "lastCommitBy_example"; // String | Include only objects whose last commit belong to the given user.
+        String committedAtLeastOnceBy = "committedAtLeastOnceBy_example"; // String | Include only objects have been committed at least once by the given user.
         Long lastCommitTimeGreater = 0L; // Long | Include only objects whose last commit time is greater than the given EPOCH time.
         Long lastCommitTimeLessThan = 0L; // Long | Include only objects whose last commit time is less than the given EPOCH time.
         String allBuckets = "false"; // String | If true, buckets without objects matching the filters will be returned with objectCount=0. Default is false
         try {
-            List<BucketMetadata> result = apiInstance.callList(sessionID, owner, kind, contentType, objectTag, associationStatus, objectName, bucketName, projectName, lastCommitBy, lastCommitTimeGreater, lastCommitTimeLessThan, allBuckets);
+            List<BucketMetadata> result = apiInstance.callList(sessionID, owner, tenant, kind, contentType, objectTag, associationStatus, objectName, bucketName, projectName, lastCommitBy, committedAtLeastOnceBy, lastCommitTimeGreater, lastCommitTimeLessThan, allBuckets);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling BucketControllerApi#callList");
@@ -173,7 +175,7 @@ Class | Method | HTTP request | Description
 *BucketGrantControllerApi* | [**getAllGrantsForABucketAndItsObjects**](docs/BucketGrantControllerApi.md#getAllGrantsForABucketAndItsObjects) | **GET** /buckets/{bucketName}/grant/all | Get all grants associated with a bucket and all objects contained in this bucket
 *BucketGrantControllerApi* | [**updateBucketGrantForAGroup**](docs/BucketGrantControllerApi.md#updateBucketGrantForAGroup) | **PUT** /buckets/{bucketName}/grant/group | Update the access type of an existing group bucket grant
 *BucketGrantControllerApi* | [**updateBucketGrantForAUser**](docs/BucketGrantControllerApi.md#updateBucketGrantForAUser) | **PUT** /buckets/{bucketName}/grant/user | Update the access type of an existing user bucket grant
-*CatalogObjectCallGraphControllerApi* | [**getCallGraph**](docs/CatalogObjectCallGraphControllerApi.md#getCallGraph) | **GET** /buckets/call-graph | Get the call graph of all catalog objects in a PDF report
+*CatalogObjectCallGraphControllerApi* | [**getCallGraph**](docs/CatalogObjectCallGraphControllerApi.md#getCallGraph) | **GET** /buckets/call-graph | Get a ZIP file containing a call graph report for each catalog objects matching the provided filters
 *CatalogObjectCallGraphControllerApi* | [**getCallGraphForSelectedObjects**](docs/CatalogObjectCallGraphControllerApi.md#getCallGraphForSelectedObjects) | **GET** /buckets/call-graph/selected/{bucketName} | Get the call graph of selected catalog objects in a bucket
 *CatalogObjectControllerApi* | [**create1**](docs/CatalogObjectControllerApi.md#create1) | **POST** /buckets/{bucketName}/resources | Creates a new catalog object
 *CatalogObjectControllerApi* | [**delete1**](docs/CatalogObjectControllerApi.md#delete1) | **DELETE** /buckets/{bucketName}/resources/{name} | Delete a catalog object
@@ -188,6 +190,7 @@ Class | Method | HTTP request | Description
 *CatalogObjectControllerApi* | [**listKinds**](docs/CatalogObjectControllerApi.md#listKinds) | **GET** /buckets/kinds | Lists all kinds for all objects
 *CatalogObjectControllerApi* | [**listObjectTags**](docs/CatalogObjectControllerApi.md#listObjectTags) | **GET** /buckets/tags | Lists all tags values for all objects stored in the catalog
 *CatalogObjectControllerApi* | [**updateObjectMetadata**](docs/CatalogObjectControllerApi.md#updateObjectMetadata) | **PUT** /buckets/{bucketName}/resources/{name} | Update a catalog object metadata, like kind, Content-Type, project name and tags
+*CatalogObjectControllerApi* | [**updateObjectMetadataMulti**](docs/CatalogObjectControllerApi.md#updateObjectMetadataMulti) | **PUT** /buckets/resources/metadata | Updates metadata, like kind, Content-Type, project name and tags for multiple objects
 *CatalogObjectGrantControllerApi* | [**createCatalogObjectGrantForAGroup**](docs/CatalogObjectGrantControllerApi.md#createCatalogObjectGrantForAGroup) | **POST** /buckets/{bucketName}/resources/{catalogObjectName}/grant/group | Create a new group grant for a catalog object
 *CatalogObjectGrantControllerApi* | [**createCatalogObjectGrantForAUser**](docs/CatalogObjectGrantControllerApi.md#createCatalogObjectGrantForAUser) | **POST** /buckets/{bucketName}/resources/{catalogObjectName}/grant/user | Create a new user grant for a catalog object
 *CatalogObjectGrantControllerApi* | [**deleteAllCatalogObjectGrants**](docs/CatalogObjectGrantControllerApi.md#deleteAllCatalogObjectGrants) | **DELETE** /buckets/{bucketName}/resources/{catalogObjectName}/grant | Delete all grant associated with a catalog object
@@ -196,8 +199,8 @@ Class | Method | HTTP request | Description
 *CatalogObjectGrantControllerApi* | [**getAllCreatedCatalogObjectGrantsByAdmins**](docs/CatalogObjectGrantControllerApi.md#getAllCreatedCatalogObjectGrantsByAdmins) | **GET** /buckets/{bucketName}/resources/{catalogObjectName}/grant | Get all grants associated with a catalog object
 *CatalogObjectGrantControllerApi* | [**updateCatalogObjectGrantForAGroup**](docs/CatalogObjectGrantControllerApi.md#updateCatalogObjectGrantForAGroup) | **PUT** /buckets/{bucketName}/resources/{catalogObjectName}/grant/group | Update a user group grant access for a catalog object
 *CatalogObjectGrantControllerApi* | [**updateCatalogObjectGrantForAUser**](docs/CatalogObjectGrantControllerApi.md#updateCatalogObjectGrantForAUser) | **PUT** /buckets/{bucketName}/resources/{catalogObjectName}/grant/user | Update a user grant access for a catalog object
-*CatalogObjectReportControllerApi* | [**getReport**](docs/CatalogObjectReportControllerApi.md#getReport) | **GET** /buckets/report | Get list of catalog objects in a PDF report file
-*CatalogObjectReportControllerApi* | [**getReportForSelectedObjects**](docs/CatalogObjectReportControllerApi.md#getReportForSelectedObjects) | **POST** /buckets/report/selected/{bucketName} | Get list of selected catalog objects in a PDF report file
+*CatalogObjectReportControllerApi* | [**getReport**](docs/CatalogObjectReportControllerApi.md#getReport) | **GET** /buckets/report | Get a ZIP file containing the PDF reports for each catalog objects matching the provided filters
+*CatalogObjectReportControllerApi* | [**getReportForSelectedObjects**](docs/CatalogObjectReportControllerApi.md#getReportForSelectedObjects) | **POST** /buckets/report/selected/{bucketName} | Get a PDF report file for the selected catalog items
 *CatalogObjectRevisionControllerApi* | [**create2**](docs/CatalogObjectRevisionControllerApi.md#create2) | **POST** /buckets/{bucketName}/resources/{name}/revisions | Creates a new catalog object revision
 *CatalogObjectRevisionControllerApi* | [**get1**](docs/CatalogObjectRevisionControllerApi.md#get1) | **GET** /buckets/{bucketName}/resources/{name}/revisions/{commitTimeRaw} | Gets a specific revision
 *CatalogObjectRevisionControllerApi* | [**getRaw**](docs/CatalogObjectRevisionControllerApi.md#getRaw) | **GET** /buckets/{bucketName}/resources/{name}/revisions/{commitTimeRaw}/raw | Gets the raw content of a specific revision

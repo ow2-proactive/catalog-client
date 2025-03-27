@@ -37,9 +37,10 @@ import org.ow2.proactive.catalog.client.JSON;
   BucketMetadata.JSON_PROPERTY_NAME,
   BucketMetadata.JSON_PROPERTY_OBJECT_COUNT,
   BucketMetadata.JSON_PROPERTY_RIGHTS,
+  BucketMetadata.JSON_PROPERTY_TENANT,
   BucketMetadata.JSON_PROPERTY_LINKS
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-02-12T10:49:33.729424-05:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-03-27T12:13:03.112691600+01:00[Europe/Berlin]")
 public class BucketMetadata {
   public static final String JSON_PROPERTY_OWNER = "owner";
   private String owner;
@@ -52,6 +53,9 @@ public class BucketMetadata {
 
   public static final String JSON_PROPERTY_RIGHTS = "rights";
   private String rights;
+
+  public static final String JSON_PROPERTY_TENANT = "tenant";
+  private String tenant;
 
   public static final String JSON_PROPERTY_LINKS = "links";
   private List<Link> links;
@@ -159,6 +163,31 @@ public class BucketMetadata {
   }
 
 
+  public BucketMetadata tenant(String tenant) {
+    this.tenant = tenant;
+    return this;
+  }
+
+   /**
+   * Get tenant
+   * @return tenant
+  **/
+  @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_TENANT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+
+  public String getTenant() {
+    return tenant;
+  }
+
+
+  @JsonProperty(JSON_PROPERTY_TENANT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  public void setTenant(String tenant) {
+    this.tenant = tenant;
+  }
+
+
   public BucketMetadata links(List<Link> links) {
     this.links = links;
     return this;
@@ -208,12 +237,13 @@ public class BucketMetadata {
         Objects.equals(this.name, bucketMetadata.name) &&
         Objects.equals(this.objectCount, bucketMetadata.objectCount) &&
         Objects.equals(this.rights, bucketMetadata.rights) &&
+        Objects.equals(this.tenant, bucketMetadata.tenant) &&
         Objects.equals(this.links, bucketMetadata.links);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(owner, name, objectCount, rights, links);
+    return Objects.hash(owner, name, objectCount, rights, tenant, links);
   }
 
   @Override
@@ -224,6 +254,7 @@ public class BucketMetadata {
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    objectCount: ").append(toIndentedString(objectCount)).append("\n");
     sb.append("    rights: ").append(toIndentedString(rights)).append("\n");
+    sb.append("    tenant: ").append(toIndentedString(tenant)).append("\n");
     sb.append("    links: ").append(toIndentedString(links)).append("\n");
     sb.append("}");
     return sb.toString();

@@ -16,7 +16,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-02-12T10:49:33.729424-05:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-03-27T12:13:03.112691600+01:00[Europe/Berlin]")
 public class BucketControllerApi {
   private ApiClient apiClient;
 
@@ -51,6 +51,7 @@ public class BucketControllerApi {
    * 
    * @param sessionID sessionID (optional)
    * @param owner The name of the user who owns the Bucket (optional)
+   * @param tenant The name of the tenant that has access to the Bucket (optional)
    * @param kind The kind(s) of objects that buckets must contain.&lt;br /&gt;Multiple kinds can be specified using comma separators (optional)
    * @param contentType The Content-Type of objects that buckets must contain (optional)
    * @param objectTag The tag of objects that buckets must contain (optional)
@@ -59,6 +60,7 @@ public class BucketControllerApi {
    * @param bucketName The bucket name contains the value of this parameter (case insensitive) (optional)
    * @param projectName Include only objects whose project name contains the given string. (optional)
    * @param lastCommitBy Include only objects whose last commit belong to the given user. (optional)
+   * @param committedAtLeastOnceBy Include only objects have been committed at least once by the given user. (optional)
    * @param lastCommitTimeGreater Include only objects whose last commit time is greater than the given EPOCH time. (optional, default to 0)
    * @param lastCommitTimeLessThan Include only objects whose last commit time is less than the given EPOCH time. (optional, default to 0)
    * @param allBuckets If true, buckets without objects matching the filters will be returned with objectCount&#x3D;0. Default is false (optional, default to false)
@@ -72,8 +74,8 @@ public class BucketControllerApi {
        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
      </table>
    */
-  public List<BucketMetadata> callList(String sessionID, String owner, String kind, String contentType, String objectTag, String associationStatus, String objectName, String bucketName, String projectName, String lastCommitBy, Long lastCommitTimeGreater, Long lastCommitTimeLessThan, String allBuckets) throws ApiException {
-    return callListWithHttpInfo(sessionID, owner, kind, contentType, objectTag, associationStatus, objectName, bucketName, projectName, lastCommitBy, lastCommitTimeGreater, lastCommitTimeLessThan, allBuckets).getData();
+  public List<BucketMetadata> callList(String sessionID, String owner, String tenant, String kind, String contentType, String objectTag, String associationStatus, String objectName, String bucketName, String projectName, String lastCommitBy, String committedAtLeastOnceBy, Long lastCommitTimeGreater, Long lastCommitTimeLessThan, String allBuckets) throws ApiException {
+    return callListWithHttpInfo(sessionID, owner, tenant, kind, contentType, objectTag, associationStatus, objectName, bucketName, projectName, lastCommitBy, committedAtLeastOnceBy, lastCommitTimeGreater, lastCommitTimeLessThan, allBuckets).getData();
   }
 
   /**
@@ -81,6 +83,7 @@ public class BucketControllerApi {
    * 
    * @param sessionID sessionID (optional)
    * @param owner The name of the user who owns the Bucket (optional)
+   * @param tenant The name of the tenant that has access to the Bucket (optional)
    * @param kind The kind(s) of objects that buckets must contain.&lt;br /&gt;Multiple kinds can be specified using comma separators (optional)
    * @param contentType The Content-Type of objects that buckets must contain (optional)
    * @param objectTag The tag of objects that buckets must contain (optional)
@@ -89,6 +92,7 @@ public class BucketControllerApi {
    * @param bucketName The bucket name contains the value of this parameter (case insensitive) (optional)
    * @param projectName Include only objects whose project name contains the given string. (optional)
    * @param lastCommitBy Include only objects whose last commit belong to the given user. (optional)
+   * @param committedAtLeastOnceBy Include only objects have been committed at least once by the given user. (optional)
    * @param lastCommitTimeGreater Include only objects whose last commit time is greater than the given EPOCH time. (optional, default to 0)
    * @param lastCommitTimeLessThan Include only objects whose last commit time is less than the given EPOCH time. (optional, default to 0)
    * @param allBuckets If true, buckets without objects matching the filters will be returned with objectCount&#x3D;0. Default is false (optional, default to false)
@@ -102,11 +106,12 @@ public class BucketControllerApi {
        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
      </table>
    */
-  public ApiResponse<List<BucketMetadata>> callListWithHttpInfo(String sessionID, String owner, String kind, String contentType, String objectTag, String associationStatus, String objectName, String bucketName, String projectName, String lastCommitBy, Long lastCommitTimeGreater, Long lastCommitTimeLessThan, String allBuckets) throws ApiException {
+  public ApiResponse<List<BucketMetadata>> callListWithHttpInfo(String sessionID, String owner, String tenant, String kind, String contentType, String objectTag, String associationStatus, String objectName, String bucketName, String projectName, String lastCommitBy, String committedAtLeastOnceBy, Long lastCommitTimeGreater, Long lastCommitTimeLessThan, String allBuckets) throws ApiException {
     // Query parameters
     List<Pair> localVarQueryParams = new ArrayList<>(
             apiClient.parameterToPairs("", "owner", owner)
     );
+    localVarQueryParams.addAll(apiClient.parameterToPairs("", "tenant", tenant));
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "kind", kind));
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "contentType", contentType));
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "objectTag", objectTag));
@@ -115,6 +120,7 @@ public class BucketControllerApi {
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "bucketName", bucketName));
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "projectName", projectName));
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "lastCommitBy", lastCommitBy));
+    localVarQueryParams.addAll(apiClient.parameterToPairs("", "committedAtLeastOnceBy", committedAtLeastOnceBy));
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "lastCommitTimeGreater", lastCommitTimeGreater));
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "lastCommitTimeLessThan", lastCommitTimeLessThan));
     localVarQueryParams.addAll(apiClient.parameterToPairs("", "allBuckets", allBuckets));

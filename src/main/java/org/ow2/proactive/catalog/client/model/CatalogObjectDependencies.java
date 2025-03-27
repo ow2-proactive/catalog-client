@@ -36,7 +36,7 @@ import org.ow2.proactive.catalog.client.JSON;
   CatalogObjectDependencies.JSON_PROPERTY_DEPENDS_ON,
   CatalogObjectDependencies.JSON_PROPERTY_CALLED_BY
 })
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-02-12T10:49:33.729424-05:00[America/New_York]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-03-27T12:13:03.112691600+01:00[Europe/Berlin]")
 public class CatalogObjectDependencies {
   public static final String JSON_PROPERTY_DEPENDS_ON = "depends_on";
   private List<DependsOnCatalogObject> dependsOn;

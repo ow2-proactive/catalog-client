@@ -15,7 +15,7 @@ All URIs are relative to *https://trydev2.activeeon.com:8443/catalog*
 
 ## callList
 
-> List&lt;BucketMetadata&gt; callList(sessionID, owner, kind, contentType, objectTag, associationStatus, objectName, bucketName, projectName, lastCommitBy, lastCommitTimeGreater, lastCommitTimeLessThan, allBuckets)
+> List&lt;BucketMetadata&gt; callList(sessionID, owner, tenant, kind, contentType, objectTag, associationStatus, objectName, bucketName, projectName, lastCommitBy, committedAtLeastOnceBy, lastCommitTimeGreater, lastCommitTimeLessThan, allBuckets)
 
 Lists the buckets
 
@@ -37,6 +37,7 @@ public class Example {
         BucketControllerApi apiInstance = new BucketControllerApi(defaultClient);
         String sessionID = "sessionID_example"; // String | sessionID
         String owner = "owner_example"; // String | The name of the user who owns the Bucket
+        String tenant = "tenant_example"; // String | The name of the tenant that has access to the Bucket
         String kind = "kind_example"; // String | The kind(s) of objects that buckets must contain.<br />Multiple kinds can be specified using comma separators
         String contentType = "contentType_example"; // String | The Content-Type of objects that buckets must contain
         String objectTag = "objectTag_example"; // String | The tag of objects that buckets must contain
@@ -45,11 +46,12 @@ public class Example {
         String bucketName = "bucketName_example"; // String | The bucket name contains the value of this parameter (case insensitive)
         String projectName = "projectName_example"; // String | Include only objects whose project name contains the given string.
         String lastCommitBy = "lastCommitBy_example"; // String | Include only objects whose last commit belong to the given user.
+        String committedAtLeastOnceBy = "committedAtLeastOnceBy_example"; // String | Include only objects have been committed at least once by the given user.
         Long lastCommitTimeGreater = 0L; // Long | Include only objects whose last commit time is greater than the given EPOCH time.
         Long lastCommitTimeLessThan = 0L; // Long | Include only objects whose last commit time is less than the given EPOCH time.
         String allBuckets = "false"; // String | If true, buckets without objects matching the filters will be returned with objectCount=0. Default is false
         try {
-            List<BucketMetadata> result = apiInstance.callList(sessionID, owner, kind, contentType, objectTag, associationStatus, objectName, bucketName, projectName, lastCommitBy, lastCommitTimeGreater, lastCommitTimeLessThan, allBuckets);
+            List<BucketMetadata> result = apiInstance.callList(sessionID, owner, tenant, kind, contentType, objectTag, associationStatus, objectName, bucketName, projectName, lastCommitBy, committedAtLeastOnceBy, lastCommitTimeGreater, lastCommitTimeLessThan, allBuckets);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling BucketControllerApi#callList");
@@ -69,6 +71,7 @@ public class Example {
 |------------- | ------------- | ------------- | -------------|
 | **sessionID** | **String**| sessionID | [optional] |
 | **owner** | **String**| The name of the user who owns the Bucket | [optional] |
+| **tenant** | **String**| The name of the tenant that has access to the Bucket | [optional] |
 | **kind** | **String**| The kind(s) of objects that buckets must contain.&lt;br /&gt;Multiple kinds can be specified using comma separators | [optional] |
 | **contentType** | **String**| The Content-Type of objects that buckets must contain | [optional] |
 | **objectTag** | **String**| The tag of objects that buckets must contain | [optional] |
@@ -77,6 +80,7 @@ public class Example {
 | **bucketName** | **String**| The bucket name contains the value of this parameter (case insensitive) | [optional] |
 | **projectName** | **String**| Include only objects whose project name contains the given string. | [optional] |
 | **lastCommitBy** | **String**| Include only objects whose last commit belong to the given user. | [optional] |
+| **committedAtLeastOnceBy** | **String**| Include only objects have been committed at least once by the given user. | [optional] |
 | **lastCommitTimeGreater** | **Long**| Include only objects whose last commit time is greater than the given EPOCH time. | [optional] [default to 0] |
 | **lastCommitTimeLessThan** | **Long**| Include only objects whose last commit time is less than the given EPOCH time. | [optional] [default to 0] |
 | **allBuckets** | **String**| If true, buckets without objects matching the filters will be returned with objectCount&#x3D;0. Default is false | [optional] [default to false] |
