@@ -15,7 +15,7 @@ package org.ow2.proactive.catalog.client;
 
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-03-27T12:13:03.112691600+01:00[Europe/Berlin]")
 public class Configuration {
-    public static final String VERSION = "1.0"";
+    public static final String VERSION = "1.0";
 
     private static ApiClient defaultApiClient = new ApiClient();
 
